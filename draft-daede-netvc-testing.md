@@ -15,7 +15,7 @@ author:
  -
     ins: T. Daede
     name: Thomas Daede
-    organization: Mozilla
+    org: Mozilla
     email: tdaede@mozilla.com
  -
     ins: J. Moffitt
@@ -42,6 +42,34 @@ informative:
 
 *todo*
 
-# ???
+# Automated Metrics
 
-...
+## SSIM
+
+## Multi-Scale SSIM
+
+## PSNR
+
+## PSNR-HVS-M
+
+# Visual Inspection
+
+- ietf is a volunteer organization and cannot fund studies directly (text
+  maybe from the audio draft)
+
+# Comparing and Interpreting Results
+
+## Bjontegaard
+
+## Scales (loglog or loglin)
+
+## Averaging results from multiple sequences
+
+# Test Sequences
+
+## Sources
+
+## Sets
+
+# Automation
+
