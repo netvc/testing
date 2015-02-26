@@ -432,19 +432,33 @@ ul.toc a:first-child {
 
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
-<link href="#rfc.section.2" rel="Chapter" title="2 ???"/>
-<link href="#rfc.references" rel="Chapter" title="3 References"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Subjective Metrics"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Objective Metrics"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 PSNR"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 PSNR-HVS-M"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 SSIM"/>
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Fast Multi-Scale SSIM"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Comparing and Interpreting Results"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Bjontegaard"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Scales"/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Averaging results from multiple sequences"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Test Sequences"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Sources"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Sets"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Automation"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 References"/>
+<link href="#rfc.references" rel="Chapter" title="8 References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
   <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Daede, T., Moffitt, J., and J. Bankoski" />
+  <meta name="dct.creator" content="Daede, T. and J. Moffitt" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-daede-netvc-testing-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2014-11-12" />
-  <meta name="dct.abstract" content="" />
-  <meta name="description" content="" />
+  <meta name="dct.abstract" content="This document describes a standard procedure for objective and subjective tests to determine the quality versus bitrate tradeoff for a digital video codec." />
+  <meta name="description" content="This document describes a standard procedure for objective and subjective tests to determine the quality versus bitrate tradeoff for a digital video codec." />
 
 </head>
 
@@ -467,14 +481,6 @@ ul.toc a:first-child {
 </tr>
 <tr>
   <td class="left">Expires: May 16, 2015</td>
-  <td class="right">J. Bankoski</td>
-</tr>
-<tr>
-  <td class="left"></td>
-  <td class="right">Google</td>
-</tr>
-<tr>
-  <td class="left"></td>
   <td class="right">November 12, 2014</td>
 </tr>
 
@@ -488,9 +494,7 @@ ul.toc a:first-child {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>
-  <em>todo</em>
-</p>
+<p>This document describes a standard procedure for objective and subjective tests to determine the quality versus bitrate tradeoff for a digital video codec.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -510,8 +514,22 @@ ul.toc a:first-child {
   <ul class="toc">
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
-<li>2.   <a href="#rfc.section.2">???</a></li>
-<li>3.   <a href="#rfc.references">References</a></li>
+<li>2.   <a href="#rfc.section.2">Subjective Metrics</a></li>
+<li>3.   <a href="#rfc.section.3">Objective Metrics</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">PSNR</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">PSNR-HVS-M</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">SSIM</a></li>
+<li>3.4.   <a href="#rfc.section.3.4">Fast Multi-Scale SSIM</a></li>
+<li>4.   <a href="#rfc.section.4">Comparing and Interpreting Results</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">Bjontegaard</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Scales</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">Averaging results from multiple sequences</a></li>
+<li>5.   <a href="#rfc.section.5">Test Sequences</a></li>
+<li>5.1.   <a href="#rfc.section.5.1">Sources</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">Sets</a></li>
+<li>6.   <a href="#rfc.section.6">Automation</a></li>
+<li>7.   <a href="#rfc.section.7">References</a></li>
+<li>8.   <a href="#rfc.references">References</a></li>
 <li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -521,9 +539,43 @@ ul.toc a:first-child {
 <p>
   <em>todo</em>
 </p>
-<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#section" id="section">???</a></h1>
-<p id="rfc.section.2.p.1">&#8230;</p>
-<h1 id="rfc.references"><a href="#rfc.references">3.</a> References</h1>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#subjective-metrics" id="subjective-metrics">Subjective Metrics</a></h1>
+<p/>
+
+<ul>
+  <li>ietf is a volunteer organization and cannot fund studies directly (text maybe from the audio draft)</li>
+</ul>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#objective-metrics" id="objective-metrics">Objective Metrics</a></h1>
+<p id="rfc.section.3.p.1">Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.</p>
+<p id="rfc.section.3.p.2">The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository [DAALA-GIT].</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#psnr" id="psnr">PSNR</a></h1>
+<p id="rfc.section.3.1.p.1">PSNR is a traditional signal quality metric, measured in decibels. It is directly drived from mean square error (MSE), or its square root (RMSE). The formula used is:</p>
+<p id="rfc.section.3.1.p.2">20 * log10 ( MAX / RMSE )</p>
+<p id="rfc.section.3.1.p.3">or, equivalently:</p>
+<p id="rfc.section.3.1.p.4">10 * log10 ( MAX^2 / MSE )</p>
+<p id="rfc.section.3.1.p.5">which is the method used in the dump_psnr.c reference implementation.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#psnr-hvs-m" id="psnr-hvs-m">PSNR-HVS-M</a></h1>
+<p id="rfc.section.3.2.p.1">The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. The weights used by the dump_pnsrhvs.c tool have been found to be the best match to real MOS scores.</p>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#ssim" id="ssim">SSIM</a></h1>
+<p id="rfc.section.3.3.p.1">SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.</p>
+<p id="rfc.section.3.3.p.2">For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:</p>
+<p id="rfc.section.3.3.p.3">-10 * log10 (1 - SSIM)</p>
+<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#fast-multi-scale-ssim" id="fast-multi-scale-ssim">Fast Multi-Scale SSIM</a></h1>
+<p id="rfc.section.3.4.p.1">Multi-Scale SSIM is SSIM extended to multiple window sizes. This is implemented by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together. The final score is converted to decibels in the same manner as SSIM.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#comparing-and-interpreting-results" id="comparing-and-interpreting-results">Comparing and Interpreting Results</a></h1>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#bjontegaard" id="bjontegaard">Bjontegaard</a></h1>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#scales" id="scales">Scales</a></h1>
+<p id="rfc.section.4.2.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:</p>
+<p id="rfc.section.4.2.p.2">-1 * log10 ( 1 - SSIM )</p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#averaging-results-from-multiple-sequences" id="averaging-results-from-multiple-sequences">Averaging results from multiple sequences</a></h1>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#sets" id="sets">Sets</a></h1>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#references" id="references">References</a></h1>
+<p id="rfc.section.7.p.1">[DAALA-GIT] http://git.xiph.org/?p=daala.git;a=summary</p>
+<p id="rfc.section.7.p.2">[SSIM] http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf</p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
@@ -567,27 +619,6 @@ ul.toc a:first-child {
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:jack@metajack.im">jack@metajack.im</a></span>
-
-  </address>
-</div><div class="avoidbreak">
-  <address class="vcard">
-	<span class="vcardline">
-	  <span class="fn">Jim Bankoski</span> 
-	  <span class="n hidden">
-		<span class="family-name">Bankoski</span>
-	  </span>
-	</span>
-	<span class="org vcardline">Google</span>
-	<span class="adr">
-	  
-	  <span class="vcardline">
-		<span class="locality"></span> 
-		<span class="region"></span>
-		<span class="code"></span>
-	  </span>
-	  <span class="country-name vcardline"></span>
-	</span>
-	<span class="vcardline">EMail: <a href="mailto:jimbankoski@google.com">jimbankoski@google.com</a></span>
 
   </address>
 </div>

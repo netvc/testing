@@ -5,9 +5,7 @@
 Network Working Group                                           T. Daede
 Internet-Draft                                                J. Moffitt
 Intended status: Informational                                   Mozilla
-Expires: May 16, 2015                                        J. Bankoski
-                                                                  Google
-                                                       November 12, 2014
+Expires: May 16, 2015                                  November 12, 2014
 
 
               Video Codec Testing and Quality Measurement
@@ -15,7 +13,9 @@ Expires: May 16, 2015                                        J. Bankoski
 
 Abstract
 
-   _todo_
+   This document describes a standard procedure for objective and
+   subjective tests to determine the quality versus bitrate tradeoff for
+   a digital video codec.
 
 Status of This Memo
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Daede, et al.             Expires May 16, 2015                  [Page 1]
+Daede & Moffitt           Expires May 16, 2015                  [Page 1]
 
 Internet-Draft Video Codec Testing and Quality Measurement November 2014
 
@@ -61,19 +61,143 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2014
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  ??? . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   2
-   3.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   2
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Subjective Metrics  . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Objective Metrics . . . . . . . . . . . . . . . . . . . . . .   2
+     3.1.  PSNR  . . . . . . . . . . . . . . . . . . . . . . . . . .   2
+     3.2.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   3
+     3.3.  SSIM  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     3.4.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   3
+   4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   3
+     4.1.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   3
+     4.2.  Scales  . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     4.3.  Averaging results from multiple sequences . . . . . . . .   4
+   5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   4
+     5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     5.2.  Sets  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
 
    _todo_
 
-2.  ???
+2.  Subjective Metrics
 
-   ...
+   o  ietf is a volunteer organization and cannot fund studies directly
+      (text maybe from the audio draft)
 
-3.  References
+3.  Objective Metrics
+
+   Objective metrics are used in place of subjective metrics for easy
+   and repeatable experiments.  Most objective metrics have been
+   designed to correlate with subjective scores.
+
+   The following descriptions give an overview of the operation of each
+   of the metrics.  Because implementation details can sometimes vary,
+   the exact implementation is specified in C in the Daala tools
+   repository [DAALA-GIT].
+
+3.1.  PSNR
+
+   PSNR is a traditional signal quality metric, measured in decibels.
+   It is directly drived from mean square error (MSE), or its square
+   root (RMSE).  The formula used is:
+
+   20 * log10 ( MAX / RMSE )
+
+
+
+Daede & Moffitt           Expires May 16, 2015                  [Page 2]
+
+Internet-Draft Video Codec Testing and Quality Measurement November 2014
+
+
+   or, equivalently:
+
+   10 * log10 ( MAX^2 / MSE )
+
+   which is the method used in the dump_psnr.c reference implementation.
+
+3.2.  PSNR-HVS-M
+
+   The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the
+   image, weights the coefficients, and then calculates the PSNR of
+   those coefficients.  Several different sets of weights have been
+   considered.  The weights used by the dump_pnsrhvs.c tool have been
+   found to be the best match to real MOS scores.
+
+3.3.  SSIM
+
+   SSIM (Structural Similarity Image Metric) is a still image quality
+   metric introduced in 2004.  It computes a score for each individual
+   pixel, using a window of neighboring pixels.  These scores can then
+   be averaged to produce a global score for the entire image.  The
+   original paper produces scores ranging between 0 and 1.
+
+   For the metric to appear more linear on BD-rate curves, the score is
+   converted into a nonlinear decibel scale:
+
+   -10 * log10 (1 - SSIM)
+
+3.4.  Fast Multi-Scale SSIM
+
+   Multi-Scale SSIM is SSIM extended to multiple window sizes.  This is
+   implemented by downscaling the image a number of times, and computing
+   SSIM over the same number of pixels, then averaging the SSIM scores
+   together.  The final score is converted to decibels in the same
+   manner as SSIM.
+
+4.  Comparing and Interpreting Results
+
+4.1.  Bjontegaard
+
+4.2.  Scales
+
+
+
+
+
+
+
+
+
+
+
+Daede & Moffitt           Expires May 16, 2015                  [Page 3]
+
+Internet-Draft Video Codec Testing and Quality Measurement November 2014
+
+
+   When displayed on a graph, bitrate is shown on the X axis, and the
+   quality metric is on the Y axis.  For clarity, the X axis bitrate is
+   always graphed in the log domain.  The Y axis metric should also be
+   chosen so that the graph is approximately linear.  For metrics such
+   as PSNR and PSNR-HVS, the metric result is already in the log domain
+   and is left as-is.  SSIM and FASTSSIM, on the other hand, return a
+   result between 0 and 1.  To create more linear graphs, this result is
+   converted to a value in decibels:
+
+   -1 * log10 ( 1 - SSIM )
+
+4.3.  Averaging results from multiple sequences
+
+5.  Test Sequences
+
+5.1.  Sources
+
+5.2.  Sets
+
+6.  Automation
+
+7.  References
+
+   [DAALA-GIT] http://git.xiph.org/?p=daala.git;a=summary
+
+   [SSIM] http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf
+
+8.  References
 
 Authors' Addresses
 
@@ -89,10 +213,6 @@ Authors' Addresses
    Email: jack@metajack.im
 
 
-   Jim Bankoski
-   Google
-
-   Email: jimbankoski@google.com
 
 
 
@@ -101,12 +221,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-Daede, et al.             Expires May 16, 2015                  [Page 2]
+Daede & Moffitt           Expires May 16, 2015                  [Page 4]
