@@ -113,10 +113,11 @@ informative:
       JCTVC: L1100
   COMPARECODECS:
     target: http://compare-codecs.appspot.com/
+    title: Compare Codecs
     author:
       -
         ins: H. Alvestrand
-        name. Harald Alvestrand
+        name: Harald Alvestrand
     date: 2015
 
 --- abstract
