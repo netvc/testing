@@ -111,6 +111,13 @@ informative:
     date: 2013
     seriesinfo:
       JCTVC: L1100
+  COMPARECODECS:
+    target: http://compare-codecs.appspot.com/
+    author:
+      -
+        ins: H. Alvestrand
+        name. Harald Alvestrand
+    date: 2015
 
 --- abstract
 
@@ -152,7 +159,7 @@ which is the method used in the dump_psnr.c reference implementation.
 
 ## PSNR-HVS-M
 
-The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. {{PSNRHVS}} The weights used by the dump_pnsrhvs.c tool have been found to be the best match to real MOS scores.
+The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. {{PSNRHVS}} The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.
 
 ## SSIM
 
@@ -182,7 +189,7 @@ The Bjontegaard rate difference, also known as BD-rate, allows the comparison of
 
 ## Sources
 
-Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. Only 8-bit sources should be used for objective testing. Higher bit depth sources should be converted once before entering the encoder.
+Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.
 
 The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with {{L1100}}. These clips are not publicly available, but are very useful for comparing to published results.
 
@@ -208,11 +215,11 @@ The Blender Open Movie projects provide a large test base of lossless cinematic 
   - SlideEditing
   - SlideShow
 
-- Game streaming content is synthetically generated content, with a source resolution of 1920x1080 at 60 frames per second.
+- Game streaming content is synthetically generated content, with varying resolutions but typically recorded at 60 frames per second.
   - ChinaSpeed
   - Touhou
 
 # Automation
 
-The Daala source repository contains a set of scripts that can be used to automate the various metrics used. An online service that uses distributed computing is also available {{AWCY}}. It is recommended to use these tools to ensure regularity in testing.
+Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs {{COMPARECODECS}}. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results {{AWCY}}.
 
