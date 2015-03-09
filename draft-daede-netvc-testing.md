@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-daede-netvc-testing-latest
-date: 2014-11-12
+date: 2015-03-09
 category: info
 
 ipr: trust200902
@@ -26,6 +26,66 @@ author:
 normative:
 
 informative:
+  PSNRHVS:
+    title: A NEW FULL-REFERENCE QUALITY METRICS BASED ON HVS
+    author:
+      -
+        name: Karen Egiazarian
+      -
+        name: Jaakko Astola
+      -
+        name: Nikolay Ponomarenko
+      -
+        name: Vladimir Lukin
+      -
+        name: Federica Battisti
+      -
+        name: Marco Carli
+  FASTSSIM:
+    target: http://live.ece.utexas.edu/publications/2011/chen_rtip_2011.pdf
+    title: Fast structural similarity index algorithm
+    author:
+      -
+        ins: M. Chen
+        name: Ming-Jun Chen
+      -
+        ins: A. C. Bovik
+        name: Alan Conrad Bovik
+  MSSSIM:
+    target: http://www.cns.nyu.edu/~zwang/files/papers/msssim.pdf
+    title: MULTI-SCALE STRUCTURAL SIMILARITY FOR IMAGE QUALITY ASSESSMENT
+    author:
+      -
+        ins: Z. Wang
+        name: Zhou Wang
+      -
+        ins: E. P. Simoncelli
+        name: Eero P. Simoncelli
+      -
+        ins: A. C. Bovik
+        name: Alan Conrad Bovik
+  SSIM:
+    target: http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf
+    title: "Image Quality Assessment: From Error Visibility to Structural Similarity"
+    author:
+      -
+        ins: Z. Wang
+        name: Zhou Wang
+      -
+        ins: A. C. Bovik
+        name: Alan Conrad Bovik
+      -
+        ins: H. R. Sheikh
+        name: Hamid Rahim Sheikh
+      -
+        ins: E. P. Simoncelli
+        name: Eero P. Simoncelli
+  DAALA-GIT:
+    target: http://git.xiph.org/?p=daala.git;a=summary
+    title: Daala Git Repository
+  AWCY:
+    target: https://arewecompressedyet.com/
+    title: Are We Compressed Yet?
 
 --- abstract
 
@@ -39,14 +99,17 @@ This document describes a standard procedure for objective and subjective tests 
 
 # Subjective Metrics
 
-- ietf is a volunteer organization and cannot fund studies directly (text
-  maybe from the audio draft)
+Subjective testing is the preferable method of testing video codecs.
+
+Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.
 
 # Objective Metrics
 
 Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.
 
 The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository [DAALA-GIT].
+
+All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.
 
 ## PSNR
 
@@ -92,13 +155,15 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 
 ## Sources
 
+Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful.
+
+The JCT-VC standards organization includes a set of standard test clips for video codec testing. These clips are not publicly available, but are very useful for comparing to published results.
+
+Xiph publishes a variety of test clips collected from various sources.
+
+The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.
+
 ## Sets
 
 # Automation
-
-# References
-
-[DAALA-GIT] http://git.xiph.org/?p=daala.git;a=summary
-
-[SSIM] http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf
 
