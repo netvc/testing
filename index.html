@@ -548,7 +548,7 @@ ul.toc a:first-child {
 <p id="rfc.section.3.1.p.4">10 * log10 ( MAX^2 / MSE )</p>
 <p id="rfc.section.3.1.p.5">which is the method used in the dump_psnr.c reference implementation.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#psnr-hvs-m" id="psnr-hvs-m">PSNR-HVS-M</a></h1>
-<p id="rfc.section.3.2.p.1">The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. <a href="#PSNRHVS">[PSNRHVS]</a> The weights used by the dump_pnsrhvs.c tool have been found to be the best match to real MOS scores.</p>
+<p id="rfc.section.3.2.p.1">The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. <a href="#PSNRHVS">[PSNRHVS]</a> The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.</p>
 <h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#ssim" id="ssim">SSIM</a></h1>
 <p id="rfc.section.3.3.p.1">SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004 <a href="#SSIM">[SSIM]</a>. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.</p>
 <p id="rfc.section.3.3.p.2">For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:</p>
@@ -563,7 +563,7 @@ ul.toc a:first-child {
 <p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
-<p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. Only 8-bit sources should be used for objective testing. Higher bit depth sources should be converted once before entering the encoder.</p>
+<p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.</p>
 <p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are not publicly available, but are very useful for comparing to published results.</p>
 <p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
 <p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
@@ -574,10 +574,10 @@ ul.toc a:first-child {
   <li>Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category: <ul><li>Sintel</li><li>Tears of Steel</li><li>Kimono1</li><li>Tennis</li><li>PeopleOnStreet</li></ul></li>
   <li>Videoconferencing content is high framerate, and varying HD resolutions. Examples: <ul><li>KristenAndSara</li><li>FourPeople</li><li>Johnny</li></ul></li>
   <li>Screensharing content is low framerate, high resolution content typical of a computer desktop.  <ul><li>SlideEditing</li><li>SlideShow</li></ul></li>
-  <li>Game streaming content is synthetically generated content, with a source resolution of 1920x1080 at 60 frames per second.  <ul><li>ChinaSpeed</li><li>Touhou</li></ul></li>
+  <li>Game streaming content is synthetically generated content, with varying resolutions but typically recorded at 60 frames per second.  <ul><li>ChinaSpeed</li><li>Touhou</li></ul></li>
 </ul>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
-<p id="rfc.section.6.p.1">The Daala source repository contains a set of scripts that can be used to automate the various metrics used. An online service that uses distributed computing is also available <a href="#AWCY">[AWCY]</a>. It is recommended to use these tools to ensure regularity in testing.</p>
+<p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results <a href="#AWCY">[AWCY]</a>.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
 <table>
   <tbody>
@@ -586,6 +586,12 @@ ul.toc a:first-child {
         <b id="AWCY">[AWCY]</b>
       </td>
       <td class="top"><a>Xiph.Org</a>, "<a href="https://arewecompressedyet.com/">Are We Compressed Yet?</a>", 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="COMPARECODECS">[COMPARECODECS]</b>
+      </td>
+      <td class="top"><a>Alvestrand, H.</a>, "<a href="http://compare-codecs.appspot.com/">Compare Codecs</a>", 2015.</td>
     </tr>
     <tr>
       <td class="reference">
