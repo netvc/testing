@@ -200,6 +200,12 @@ The Blender Open Movie projects provide a large test base of lossless cinematic 
 
 ## Usage Scenarios
 
+- Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format.
+  - subset1 (50 images)
+  - subset2 (50 images)
+  - subset3 (1000 images)
+  - subset4 (1000 images)
+
 - Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category:
   - Sintel
   - Tears of Steel
