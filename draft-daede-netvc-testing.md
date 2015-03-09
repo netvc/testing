@@ -27,20 +27,27 @@ normative:
 
 informative:
   PSNRHVS:
-    title: A NEW FULL-REFERENCE QUALITY METRICS BASED ON HVS
+    title: A New Full-Reference Quality Metrics Based on HVS
     author:
       -
+        ins: K. Egiazarian
         name: Karen Egiazarian
       -
+        ins: J. Astola
         name: Jaakko Astola
       -
+        ins: N. Ponomarenko
         name: Nikolay Ponomarenko
       -
+        ins: V. Lukin
         name: Vladimir Lukin
       -
+        ins: F. Battisti
         name: Federica Battisti
       -
+        ins: M. Carli
         name: Marco Carli
+    date: 2002
   FASTSSIM:
     target: http://live.ece.utexas.edu/publications/2011/chen_rtip_2011.pdf
     title: Fast structural similarity index algorithm
@@ -51,9 +58,10 @@ informative:
       -
         ins: A. C. Bovik
         name: Alan Conrad Bovik
+    date: 2010
   MSSSIM:
     target: http://www.cns.nyu.edu/~zwang/files/papers/msssim.pdf
-    title: MULTI-SCALE STRUCTURAL SIMILARITY FOR IMAGE QUALITY ASSESSMENT
+    title: Multi-Scale Structural Similarity for Image Quality Assessment
     author:
       -
         ins: Z. Wang
@@ -80,12 +88,15 @@ informative:
       -
         ins: E. P. Simoncelli
         name: Eero P. Simoncelli
+    date: 2004
   DAALA-GIT:
     target: http://git.xiph.org/?p=daala.git;a=summary
     title: Daala Git Repository
+    date: 2015
   AWCY:
     target: https://arewecompressedyet.com/
     title: Are We Compressed Yet?
+    date: 2015
   L1100:
     target: http://phenix.int-evry.fr/jct/
     title: Common test conditions and software reference configurations
@@ -93,16 +104,19 @@ informative:
       -
         ins: F. Bossen
         name: Frank Bossen
+    date: 2013
+    seriesinfo:
+      JCTVC: L1100
 
 --- abstract
 
-This document describes a standard procedure for objective and subjective tests to determine the quality versus bitrate tradeoff for a digital video codec.
+This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.
 
 --- middle
 
 # Introduction
 
-*todo*
+When developing an internet video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.
 
 # Subjective Metrics
 
@@ -118,6 +132,8 @@ The following descriptions give an overview of the operation of each of the metr
 
 All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.
 
+Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.
+
 ## PSNR
 
 PSNR is a traditional signal quality metric, measured in decibels. It is directly drived from mean square error (MSE), or its square root (RMSE). The formula used is:
@@ -132,11 +148,11 @@ which is the method used in the dump_psnr.c reference implementation.
 
 ## PSNR-HVS-M
 
-The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. The weights used by the dump_pnsrhvs.c tool have been found to be the best match to real MOS scores.
+The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. {{PSNRHVS}} The weights used by the dump_pnsrhvs.c tool have been found to be the best match to real MOS scores.
 
 ## SSIM
 
-SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.
+SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004 {{SSIM}}. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.
 
 For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:
 
@@ -144,19 +160,19 @@ For the metric to appear more linear on BD-rate curves, the score is converted i
 
 ## Fast Multi-Scale SSIM
 
-Multi-Scale SSIM is SSIM extended to multiple window sizes. This is implemented by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together. The final score is converted to decibels in the same manner as SSIM.
+Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}. This is implemented in the Fast implementation by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together {{FASTSSIM}}. The final score is converted to decibels in the same manner as SSIM.
 
 # Comparing and Interpreting Results
 
-## Bjontegaard
-
-## Scales
+## Graphing
 
 When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:
 
 -1 * log10 ( 1 - SSIM )
 
-## Averaging results from multiple sequences
+## Bjontegaard
+
+The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used.
 
 # Test Sequences
 
@@ -170,7 +186,28 @@ Xiph publishes a variety of test clips collected from various sources.
 
 The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.
 
-## Sets
+## Usage Scenarios
+
+- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 frames per second. Example test clips that fit into this category:
+  - Sintel
+  - Tears of Steel
+  - Kimono1
+  - Tennis
+
+- Videoconferencing content is high framerate, and varying HD resolutions. Examples:
+  - KristenAndSara
+  - FourPeople
+  - Johnny
+
+- Screensharing content is low framerate, high resolution content typical of a computer desktop.
+  - SlideEditing
+  - SlideShow
+
+- Game streaming content is synthetically generated content, with a source resolution of 1920x1080 at 60 frames per second.
+  - ChinaSpeed
+  - Touhou
 
 # Automation
+
+The Daala source repository contains a set of scripts that can be used to automate the various metrics used. An online service that uses distributed computing is also available {{AWCY}}. It is recommended to use these tools to ensure regularity in testing.
 
