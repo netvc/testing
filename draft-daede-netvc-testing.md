@@ -200,20 +200,22 @@ The Blender Open Movie projects provide a large test base of lossless cinematic 
 
 ## Usage Scenarios
 
+Sources are divided into several categories to test different scenarios the codec will be required to operate in. Example sources are provided for each scenario.
+
 - Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format.
   - subset1 (50 images)
   - subset2 (50 images)
   - subset3 (1000 images)
   - subset4 (1000 images)
 
-- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category:
+- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second.
   - Sintel
   - Tears of Steel
   - Kimono1
   - Tennis
   - PeopleOnStreet
 
-- Videoconferencing content is high framerate, and varying HD resolutions. Examples:
+- Videoconferencing content is high framerate, and varying HD resolutions.
   - KristenAndSara
   - FourPeople
   - Johnny
