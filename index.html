@@ -563,7 +563,7 @@ ul.toc a:first-child {
 <p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
-<p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful.</p>
+<p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. Only 8-bit sources should be used for objective testing. Higher bit depth sources should be converted once before entering the encoder.</p>
 <p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are not publicly available, but are very useful for comparing to published results.</p>
 <p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
 <p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
@@ -571,7 +571,7 @@ ul.toc a:first-child {
 <p/>
 
 <ul>
-  <li>Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 frames per second. Example test clips that fit into this category: <ul><li>Sintel</li><li>Tears of Steel</li><li>Kimono1</li><li>Tennis</li></ul></li>
+  <li>Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category: <ul><li>Sintel</li><li>Tears of Steel</li><li>Kimono1</li><li>Tennis</li><li>PeopleOnStreet</li></ul></li>
   <li>Videoconferencing content is high framerate, and varying HD resolutions. Examples: <ul><li>KristenAndSara</li><li>FourPeople</li><li>Johnny</li></ul></li>
   <li>Screensharing content is low framerate, high resolution content typical of a computer desktop.  <ul><li>SlideEditing</li><li>SlideShow</li></ul></li>
   <li>Game streaming content is synthetically generated content, with a source resolution of 1920x1080 at 60 frames per second.  <ul><li>ChinaSpeed</li><li>Touhou</li></ul></li>
@@ -581,8 +581,18 @@ ul.toc a:first-child {
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
 <table>
   <tbody>
-    <tr><td class="reference"><b id="AWCY">[AWCY]</b></td><td class="top"><a href="https://arewecompressedyet.com/">Are We Compressed Yet?</a>", 2015.</td>, "</tr>
-    <tr><td class="reference"><b id="DAALA-GIT">[DAALA-GIT]</b></td><td class="top"><a href="http://git.xiph.org/?p=daala.git;a=summary">Daala Git Repository</a>", 2015.</td>, "</tr>
+    <tr>
+      <td class="reference">
+        <b id="AWCY">[AWCY]</b>
+      </td>
+      <td class="top"><a>Xiph.Org</a>, "<a href="https://arewecompressedyet.com/">Are We Compressed Yet?</a>", 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="DAALA-GIT">[DAALA-GIT]</b>
+      </td>
+      <td class="top"><a>Xiph.Org</a>, "<a href="http://git.xiph.org/?p=daala.git;a=summary">Daala Git Repository</a>", 2015.</td>
+    </tr>
     <tr>
       <td class="reference">
         <b id="FASTSSIM">[FASTSSIM]</b>
