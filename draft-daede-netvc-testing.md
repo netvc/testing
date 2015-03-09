@@ -86,6 +86,13 @@ informative:
   AWCY:
     target: https://arewecompressedyet.com/
     title: Are We Compressed Yet?
+  L1100:
+    target: http://phenix.int-evry.fr/jct/
+    title: Common test conditions and software reference configurations
+    author:
+      -
+        ins: F. Bossen
+        name: Frank Bossen
 
 --- abstract
 
@@ -107,7 +114,7 @@ Because the IETF does not have testing resources of its own, it has to rely on t
 
 Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.
 
-The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository [DAALA-GIT].
+The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository {{DAALA-GIT}}.
 
 All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.
 
@@ -157,7 +164,7 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 
 Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful.
 
-The JCT-VC standards organization includes a set of standard test clips for video codec testing. These clips are not publicly available, but are very useful for comparing to published results.
+The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with {{L1100}}. These clips are not publicly available, but are very useful for comparing to published results.
 
 Xiph publishes a variety of test clips collected from various sources.
 
