@@ -5,7 +5,7 @@
 Network Working Group                                           T. Daede
 Internet-Draft                                                J. Moffitt
 Intended status: Informational                                   Mozilla
-Expires: May 16, 2015                                  November 12, 2014
+Expires: September 10, 2015                               March 09, 2015
 
 
               Video Codec Testing and Quality Measurement
@@ -13,9 +13,10 @@ Expires: May 16, 2015                                  November 12, 2014
 
 Abstract
 
-   This document describes a standard procedure for objective and
-   subjective tests to determine the quality versus bitrate tradeoff for
-   a digital video codec.
+   This document describes guidelines and procedures for evaluating an
+   internet video codec specified at the IETF.  This covers subjective
+   and objective tests, test conditions, and materials used for the
+   test.
 
 Status of This Memo
 
@@ -32,11 +33,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 16, 2015.
+   This Internet-Draft will expire on September 10, 2015.
 
 Copyright Notice
 
-   Copyright (c) 2014 IETF Trust and the persons identified as the
+   Copyright (c) 2015 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -52,10 +53,9 @@ Copyright Notice
 
 
 
-
-Daede & Moffitt           Expires May 16, 2015                  [Page 1]
+Daede & Moffitt        Expires September 10, 2015               [Page 1]
 
-Internet-Draft Video Codec Testing and Quality Measurement November 2014
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
 
 
 Table of Contents
@@ -63,30 +63,39 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Subjective Metrics  . . . . . . . . . . . . . . . . . . . . .   2
    3.  Objective Metrics . . . . . . . . . . . . . . . . . . . . . .   2
-     3.1.  PSNR  . . . . . . . . . . . . . . . . . . . . . . . . . .   2
+     3.1.  PSNR  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      3.2.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   3
      3.3.  SSIM  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     3.4.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   3
-   4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   3
-     4.1.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   3
-     4.2.  Scales  . . . . . . . . . . . . . . . . . . . . . . . . .   3
-     4.3.  Averaging results from multiple sequences . . . . . . . .   4
+     3.4.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   4
+   4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   4
+     4.1.  Graphing  . . . . . . . . . . . . . . . . . . . . . . . .   4
+     4.2.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   4
    5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   4
      5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     5.2.  Sets  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
+     5.2.  Usage Scenarios . . . . . . . . . . . . . . . . . . . . .   5
+   6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   7.  Informative References  . . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
-   _todo_
+   When developing an internet video codec, changes and additions to the
+   codec need to be decided based on their performance tradeoffs.  In
+   addition, measurements are needed to determine when the codec has met
+   its performance goals.  This document specifies how the tests are to
+   be carried about to ensure valid comparisons and good decisions.
 
 2.  Subjective Metrics
 
-   o  ietf is a volunteer organization and cannot fund studies directly
-      (text maybe from the audio draft)
+   Subjective testing is the preferable method of testing video codecs.
+
+   Because the IETF does not have testing resources of its own, it has
+   to rely on the resources of its participants.  For this reason, even
+   if the group agrees that a particular test is important, if no one
+   volunteers to do it, or if volunteers do not complete it in a timely
+   fashion, then that test should be discarded.  This ensures that only
+   important tests be done in particular, the tests that are important
+   to participants.
 
 3.  Objective Metrics
 
@@ -94,10 +103,32 @@ Table of Contents
    and repeatable experiments.  Most objective metrics have been
    designed to correlate with subjective scores.
 
+
+
+
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 2]
+
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
+
+
    The following descriptions give an overview of the operation of each
    of the metrics.  Because implementation details can sometimes vary,
    the exact implementation is specified in C in the Daala tools
    repository [DAALA-GIT].
+
+   All of the metrics described in this document are to be applied to
+   the luma plane only.  In addition, they are single frame metrics.
+   When applied to the video, the scores of each frame are averaged to
+   create the final score.
+
+   Codecs are allowed to internally use downsampling, but must include a
+   normative upsampler, so that the metrics run at the same resolution
+   as the source video.  In addition, some metrics, such as PSNR and
+   FASTSSIM, have poor behavior on downsampled images, so it must be
+   noted in test results if downsampling is in effect.
 
 3.1.  PSNR
 
@@ -106,13 +137,6 @@ Table of Contents
    root (RMSE).  The formula used is:
 
    20 * log10 ( MAX / RMSE )
-
-
-
-Daede & Moffitt           Expires May 16, 2015                  [Page 2]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2014
-
 
    or, equivalently:
 
@@ -125,50 +149,40 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2014
    The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the
    image, weights the coefficients, and then calculates the PSNR of
    those coefficients.  Several different sets of weights have been
-   considered.  The weights used by the dump_pnsrhvs.c tool have been
-   found to be the best match to real MOS scores.
+   considered.  [PSNRHVS] The weights used by the dump_pnsrhvs.c tool
+   have been found to be the best match to real MOS scores.
 
 3.3.  SSIM
 
    SSIM (Structural Similarity Image Metric) is a still image quality
-   metric introduced in 2004.  It computes a score for each individual
-   pixel, using a window of neighboring pixels.  These scores can then
-   be averaged to produce a global score for the entire image.  The
-   original paper produces scores ranging between 0 and 1.
+   metric introduced in 2004 [SSIM].  It computes a score for each
+   individual pixel, using a window of neighboring pixels.  These scores
+   can then be averaged to produce a global score for the entire image.
+   The original paper produces scores ranging between 0 and 1.
 
    For the metric to appear more linear on BD-rate curves, the score is
    converted into a nonlinear decibel scale:
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 3]
+
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
+
 
    -10 * log10 (1 - SSIM)
 
 3.4.  Fast Multi-Scale SSIM
 
-   Multi-Scale SSIM is SSIM extended to multiple window sizes.  This is
-   implemented by downscaling the image a number of times, and computing
-   SSIM over the same number of pixels, then averaging the SSIM scores
-   together.  The final score is converted to decibels in the same
-   manner as SSIM.
+   Multi-Scale SSIM is SSIM extended to multiple window sizes [MSSSIM].
+   This is implemented in the Fast implementation by downscaling the
+   image a number of times, and computing SSIM over the same number of
+   pixels, then averaging the SSIM scores together [FASTSSIM].  The
+   final score is converted to decibels in the same manner as SSIM.
 
 4.  Comparing and Interpreting Results
 
-4.1.  Bjontegaard
-
-4.2.  Scales
-
-
-
-
-
-
-
-
-
-
-
-Daede & Moffitt           Expires May 16, 2015                  [Page 3]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2014
-
+4.1.  Graphing
 
    When displayed on a graph, bitrate is shown on the X axis, and the
    quality metric is on the Y axis.  For clarity, the X axis bitrate is
@@ -181,23 +195,130 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2014
 
    -1 * log10 ( 1 - SSIM )
 
-4.3.  Averaging results from multiple sequences
+4.2.  Bjontegaard
+
+   The Bjontegaard rate difference, also known as BD-rate, allows the
+   comparison of two different codecs based on a metric.  This is
+   commonly done by fitting a curve to each set of data points on the
+   plot of bitrate versus metric score, and then computing the
+   difference in area between each of the curves.  A cubic polynomial
+   fit is common, but will be overconstrained with more than four
+   samples.  For higher accuracy, at least 10 samples and a linear
+   piecewise fit should be used.
 
 5.  Test Sequences
 
 5.1.  Sources
 
-5.2.  Sets
+   Lossless test clips are preferred for most tests, because the
+   structure of compression artifacts in already-compressed clips may
+   introduce extra noise in the test results.  However, a large amount
+   of content on the internet needs to be recompressed at least once, so
+   some sources of this nature are useful.
+
+   The JCT-VC standards organization includes a set of standard test
+   clips for video codec testing, and parameters to run the clips with
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 4]
+
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
+
+
+   [L1100].  These clips are not publicly available, but are very useful
+   for comparing to published results.
+
+   Xiph publishes a variety of test clips collected from various
+   sources.
+
+   The Blender Open Movie projects provide a large test base of lossless
+   cinematic test material.  The lossless sources are available, hosted
+   on Xiph.
+
+5.2.  Usage Scenarios
+
+   o  Streaming video consists of cinematic content, with a minimum
+      source resolution of 1920x1080 at 24 frames per second.  Example
+      test clips that fit into this category:
+
+      *  Sintel
+
+      *  Tears of Steel
+
+      *  Kimono1
+
+      *  Tennis
+
+   o  Videoconferencing content is high framerate, and varying HD
+      resolutions.  Examples:
+
+      *  KristenAndSara
+
+      *  FourPeople
+
+      *  Johnny
+
+   o  Screensharing content is low framerate, high resolution content
+      typical of a computer desktop.
+
+      *  SlideEditing
+
+      *  SlideShow
+
+   o  Game streaming content is synthetically generated content, with a
+      source resolution of 1920x1080 at 60 frames per second.
+
+      *  ChinaSpeed
+
+      *  Touhou
+
+
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 5]
+
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
+
 
 6.  Automation
 
-7.  References
+   The Daala source repository contains a set of scripts that can be
+   used to automate the various metrics used.  An online service that
+   uses distributed computing is also available [AWCY].  It is
+   recommended to use these tools to ensure regularity in testing.
 
-   [DAALA-GIT] http://git.xiph.org/?p=daala.git;a=summary
+7.  Informative References
 
-   [SSIM] http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf
+   [AWCY]     , "Are We Compressed Yet?", 2015, <https://
+              arewecompressedyet.com/>.
 
-8.  References
+   [DAALA-GIT]
+              , "Daala Git Repository", 2015,
+              <http://git.xiph.org/?p=daala.git;a=summary>.
+
+   [FASTSSIM]
+              Chen, M. and A. Bovik, "Fast structural similarity index
+              algorithm", 2010, <http://live.ece.utexas.edu/publications
+              /2011/chen_rtip_2011.pdf>.
+
+   [L1100]    Bossen, F., "Common test conditions and software reference
+              configurations", JCTVC L1100, 2013,
+              <http://phenix.int-evry.fr/jct/>.
+
+   [MSSSIM]   Wang, Z., Simoncelli, E., and A. Bovik, "Multi-Scale
+              Structural Similarity for Image Quality Assessment", n.d.,
+              <http://www.cns.nyu.edu/~zwang/files/papers/msssim.pdf>.
+
+   [PSNRHVS]  Egiazarian, K., Astola, J., Ponomarenko, N., Lukin, V.,
+              Battisti, F., and M. Carli, "A New Full-Reference Quality
+              Metrics Based on HVS", 2002.
+
+   [SSIM]     Wang, Z., Bovik, A., Sheikh, H., and E. Simoncelli, "Image
+              Quality Assessment: From Error Visibility to Structural
+              Similarity", 2004,
+              <http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf>.
 
 Authors' Addresses
 
@@ -205,6 +326,16 @@ Authors' Addresses
    Mozilla
 
    Email: tdaede@mozilla.com
+
+
+
+
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 6]
+
+Internet-Draft Video Codec Testing and Quality Measurement    March 2015
 
 
    Jack Moffitt
@@ -221,4 +352,41 @@ Authors' Addresses
 
 
 
-Daede & Moffitt           Expires May 16, 2015                  [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Daede & Moffitt        Expires September 10, 2015               [Page 7]
