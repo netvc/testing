@@ -182,7 +182,7 @@ The Bjontegaard rate difference, also known as BD-rate, allows the comparison of
 
 ## Sources
 
-Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful.
+Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. Only 8-bit sources should be used for objective testing. Higher bit depth sources should be converted once before entering the encoder.
 
 The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with {{L1100}}. These clips are not publicly available, but are very useful for comparing to published results.
 
@@ -192,11 +192,12 @@ The Blender Open Movie projects provide a large test base of lossless cinematic 
 
 ## Usage Scenarios
 
-- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 frames per second. Example test clips that fit into this category:
+- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category:
   - Sintel
   - Tears of Steel
   - Kimono1
   - Tennis
+  - PeopleOnStreet
 
 - Videoconferencing content is high framerate, and varying HD resolutions. Examples:
   - KristenAndSara
