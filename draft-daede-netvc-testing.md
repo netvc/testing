@@ -92,9 +92,13 @@ informative:
   DAALA-GIT:
     target: http://git.xiph.org/?p=daala.git;a=summary
     title: Daala Git Repository
+    author:
+      org: Xiph.Org
     date: 2015
   AWCY:
     target: https://arewecompressedyet.com/
+    author:
+      org: Xiph.Org
     title: Are We Compressed Yet?
     date: 2015
   L1100:
