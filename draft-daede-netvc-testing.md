@@ -101,6 +101,12 @@ informative:
       org: Xiph.Org
     title: Are We Compressed Yet?
     date: 2015
+  STEAM:
+    target: http://store.steampowered.com/hwsurvey
+    author:
+      org: Valve Corporation
+    title: "Steam Hardware & Software Survey: June 2015"
+    date: June 2015
   L1100:
     target: http://phenix.int-evry.fr/jct/
     title: Common test conditions and software reference configurations
@@ -119,6 +125,13 @@ informative:
         ins: H. Alvestrand
         name: Harald Alvestrand
     date: 2015
+  DERFVIDEO:
+    target: https://media.xiph.org/video/derf/
+    title: Xiph.org Video Test Media
+    author:
+      -
+        ins: T. Terriberry
+        name: Timothy Terriberry
 
 --- abstract
 
@@ -184,7 +197,19 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 
 ## Bjontegaard
 
-The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used.
+The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.
+
+## Ranges
+
+The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:
+
+- Low bitrate: 0.005 - 0.02 bpp
+- Medium bitrate: 0.02 - 0.1 bpp
+- High bitrate: 0.1 - 0.2 bpp
+
+Bitrate can be calculated from bits per pixel (bpp) as follows:
+
+bitrate = bpp * width * height * framerate
 
 # Test Sequences
 
@@ -198,35 +223,52 @@ Xiph publishes a variety of test clips collected from various sources.
 
 The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.
 
-## Usage Scenarios
+## Test Sets
 
-Sources are divided into several categories to test different scenarios the codec will be required to operate in. Example sources are provided for each scenario.
+Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comaprison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow any results
 
-- Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format.
+- Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used:
   - subset1 (50 images)
   - subset2 (50 images)
   - subset3 (1000 images)
   - subset4 (1000 images)
 
-- Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second.
-  - Sintel
-  - Tears of Steel
-  - Kimono1
-  - Tennis
-  - PeopleOnStreet
+- video-hd-2, a set that consists of the following 1920x1080 clips from {{DERFVIDEO}}, cropped to 50 frames (and converted to 4:2:0 if necessary)
+  - aspen
+  - blue_sky
+  - crowd_run
+  - ducks_take_off
+  - factory
+  - life
+  - old_town_cross
+  - park_joy
+  - pedestrian_area
+  - red_kayak
+  - riverbed
+  - rush_hour
+  - station2
 
-- Videoconferencing content is high framerate, and varying HD resolutions.
-  - KristenAndSara
-  - FourPeople
-  - Johnny
+- A video conferencing test set, with 1280x720 content at 60 frames per second. Unlike other sets, the videos in this set are 10 seconds long.
+  - TBD
 
+- Game streaming content: 1920x1080, 60 frames per second, 4:2:0 chroma subsampling. 1080p is chosen as it is currently the most common gaming monitor resolution {{STEAM}}. All clips should be two seconds long.
+  - TBD
+  
 - Screensharing content is low framerate, high resolution content typical of a computer desktop.
-  - SlideEditing
-  - SlideShow
+  - screenshots - desktop screenshots of various resolutions, with 4:2:0 subsampling
+  - Video sets TBD
+  
+  
+## Operating Points
 
-- Game streaming content is synthetically generated content, with varying resolutions but typically recorded at 60 frames per second.
-  - ChinaSpeed
-  - Touhou
+All test sets except for video conferencing should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. Example configurations follow:
+
+- x264: --crf=x
+- x265: --crf=x
+- daala: -v=x
+- libvpx: --codec=vp9 --end-usage=q --cq-level=x
+
+The video conferencing test set should be run in CBR mode, with a buffer size not greater than 300ms * bitrate.
 
 # Automation
 
