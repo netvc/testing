@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-daede-netvc-testing-latest
-date: 2015-03-09
+date: 2015-07-06
 category: info
 
 ipr: trust200902
@@ -261,14 +261,27 @@ Sources are divided into several categories to test different scenarios the code
   
 ## Operating Points
 
-All test sets except for video conferencing should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. Example configurations follow:
+Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.
+
+### High Latency
+
+The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. Example configurations follow:
 
 - x264: --crf=x
 - x265: --crf=x
 - daala: -v=x
 - libvpx: --codec=vp9 --end-usage=q --cq-level=x
 
-The video conferencing test set should be run in CBR mode, with a buffer size not greater than 300ms * bitrate.
+### Low Latency
+
+Codecs should be run in CBR mode. The maximum allowed bitrate variance is determined by a buffer model:
+
+- The buffer starts out empty.
+- After each frame is encoded, the buffer is filled by the number of bits spent for the frame.
+- The buffer is then emptied by (bitrate * frame duration) bits.
+- The buffer fill level is checked. If it is over the limit, the test is considered a failure.
+
+The buffer size limit is defined by the bitrate target * 0.3 seconds.
 
 # Automation
 
