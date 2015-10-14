@@ -265,16 +265,20 @@ Two operating modes are defined. High latency is intended for on demand streamin
 
 ### High Latency
 
-The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. Example configurations follow:
+The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:
 
 - x264: --crf=x
 - x265: --crf=x
 - daala: -v=x
 - libvpx: --codec=vp9 --end-usage=q --cq-level=x
 
-### Low Latency
+### Unconstrained Low Latency
 
-Codecs should be run in CBR mode. The maximum allowed bitrate variance is determined by a buffer model:
+The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary.
+
+### Constrained Low Latency
+
+The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:
 
 - The buffer starts out empty.
 - After each frame is encoded, the buffer is filled by the number of bits spent for the frame.
