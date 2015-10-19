@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-daede-netvc-testing-latest
-date: 2015-07-06
+date: 2015-10-19
 category: info
 
 ipr: trust200902
