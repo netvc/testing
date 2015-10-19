@@ -149,6 +149,10 @@ Subjective testing is the preferable method of testing video codecs.
 
 Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.
 
+## Still Image Pair Comparison
+
+A simple way to determine superiority of one compressed image over another is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is mainly used for rapid comparisons during development. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.
+
 # Objective Metrics
 
 Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.
@@ -204,8 +208,8 @@ The Bjontegaard rate difference, also known as BD-rate, allows the comparison of
 The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:
 
 - Low bitrate: 0.005 - 0.02 bpp
-- Medium bitrate: 0.02 - 0.1 bpp
-- High bitrate: 0.1 - 0.2 bpp
+- Medium bitrate: 0.02 - 0.06 bpp
+- High bitrate: 0.06 - 0.2 bpp
 
 Bitrate can be calculated from bits per pixel (bpp) as follows:
 
@@ -265,16 +269,21 @@ Two operating modes are defined. High latency is intended for on demand streamin
 
 ### High Latency
 
-The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:
+The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:
 
 - x264: --crf=x
 - x265: --crf=x
 - daala: -v=x
-- libvpx: --codec=vp9 --end-usage=q --cq-level=x
+- libvpx: --codec=vp9 --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=1
 
 ### Unconstrained Low Latency
 
-The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary.
+The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:
+
+- x264: --crf-x --tune zerolatency
+- x265: --crf=x --tune zerolatency
+- daala: -v=x
+- libvpx: --codec=vp9 --end-usage=q --cq-level=x -lag-in-frames=0 -auto-alt-ref=0
 
 ### Constrained Low Latency
 
