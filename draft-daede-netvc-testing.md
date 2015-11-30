@@ -17,11 +17,6 @@ author:
     name: Thomas Daede
     org: Mozilla
     email: tdaede@mozilla.com
- -
-    ins: J. Moffitt
-    name: Jack Moffitt
-    org: Mozilla
-    email: jack@metajack.im
 
 normative:
 
