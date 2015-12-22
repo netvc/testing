@@ -377,8 +377,6 @@ body {
 h1 { font-size: 130%; }
 h2 { font-size: 120%; }
 h3, h4 { font-size: 110%; }
-ul.toc >li { font-size: 95%; }
-ul.toc >li >ul, .figure, caption { font-size: 90%; }
 
 table {
   margin-left: 0em;
@@ -422,17 +420,19 @@ ol, ul {
   padding: 0;
   margin: 0.5em 0 0.5em 2em;
 }
-ul.toc, ul.toc ul { 
+ul.toc, ul.toc ul {
   margin: 0 0 0 1.5em;
 }
-ul.toc a:first-child { 
-  display: inline-block; 
+ul.toc a:first-child {
+  display: inline-block;
   min-width: 1.2em;
-}  </style>
+}
+  </style>
 
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Subjective Metrics"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Still Image Pair Comparison"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Objective Metrics"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 PSNR"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 PSNR-HVS-M"/>
@@ -441,9 +441,14 @@ ul.toc a:first-child {
 <link href="#rfc.section.4" rel="Chapter" title="4 Comparing and Interpreting Results"/>
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Graphing"/>
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Bjontegaard"/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Ranges"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Test Sequences"/>
 <link href="#rfc.section.5.1" rel="Chapter" title="5.1 Sources"/>
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Usage Scenarios"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Test Sets"/>
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 Operating Points"/>
+<link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 High Latency"/>
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Unconstrained Low Latency"/>
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Constrained Low Latency"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Automation"/>
 <link href="#rfc.references" rel="Chapter" title="7 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
@@ -452,9 +457,9 @@ ul.toc a:first-child {
   <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Daede, T. and J. Moffitt" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-daede-netvc-testing-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-3-09" />
+  <meta name="dct.creator" content="Daede, T." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-netvc-testing-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-11-30" />
   <meta name="dct.abstract" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
   <meta name="description" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
 
@@ -471,15 +476,15 @@ ul.toc a:first-child {
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">J. Moffitt</td>
-</tr>
-<tr>
-  <td class="left">Intended status: Informational</td>
   <td class="right">Mozilla</td>
 </tr>
 <tr>
-  <td class="left">Expires: September 10, 2015</td>
-  <td class="right">March 09, 2015</td>
+  <td class="left">Intended status: Informational</td>
+  <td class="right">November 30, 2015</td>
+</tr>
+<tr>
+  <td class="left">Expires: June 02, 2016</td>
+  <td class="right"></td>
 </tr>
 
     	
@@ -487,7 +492,7 @@ ul.toc a:first-child {
   </table>
 
   <p class="title">Video Codec Testing and Quality Measurement<br />
-  <span class="filename">draft-daede-netvc-testing-latest</span></p>
+  <span class="filename">draft-ietf-netvc-testing-latest</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -499,7 +504,7 @@ ul.toc a:first-child {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 10, 2015.</p>
+<p>This Internet-Draft will expire on June 02, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -513,6 +518,7 @@ ul.toc a:first-child {
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <li>2.   <a href="#rfc.section.2">Subjective Metrics</a></li>
+<li>2.1.   <a href="#rfc.section.2.1">Still Image Pair Comparison</a></li>
 <li>3.   <a href="#rfc.section.3">Objective Metrics</a></li>
 <li>3.1.   <a href="#rfc.section.3.1">PSNR</a></li>
 <li>3.2.   <a href="#rfc.section.3.2">PSNR-HVS-M</a></li>
@@ -521,12 +527,17 @@ ul.toc a:first-child {
 <li>4.   <a href="#rfc.section.4">Comparing and Interpreting Results</a></li>
 <li>4.1.   <a href="#rfc.section.4.1">Graphing</a></li>
 <li>4.2.   <a href="#rfc.section.4.2">Bjontegaard</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">Ranges</a></li>
 <li>5.   <a href="#rfc.section.5">Test Sequences</a></li>
 <li>5.1.   <a href="#rfc.section.5.1">Sources</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Usage Scenarios</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">Test Sets</a></li>
+<li>5.3.   <a href="#rfc.section.5.3">Operating Points</a></li>
+<li>5.3.1.   <a href="#rfc.section.5.3.1">High Latency</a></li>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">Unconstrained Low Latency</a></li>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Constrained Low Latency</a></li>
 <li>6.   <a href="#rfc.section.6">Automation</a></li>
 <li>7.   <a href="#rfc.references">Informative References</a></li>
-<li><a href="#rfc.authors">Authors' Addresses</a></li>
+<li><a href="#rfc.authors">Author's Address</a></li>
 
 
   </ul>
@@ -536,6 +547,8 @@ ul.toc a:first-child {
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#subjective-metrics" id="subjective-metrics">Subjective Metrics</a></h1>
 <p id="rfc.section.2.p.1">Subjective testing is the preferable method of testing video codecs.</p>
 <p id="rfc.section.2.p.2">Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#still-image-pair-comparison" id="still-image-pair-comparison">Still Image Pair Comparison</a></h1>
+<p id="rfc.section.2.1.p.1">A simple way to determine superiority of one compressed image over another is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is mainly used for rapid comparisons during development. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#objective-metrics" id="objective-metrics">Objective Metrics</a></h1>
 <p id="rfc.section.3.p.1">Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.</p>
 <p id="rfc.section.3.p.2">The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository <a href="#DAALA-GIT">[DAALA-GIT]</a>.</p>
@@ -560,22 +573,68 @@ ul.toc a:first-child {
 <p id="rfc.section.4.1.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:</p>
 <p id="rfc.section.4.1.p.2">-1 * log10 ( 1 - SSIM )</p>
 <h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#bjontegaard" id="bjontegaard">Bjontegaard</a></h1>
-<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used.</p>
+<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.</p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#ranges" id="ranges">Ranges</a></h1>
+<p id="rfc.section.4.3.p.1">The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:</p>
+<p/>
+
+<ul>
+  <li>Low bitrate: 0.005 - 0.02 bpp</li>
+  <li>Medium bitrate: 0.02 - 0.06 bpp</li>
+  <li>High bitrate: 0.06 - 0.2 bpp</li>
+</ul>
+<p id="rfc.section.4.3.p.3">Bitrate can be calculated from bits per pixel (bpp) as follows:</p>
+<p id="rfc.section.4.3.p.4">bitrate = bpp * width * height * framerate</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
 <p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.</p>
 <p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are not publicly available, but are very useful for comparing to published results.</p>
 <p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
 <p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
-<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#usage-scenarios" id="usage-scenarios">Usage Scenarios</a></h1>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#test-sets" id="test-sets">Test Sets</a></h1>
+<p id="rfc.section.5.2.p.1">Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comaprison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results.</p>
 <p/>
 
 <ul>
-  <li>Streaming video consists of cinematic content, with a minimum source resolution of 1920x1080 at 24 to 30 frames per second. Example test clips that fit into this category: <ul><li>Sintel</li><li>Tears of Steel</li><li>Kimono1</li><li>Tennis</li><li>PeopleOnStreet</li></ul></li>
-  <li>Videoconferencing content is high framerate, and varying HD resolutions. Examples: <ul><li>KristenAndSara</li><li>FourPeople</li><li>Johnny</li></ul></li>
-  <li>Screensharing content is low framerate, high resolution content typical of a computer desktop.  <ul><li>SlideEditing</li><li>SlideShow</li></ul></li>
-  <li>Game streaming content is synthetically generated content, with varying resolutions but typically recorded at 60 frames per second.  <ul><li>ChinaSpeed</li><li>Touhou</li></ul></li>
+  <li>Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used: <ul><li>subset1 (50 images)</li><li>subset2 (50 images)</li><li>subset3 (1000 images)</li><li>subset4 (1000 images)</li></ul></li>
+  <li>video-hd-2, a set that consists of the following 1920x1080 clips from <a href="#DERFVIDEO">[DERFVIDEO]</a>, cropped to 50 frames (and converted to 4:2:0 if necessary) <ul><li>aspen</li><li>blue_sky</li><li>crowd_run</li><li>ducks_take_off</li><li>factory</li><li>life</li><li>old_town_cross</li><li>park_joy</li><li>pedestrian_area</li><li>red_kayak</li><li>riverbed</li><li>rush_hour</li><li>station2</li></ul></li>
+  <li>A video conferencing test set, with 1280x720 content at 60 frames per second. Unlike other sets, the videos in this set are 10 seconds long.  <ul><li>TBD</li></ul></li>
+  <li>Game streaming content: 1920x1080, 60 frames per second, 4:2:0 chroma subsampling. 1080p is chosen as it is currently the most common gaming monitor resolution <a href="#STEAM">[STEAM]</a>. All clips should be two seconds long.  <ul><li>TBD</li></ul></li>
+  <li>Screensharing content is low framerate, high resolution content typical of a computer desktop.  <ul><li>screenshots - desktop screenshots of various resolutions, with 4:2:0 subsampling</li><li>Video sets TBD</li></ul></li>
 </ul>
+<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#operating-points" id="operating-points">Operating Points</a></h1>
+<p id="rfc.section.5.3.p.1">Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.</p>
+<h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#high-latency" id="high-latency">High Latency</a></h1>
+<p id="rfc.section.5.3.1.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:</p>
+<p/>
+
+<ul>
+  <li>x264: &#8211;crf=x</li>
+  <li>x265: &#8211;crf=x</li>
+  <li>daala: -v=x</li>
+  <li>libvpx: &#8211;codec=vp9 &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=1</li>
+</ul>
+<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#unconstrained-low-latency" id="unconstrained-low-latency">Unconstrained Low Latency</a></h1>
+<p id="rfc.section.5.3.2.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:</p>
+<p/>
+
+<ul>
+  <li>x264: &#8211;crf-x &#8211;tune zerolatency</li>
+  <li>x265: &#8211;crf=x &#8211;tune zerolatency</li>
+  <li>daala: -v=x</li>
+  <li>libvpx: &#8211;codec=vp9 &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=0 -auto-alt-ref=0</li>
+</ul>
+<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#constrained-low-latency" id="constrained-low-latency">Constrained Low Latency</a></h1>
+<p id="rfc.section.5.3.3.p.1">The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:</p>
+<p/>
+
+<ul>
+  <li>The buffer starts out empty.</li>
+  <li>After each frame is encoded, the buffer is filled by the number of bits spent for the frame.</li>
+  <li>The buffer is then emptied by (bitrate * frame duration) bits.</li>
+  <li>The buffer fill level is checked. If it is over the limit, the test is considered a failure.</li>
+</ul>
+<p id="rfc.section.5.3.3.p.3">The buffer size limit is defined by the bitrate target * 0.3 seconds.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
 <p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results <a href="#AWCY">[AWCY]</a>.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
@@ -598,6 +657,12 @@ ul.toc a:first-child {
         <b id="DAALA-GIT">[DAALA-GIT]</b>
       </td>
       <td class="top"><a>Xiph.Org</a>, "<a href="http://git.xiph.org/?p=daala.git;a=summary">Daala Git Repository</a>", 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="DERFVIDEO">[DERFVIDEO]</b>
+      </td>
+      <td class="top"><a>Terriberry, T.</a>, "<a href="https://media.xiph.org/video/derf/">Xiph.org Video Test Media</a>", n.d..</td>
     </tr>
     <tr>
       <td class="reference">
@@ -629,10 +694,16 @@ ul.toc a:first-child {
       </td>
       <td class="top"><a>Wang, Z.</a>, <a>Bovik, A.</a>, <a>Sheikh, H.</a> and <a>E. Simoncelli</a>, "<a href="http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf">Image Quality Assessment: From Error Visibility to Structural Similarity</a>", 2004.</td>
     </tr>
+    <tr>
+      <td class="reference">
+        <b id="STEAM">[STEAM]</b>
+      </td>
+      <td class="top"><a>Valve Corporation</a>, "<a href="http://store.steampowered.com/hwsurvey">Steam Hardware &amp; Software Survey: June 2015</a>", June 2015.</td>
+    </tr>
   </tbody>
 </table>
 <h1 id="rfc.authors">
-  <a href="#rfc.authors">Authors' Addresses</a>
+  <a href="#rfc.authors">Author's Address</a>
 </h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -653,27 +724,6 @@ ul.toc a:first-child {
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:tdaede@mozilla.com">tdaede@mozilla.com</a></span>
-
-  </address>
-</div><div class="avoidbreak">
-  <address class="vcard">
-	<span class="vcardline">
-	  <span class="fn">Jack Moffitt</span> 
-	  <span class="n hidden">
-		<span class="family-name">Moffitt</span>
-	  </span>
-	</span>
-	<span class="org vcardline">Mozilla</span>
-	<span class="adr">
-	  
-	  <span class="vcardline">
-		<span class="locality"></span> 
-		<span class="region"></span>
-		<span class="code"></span>
-	  </span>
-	  <span class="country-name vcardline"></span>
-	</span>
-	<span class="vcardline">EMail: <a href="mailto:jack@metajack.im">jack@metajack.im</a></span>
 
   </address>
 </div>
