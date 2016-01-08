@@ -127,6 +127,22 @@ informative:
       -
         ins: T. Terriberry
         name: Timothy Terriberry
+  TESTSEQUENCES:
+    target: https://people.xiph.org/~tdaede/sets/
+  CIEDE2000:
+    target: http://dx.doi.org/10.1155/2012/273723
+    title: Color Image Quality Assessment Based on CIEDE2000
+    author:
+      -
+        ins: Y. Yang
+        name: Yang Yang
+      -
+        ins: J. Ming
+        name: Jun Ming
+      -
+        ins: N. Yu
+        name: Nenghai Yu
+    date: 2012
 
 --- abstract
 
@@ -185,6 +201,10 @@ For the metric to appear more linear on BD-rate curves, the score is converted i
 ## Fast Multi-Scale SSIM
 
 Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}. This is implemented in the Fast implementation by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together {{FASTSSIM}}. The final score is converted to decibels in the same manner as SSIM.
+
+## CIEDE2000
+
+CIEDE2000 is a metric based on CIEDE color distances {{CIEDE2000}}. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.
 
 # Comparing and Interpreting Results
 
@@ -252,12 +272,12 @@ Sources are divided into several categories to test different scenarios the code
 
 - Game streaming content: 1920x1080, 60 frames per second, 4:2:0 chroma subsampling. 1080p is chosen as it is currently the most common gaming monitor resolution {{STEAM}}. All clips should be two seconds long.
   - TBD
-  
+
 - Screensharing content is low framerate, high resolution content typical of a computer desktop.
   - screenshots - desktop screenshots of various resolutions, with 4:2:0 subsampling
   - Video sets TBD
-  
-  
+
+
 ## Operating Points
 
 Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.
@@ -294,4 +314,3 @@ The buffer size limit is defined by the bitrate target * 0.3 seconds.
 # Automation
 
 Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs {{COMPARECODECS}}. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results {{AWCY}}.
-
