@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-ietf-netvc-testing-latest
-date: 2015-11-30
+date: 2016-01-07
 category: info
 
 ipr: trust200902
