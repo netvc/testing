@@ -244,7 +244,7 @@ The Blender Open Movie projects provide a large test base of lossless cinematic 
 
 ## Test Sets
 
-Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comaprison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results.
+Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comparison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results. All current test sets are available for download {{TESTSEQUENCES}}.
 
 - Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used:
   - subset1 (50 images)
@@ -252,31 +252,17 @@ Sources are divided into several categories to test different scenarios the code
   - subset3 (1000 images)
   - subset4 (1000 images)
 
-- video-hd-2, a set that consists of the following 1920x1080 clips from {{DERFVIDEO}}, cropped to 50 frames (and converted to 4:2:0 if necessary)
-  - aspen
-  - blue_sky
-  - crowd_run
-  - ducks_take_off
-  - factory
-  - life
-  - old_town_cross
-  - park_joy
-  - pedestrian_area
-  - red_kayak
-  - riverbed
-  - rush_hour
-  - station2
+- video-hd-3, a set that consists of the following 1920x1080 clips from {{DERFVIDEO}}, cropped to 50 frames (and converted to 4:2:0 if necessary)
 
-- A video conferencing test set, with 1280x720 content at 60 frames per second. Unlike other sets, the videos in this set are 10 seconds long.
-  - TBD
+- vc-360p-1, a low quality video conferencing set
 
-- Game streaming content: 1920x1080, 60 frames per second, 4:2:0 chroma subsampling. 1080p is chosen as it is currently the most common gaming monitor resolution {{STEAM}}. All clips should be two seconds long.
-  - TBD
+- vc-720p-1, a high quality video conferencing set
 
-- Screensharing content is low framerate, high resolution content typical of a computer desktop.
-  - screenshots - desktop screenshots of various resolutions, with 4:2:0 subsampling
-  - Video sets TBD
+- netflix-4k-1, a cinematic 4K video test set
 
+- netflix-2k-1, a 2K scaled version of netflix-4k-1
+
+- twitch-1, a game sequence set
 
 ## Operating Points
 
