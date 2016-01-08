@@ -129,6 +129,11 @@ informative:
         name: Timothy Terriberry
   TESTSEQUENCES:
     target: https://people.xiph.org/~tdaede/sets/
+    title: Test Sets
+    author:
+      -
+        ins: T. Daede
+        name: Thomas Daede
   CIEDE2000:
     target: http://dx.doi.org/10.1155/2012/273723
     title: Color Image Quality Assessment Based on CIEDE2000
@@ -268,14 +273,23 @@ Sources are divided into several categories to test different scenarios the code
 
 Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.
 
+### Common settings
+
+Encoders should be configured to their best settings when being compared against each other:
+
+- x264: --preset placebo
+- x265: --preset veryslow
+- daala: -z 10 --fpr
+- vp10: --codec=vp10 --ivf --frame-parallel=0 --tile-columns=0 --cpu-used=0 --threads=1
+
 ### High Latency
 
 The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:
 
 - x264: --crf=x
 - x265: --crf=x
-- daala: -v=x
-- libvpx: --codec=vp9 --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=1
+- daala: -v=x -b 2
+- vp10: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
 ### Unconstrained Low Latency
 
@@ -284,7 +298,7 @@ The encoder should be run at the best quality mode available, using the mode tha
 - x264: --crf-x --tune zerolatency
 - x265: --crf=x --tune zerolatency
 - daala: -v=x
-- libvpx: --codec=vp9 --end-usage=q --cq-level=x -lag-in-frames=0 -auto-alt-ref=0
+- vp10: --end-usage=q --cq-level=x -lag-in-frames=0
 
 ### Constrained Low Latency
 
