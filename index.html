@@ -594,7 +594,7 @@ ul.toc a:first-child {
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
 <p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.</p>
-<p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are not publicly available, but are very useful for comparing to published results.</p>
+<p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are useful to verify older published results. They are not publicly available, so they are omitted from the test sets in this document.</p>
 <p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
 <p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
 <h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#test-sets" id="test-sets">Test Sets</a></h1>
@@ -603,12 +603,12 @@ ul.toc a:first-child {
 
 <ul>
   <li>Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used: <ul><li>subset1 (50 images)</li><li>subset2 (50 images)</li><li>subset3 (1000 images)</li><li>subset4 (1000 images)</li></ul></li>
-  <li>video-hd-3, a set that consists of the following 1920x1080 clips from <a href="#DERFVIDEO">[DERFVIDEO]</a>, cropped to 50 frames (and converted to 4:2:0 if necessary)</li>
-  <li>vc-360p-1, a low quality video conferencing set</li>
-  <li>vc-720p-1, a high quality video conferencing set</li>
-  <li>netflix-4k-1, a cinematic 4K video test set</li>
-  <li>netflix-2k-1, a 2K scaled version of netflix-4k-1</li>
-  <li>twitch-1, a game sequence set</li>
+  <li>video-hd-3, a set that consists of 1920x1080 clips from <a href="#DERFVIDEO">[DERFVIDEO]</a> (1500 frames total)</li>
+  <li>vc-360p-1, a low quality video conferencing set (2700 frames total)</li>
+  <li>vc-720p-1, a high quality video conferencing set (2750 frames total)</li>
+  <li>netflix-4k-1, a cinematic 4K video test set (2280 frames total)</li>
+  <li>netflix-2k-1, a 2K scaled version of netflix-4k-1 (2280 frames total)</li>
+  <li>twitch-1, a game sequence set (2280 frames total)</li>
 </ul>
 <h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#operating-points" id="operating-points">Operating Points</a></h1>
 <p id="rfc.section.5.3.p.1">Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.</p>

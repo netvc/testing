@@ -76,7 +76,7 @@ Table of Contents
    5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   5
      5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   5
      5.2.  Test Sets . . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   6
+     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   7
        5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   7
        5.3.2.  High Latency  . . . . . . . . . . . . . . . . . . . .   7
        5.3.3.  Unconstrained Low Latency . . . . . . . . . . . . . .   7
@@ -270,10 +270,10 @@ Internet-Draft Video Codec Testing and Quality Measurement  January 2016
    comparison do not support high bit depth, sources need to be
    converted once before entering the encoder.
 
-   The JCT-VC standards organization includes a set of standard test
-   clips for video codec testing, and parameters to run the clips with
-   [L1100].  These clips are not publicly available, but are very useful
-   for comparing to published results.
+
+
+
+
 
 
 
@@ -281,6 +281,12 @@ Daede                     Expires July 17, 2016                 [Page 5]
 
 Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
+
+   The JCT-VC standards organization includes a set of standard test
+   clips for video codec testing, and parameters to run the clips with
+   [L1100].  These clips are useful to verify older published results.
+   They are not publicly available, so they are omitted from the test
+   sets in this document.
 
    Xiph publishes a variety of test clips collected from various
    sources.
@@ -312,22 +318,16 @@ Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
       *  subset4 (1000 images)
 
-   o  video-hd-3, a set that consists of the following 1920x1080 clips
-      from [DERFVIDEO], cropped to 50 frames (and converted to 4:2:0 if
-      necessary)
+   o  video-hd-3, a set that consists of 1920x1080 clips from
+      [DERFVIDEO] (1500 frames total)
 
-   o  vc-360p-1, a low quality video conferencing set
+   o  vc-360p-1, a low quality video conferencing set (2700 frames
+      total)
 
-   o  vc-720p-1, a high quality video conferencing set
+   o  vc-720p-1, a high quality video conferencing set (2750 frames
+      total)
 
-   o  netflix-4k-1, a cinematic 4K video test set
-
-   o  netflix-2k-1, a 2K scaled version of netflix-4k-1
-
-   o  twitch-1, a game sequence set
-
-5.3.  Operating Points
-
+   o  netflix-4k-1, a cinematic 4K video test set (2280 frames total)
 
 
 
@@ -337,6 +337,13 @@ Daede                     Expires July 17, 2016                 [Page 6]
 
 Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
+
+   o  netflix-2k-1, a 2K scaled version of netflix-4k-1 (2280 frames
+      total)
+
+   o  twitch-1, a game sequence set (2280 frames total)
+
+5.3.  Operating Points
 
    Two operating modes are defined.  High latency is intended for on
    demand streaming, one-to-many live streaming, and stored video.  Low
@@ -380,19 +387,18 @@ Internet-Draft Video Codec Testing and Quality Measurement  January 2016
    is allowed.  One parameter is provided to adjust bitrate, but the
    units are arbitrary.  Example configurations follow:
 
-   o  x264: -crf-x -tune zerolatency
-
-   o  x265: -crf=x -tune zerolatency
-
-   o  daala: -v=x
-
-
 
 
 Daede                     Expires July 17, 2016                 [Page 7]
 
 Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
+
+   o  x264: -crf-x -tune zerolatency
+
+   o  x265: -crf=x -tune zerolatency
+
+   o  daala: -v=x
 
    o  vp10: -end-usage=q -cq-level=x -lag-in-frames=0
 
@@ -436,12 +442,6 @@ Internet-Draft Video Codec Testing and Quality Measurement  January 2016
               Assessment Based on CIEDE2000", 2012,
               <http://dx.doi.org/10.1155/2012/273723>.
 
-   [COMPARECODECS]
-              Alvestrand, H., "Compare Codecs", 2015,
-              <http://compare-codecs.appspot.com/>.
-
-   [DAALA-GIT]
-
 
 
 
@@ -450,6 +450,11 @@ Daede                     Expires July 17, 2016                 [Page 8]
 Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
 
+   [COMPARECODECS]
+              Alvestrand, H., "Compare Codecs", 2015,
+              <http://compare-codecs.appspot.com/>.
+
+   [DAALA-GIT]
               Xiph.Org, "Daala Git Repository", 2015,
               <http://git.xiph.org/?p=daala.git;a=summary>.
 
@@ -496,9 +501,60 @@ Author's Address
 
 
 
-
-
-
-
-
 Daede                     Expires July 17, 2016                 [Page 9]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Daede                     Expires July 17, 2016                [Page 10]
