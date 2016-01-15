@@ -438,6 +438,7 @@ ul.toc a:first-child {
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 PSNR-HVS-M"/>
 <link href="#rfc.section.3.3" rel="Chapter" title="3.3 SSIM"/>
 <link href="#rfc.section.3.4" rel="Chapter" title="3.4 Fast Multi-Scale SSIM"/>
+<link href="#rfc.section.3.5" rel="Chapter" title="3.5 CIEDE2000"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Comparing and Interpreting Results"/>
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Graphing"/>
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Bjontegaard"/>
@@ -446,9 +447,10 @@ ul.toc a:first-child {
 <link href="#rfc.section.5.1" rel="Chapter" title="5.1 Sources"/>
 <link href="#rfc.section.5.2" rel="Chapter" title="5.2 Test Sets"/>
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Operating Points"/>
-<link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 High Latency"/>
-<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 Unconstrained Low Latency"/>
-<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Constrained Low Latency"/>
+<link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Common settings"/>
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 High Latency"/>
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Unconstrained Low Latency"/>
+<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Constrained Low Latency"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Automation"/>
 <link href="#rfc.references" rel="Chapter" title="7 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
@@ -459,7 +461,7 @@ ul.toc a:first-child {
 
   <meta name="dct.creator" content="Daede, T." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-netvc-testing-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-11-30" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-1-14" />
   <meta name="dct.abstract" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
   <meta name="description" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
 
@@ -480,10 +482,10 @@ ul.toc a:first-child {
 </tr>
 <tr>
   <td class="left">Intended status: Informational</td>
-  <td class="right">November 30, 2015</td>
+  <td class="right">January 14, 2016</td>
 </tr>
 <tr>
-  <td class="left">Expires: June 02, 2016</td>
+  <td class="left">Expires: July 17, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -504,11 +506,11 @@ ul.toc a:first-child {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 02, 2016.</p>
+<p>This Internet-Draft will expire on July 17, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
-<p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c) 2016 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -524,6 +526,7 @@ ul.toc a:first-child {
 <li>3.2.   <a href="#rfc.section.3.2">PSNR-HVS-M</a></li>
 <li>3.3.   <a href="#rfc.section.3.3">SSIM</a></li>
 <li>3.4.   <a href="#rfc.section.3.4">Fast Multi-Scale SSIM</a></li>
+<li>3.5.   <a href="#rfc.section.3.5">CIEDE2000</a></li>
 <li>4.   <a href="#rfc.section.4">Comparing and Interpreting Results</a></li>
 <li>4.1.   <a href="#rfc.section.4.1">Graphing</a></li>
 <li>4.2.   <a href="#rfc.section.4.2">Bjontegaard</a></li>
@@ -532,9 +535,10 @@ ul.toc a:first-child {
 <li>5.1.   <a href="#rfc.section.5.1">Sources</a></li>
 <li>5.2.   <a href="#rfc.section.5.2">Test Sets</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">Operating Points</a></li>
-<li>5.3.1.   <a href="#rfc.section.5.3.1">High Latency</a></li>
-<li>5.3.2.   <a href="#rfc.section.5.3.2">Unconstrained Low Latency</a></li>
-<li>5.3.3.   <a href="#rfc.section.5.3.3">Constrained Low Latency</a></li>
+<li>5.3.1.   <a href="#rfc.section.5.3.1">Common settings</a></li>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">High Latency</a></li>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Unconstrained Low Latency</a></li>
+<li>5.3.4.   <a href="#rfc.section.5.3.4">Constrained Low Latency</a></li>
 <li>6.   <a href="#rfc.section.6">Automation</a></li>
 <li>7.   <a href="#rfc.references">Informative References</a></li>
 <li><a href="#rfc.authors">Author's Address</a></li>
@@ -568,6 +572,8 @@ ul.toc a:first-child {
 <p id="rfc.section.3.3.p.3">-10 * log10 (1 - SSIM)</p>
 <h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#fast-multi-scale-ssim" id="fast-multi-scale-ssim">Fast Multi-Scale SSIM</a></h1>
 <p id="rfc.section.3.4.p.1">Multi-Scale SSIM is SSIM extended to multiple window sizes <a href="#MSSSIM">[MSSSIM]</a>. This is implemented in the Fast implementation by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together <a href="#FASTSSIM">[FASTSSIM]</a>. The final score is converted to decibels in the same manner as SSIM.</p>
+<h1 id="rfc.section.3.5"><a href="#rfc.section.3.5">3.5.</a> <a href="#ciede2000" id="ciede2000">CIEDE2000</a></h1>
+<p id="rfc.section.3.5.p.1">CIEDE2000 is a metric based on CIEDE color distances <a href="#CIEDE2000">[CIEDE2000]</a>. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#comparing-and-interpreting-results" id="comparing-and-interpreting-results">Comparing and Interpreting Results</a></h1>
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#graphing" id="graphing">Graphing</a></h1>
 <p id="rfc.section.4.1.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:</p>
@@ -592,40 +598,52 @@ ul.toc a:first-child {
 <p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
 <p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
 <h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#test-sets" id="test-sets">Test Sets</a></h1>
-<p id="rfc.section.5.2.p.1">Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comaprison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results.</p>
+<p id="rfc.section.5.2.p.1">Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comparison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results. All current test sets are available for download <a href="#TESTSEQUENCES">[TESTSEQUENCES]</a>.</p>
 <p/>
 
 <ul>
   <li>Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used: <ul><li>subset1 (50 images)</li><li>subset2 (50 images)</li><li>subset3 (1000 images)</li><li>subset4 (1000 images)</li></ul></li>
-  <li>video-hd-2, a set that consists of the following 1920x1080 clips from <a href="#DERFVIDEO">[DERFVIDEO]</a>, cropped to 50 frames (and converted to 4:2:0 if necessary) <ul><li>aspen</li><li>blue_sky</li><li>crowd_run</li><li>ducks_take_off</li><li>factory</li><li>life</li><li>old_town_cross</li><li>park_joy</li><li>pedestrian_area</li><li>red_kayak</li><li>riverbed</li><li>rush_hour</li><li>station2</li></ul></li>
-  <li>A video conferencing test set, with 1280x720 content at 60 frames per second. Unlike other sets, the videos in this set are 10 seconds long.  <ul><li>TBD</li></ul></li>
-  <li>Game streaming content: 1920x1080, 60 frames per second, 4:2:0 chroma subsampling. 1080p is chosen as it is currently the most common gaming monitor resolution <a href="#STEAM">[STEAM]</a>. All clips should be two seconds long.  <ul><li>TBD</li></ul></li>
-  <li>Screensharing content is low framerate, high resolution content typical of a computer desktop.  <ul><li>screenshots - desktop screenshots of various resolutions, with 4:2:0 subsampling</li><li>Video sets TBD</li></ul></li>
+  <li>video-hd-3, a set that consists of the following 1920x1080 clips from <a href="#DERFVIDEO">[DERFVIDEO]</a>, cropped to 50 frames (and converted to 4:2:0 if necessary)</li>
+  <li>vc-360p-1, a low quality video conferencing set</li>
+  <li>vc-720p-1, a high quality video conferencing set</li>
+  <li>netflix-4k-1, a cinematic 4K video test set</li>
+  <li>netflix-2k-1, a 2K scaled version of netflix-4k-1</li>
+  <li>twitch-1, a game sequence set</li>
 </ul>
 <h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#operating-points" id="operating-points">Operating Points</a></h1>
 <p id="rfc.section.5.3.p.1">Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.</p>
-<h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#high-latency" id="high-latency">High Latency</a></h1>
-<p id="rfc.section.5.3.1.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:</p>
+<h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#common-settings" id="common-settings">Common settings</a></h1>
+<p id="rfc.section.5.3.1.p.1">Encoders should be configured to their best settings when being compared against each other:</p>
+<p/>
+
+<ul>
+  <li>x264: &#8211;preset placebo</li>
+  <li>x265: &#8211;preset veryslow</li>
+  <li>daala: -z 10 &#8211;fpr</li>
+  <li>vp10: &#8211;codec=vp10 &#8211;ivf &#8211;frame-parallel=0 &#8211;tile-columns=0 &#8211;cpu-used=0 &#8211;threads=1</li>
+</ul>
+<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#high-latency" id="high-latency">High Latency</a></h1>
+<p id="rfc.section.5.3.2.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:</p>
 <p/>
 
 <ul>
   <li>x264: &#8211;crf=x</li>
   <li>x265: &#8211;crf=x</li>
-  <li>daala: -v=x</li>
-  <li>libvpx: &#8211;codec=vp9 &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=1</li>
+  <li>daala: -v=x -b 2</li>
+  <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=2</li>
 </ul>
-<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#unconstrained-low-latency" id="unconstrained-low-latency">Unconstrained Low Latency</a></h1>
-<p id="rfc.section.5.3.2.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:</p>
+<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#unconstrained-low-latency" id="unconstrained-low-latency">Unconstrained Low Latency</a></h1>
+<p id="rfc.section.5.3.3.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:</p>
 <p/>
 
 <ul>
   <li>x264: &#8211;crf-x &#8211;tune zerolatency</li>
   <li>x265: &#8211;crf=x &#8211;tune zerolatency</li>
   <li>daala: -v=x</li>
-  <li>libvpx: &#8211;codec=vp9 &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=0 -auto-alt-ref=0</li>
+  <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=0</li>
 </ul>
-<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#constrained-low-latency" id="constrained-low-latency">Constrained Low Latency</a></h1>
-<p id="rfc.section.5.3.3.p.1">The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:</p>
+<h1 id="rfc.section.5.3.4"><a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#constrained-low-latency" id="constrained-low-latency">Constrained Low Latency</a></h1>
+<p id="rfc.section.5.3.4.p.1">The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:</p>
 <p/>
 
 <ul>
@@ -634,7 +652,7 @@ ul.toc a:first-child {
   <li>The buffer is then emptied by (bitrate * frame duration) bits.</li>
   <li>The buffer fill level is checked. If it is over the limit, the test is considered a failure.</li>
 </ul>
-<p id="rfc.section.5.3.3.p.3">The buffer size limit is defined by the bitrate target * 0.3 seconds.</p>
+<p id="rfc.section.5.3.4.p.3">The buffer size limit is defined by the bitrate target * 0.3 seconds.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
 <p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results <a href="#AWCY">[AWCY]</a>.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
@@ -645,6 +663,12 @@ ul.toc a:first-child {
         <b id="AWCY">[AWCY]</b>
       </td>
       <td class="top"><a>Xiph.Org</a>, "<a href="https://arewecompressedyet.com/">Are We Compressed Yet?</a>", 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="CIEDE2000">[CIEDE2000]</b>
+      </td>
+      <td class="top"><a>Yang, Y.</a>, <a>Ming, J.</a> and <a>N. Yu</a>, "<a href="http://dx.doi.org/10.1155/2012/273723">Color Image Quality Assessment Based on CIEDE2000</a>", 2012.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -699,6 +723,12 @@ ul.toc a:first-child {
         <b id="STEAM">[STEAM]</b>
       </td>
       <td class="top"><a>Valve Corporation</a>, "<a href="http://store.steampowered.com/hwsurvey">Steam Hardware &amp; Software Survey: June 2015</a>", June 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="TESTSEQUENCES">[TESTSEQUENCES]</b>
+      </td>
+      <td class="top"><a>Daede, T.</a>, "<a href="https://people.xiph.org/~tdaede/sets/">Test Sets</a>", n.d..</td>
     </tr>
   </tbody>
 </table>

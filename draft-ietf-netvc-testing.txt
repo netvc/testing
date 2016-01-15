@@ -4,8 +4,8 @@
 
 Network Working Group                                           T. Daede
 Internet-Draft                                                   Mozilla
-Intended status: Informational                         November 30, 2015
-Expires: June 02, 2016
+Intended status: Informational                          January 14, 2016
+Expires: July 17, 2016
 
 
               Video Codec Testing and Quality Measurement
@@ -33,11 +33,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 02, 2016.
+   This Internet-Draft will expire on July 17, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,35 +53,37 @@ Copyright Notice
 
 
 
-Daede                     Expires June 02, 2016                 [Page 1]
+Daede                     Expires July 17, 2016                 [Page 1]
 
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
 
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Subjective Metrics  . . . . . . . . . . . . . . . . . . . . .   2
-     2.1.  Still Image Pair Comparison . . . . . . . . . . . . . . .   2
+     2.1.  Still Image Pair Comparison . . . . . . . . . . . . . . .   3
    3.  Objective Metrics . . . . . . . . . . . . . . . . . . . . . .   3
      3.1.  PSNR  . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      3.2.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   3
      3.3.  SSIM  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      3.4.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   4
+     3.5.  CIEDE2000 . . . . . . . . . . . . . . . . . . . . . . . .   4
    4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   4
      4.1.  Graphing  . . . . . . . . . . . . . . . . . . . . . . . .   4
-     4.2.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   4
+     4.2.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   5
      4.3.  Ranges  . . . . . . . . . . . . . . . . . . . . . . . . .   5
    5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   5
      5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   5
      5.2.  Test Sets . . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   7
-       5.3.1.  High Latency  . . . . . . . . . . . . . . . . . . . .   7
-       5.3.2.  Unconstrained Low Latency . . . . . . . . . . . . . .   8
-       5.3.3.  Constrained Low Latency . . . . . . . . . . . . . . .   8
+     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   6
+       5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   7
+       5.3.2.  High Latency  . . . . . . . . . . . . . . . . . . . .   7
+       5.3.3.  Unconstrained Low Latency . . . . . . . . . . . . . .   7
+       5.3.4.  Constrained Low Latency . . . . . . . . . . . . . . .   8
    6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-   7.  Informative References  . . . . . . . . . . . . . . . . . . .   9
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+   7.  Informative References  . . . . . . . . . . . . . . . . . . .   8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -103,16 +105,16 @@ Table of Contents
    important tests be done in particular, the tests that are important
    to participants.
 
-2.1.  Still Image Pair Comparison
 
 
 
 
-
-Daede                     Expires June 02, 2016                 [Page 2]
+Daede                     Expires July 17, 2016                 [Page 2]
 
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
 
+
+2.1.  Still Image Pair Comparison
 
    A simple way to determine superiority of one compressed image over
    another is to visually compare two compressed images, and have the
@@ -160,16 +162,16 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
 
 3.2.  PSNR-HVS-M
 
+
+
+
+Daede                     Expires July 17, 2016                 [Page 3]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
    The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the
    image, weights the coefficients, and then calculates the PSNR of
-
-
-
-Daede                     Expires June 02, 2016                 [Page 3]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
    those coefficients.  Several different sets of weights have been
    considered.  [PSNRHVS] The weights used by the dump_pnsrhvs.c tool in
    the Daala repository have been found to be the best match to real MOS
@@ -196,6 +198,13 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    pixels, then averaging the SSIM scores together [FASTSSIM].  The
    final score is converted to decibels in the same manner as SSIM.
 
+3.5.  CIEDE2000
+
+   CIEDE2000 is a metric based on CIEDE color distances [CIEDE2000].  It
+   generates a single score taking into account all three chroma planes.
+   It does not take into consideration any structural similarity or
+   other psychovisual effects.
+
 4.  Comparing and Interpreting Results
 
 4.1.  Graphing
@@ -209,6 +218,14 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    result between 0 and 1.  To create more linear graphs, this result is
    converted to a value in decibels:
 
+
+
+
+Daede                     Expires July 17, 2016                 [Page 4]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
    -1 * log10 ( 1 - SSIM )
 
 4.2.  Bjontegaard
@@ -218,14 +235,6 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    commonly done by fitting a curve to each set of data points on the
    plot of bitrate versus metric score, and then computing the
    difference in area between each of the curves.  A cubic polynomial
-
-
-
-Daede                     Expires June 02, 2016                 [Page 4]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
    fit is common, but will be overconstrained with more than four
    samples.  For higher accuracy, at least 10 samples and a linear
    piecewise fit should be used.  In addition, if using a truncated BD-
@@ -266,6 +275,13 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    [L1100].  These clips are not publicly available, but are very useful
    for comparing to published results.
 
+
+
+Daede                     Expires July 17, 2016                 [Page 5]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
    Xiph publishes a variety of test clips collected from various
    sources.
 
@@ -273,23 +289,15 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    cinematic test material.  The lossless sources are available, hosted
    on Xiph.
 
-
-
-
-
-Daede                     Expires June 02, 2016                 [Page 5]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
 5.2.  Test Sets
 
    Sources are divided into several categories to test different
    scenarios the codec will be required to operate in.  For easier
-   comaprison, all videos in each set should have the same color
+   comparison, all videos in each set should have the same color
    subsampling, same resolution, and same number of frames.  In
    addition, all test videos must be publicly available for testing use,
-   to allow for reproducibility of results.
+   to allow for reproducibility of results.  All current test sets are
+   available for download [TESTSEQUENCES].
 
    o  Still images are useful when comparing intra coding performance.
       Xiph.org has four sets of lossless, one megapixel images that have
@@ -304,72 +312,51 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
 
       *  subset4 (1000 images)
 
-   o  video-hd-2, a set that consists of the following 1920x1080 clips
+   o  video-hd-3, a set that consists of the following 1920x1080 clips
       from [DERFVIDEO], cropped to 50 frames (and converted to 4:2:0 if
       necessary)
 
-      *  aspen
+   o  vc-360p-1, a low quality video conferencing set
 
-      *  blue_sky
+   o  vc-720p-1, a high quality video conferencing set
 
-      *  crowd_run
+   o  netflix-4k-1, a cinematic 4K video test set
 
-      *  ducks_take_off
+   o  netflix-2k-1, a 2K scaled version of netflix-4k-1
 
-      *  factory
-
-      *  life
-
-      *  old_town_cross
-
-      *  park_joy
-
-      *  pedestrian_area
-
-      *  red_kayak
-
-      *  riverbed
-
-
-
-
-Daede                     Expires June 02, 2016                 [Page 6]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
-      *  rush_hour
-
-      *  station2
-
-   o  A video conferencing test set, with 1280x720 content at 60 frames
-      per second.  Unlike other sets, the videos in this set are 10
-      seconds long.
-
-      *  TBD
-
-   o  Game streaming content: 1920x1080, 60 frames per second, 4:2:0
-      chroma subsampling. 1080p is chosen as it is currently the most
-      common gaming monitor resolution [STEAM].  All clips should be two
-      seconds long.
-
-      *  TBD
-
-   o  Screensharing content is low framerate, high resolution content
-      typical of a computer desktop.
-
-      *  screenshots - desktop screenshots of various resolutions, with
-         4:2:0 subsampling
-
-      *  Video sets TBD
+   o  twitch-1, a game sequence set
 
 5.3.  Operating Points
+
+
+
+
+
+
+Daede                     Expires July 17, 2016                 [Page 6]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
 
    Two operating modes are defined.  High latency is intended for on
    demand streaming, one-to-many live streaming, and stored video.  Low
    latency is intended for videoconferencing and remote access.
 
-5.3.1.  High Latency
+5.3.1.  Common settings
+
+   Encoders should be configured to their best settings when being
+   compared against each other:
+
+   o  x264: -preset placebo
+
+   o  x265: -preset veryslow
+
+   o  daala: -z 10 -fpr
+
+   o  vp10: -codec=vp10 -ivf -frame-parallel=0 -tile-columns=0 -cpu-
+      used=0 -threads=1
+
+5.3.2.  High Latency
 
    The encoder should be run at the best quality mode available, using
    the mode that will provide the best quality per bitrate (VBR or
@@ -381,20 +368,11 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
 
    o  x265: -crf=x
 
-   o  daala: -v=x
+   o  daala: -v=x -b 2
 
-   o  libvpx: -codec=vp9 -end-usage=q -cq-level=x -lag-in-frames=25
-      -auto-alt-ref=1
+   o  vp10: -end-usage=q -cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
-
-
-
-Daede                     Expires June 02, 2016                 [Page 7]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
-5.3.2.  Unconstrained Low Latency
+5.3.3.  Unconstrained Low Latency
 
    The encoder should be run at the best quality mode available, using
    the mode that will provide the best quality per bitrate (VBR or
@@ -408,10 +386,17 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
 
    o  daala: -v=x
 
-   o  libvpx: -codec=vp9 -end-usage=q -cq-level=x -lag-in-frames=0
-      -auto-alt-ref=0
 
-5.3.3.  Constrained Low Latency
+
+
+Daede                     Expires July 17, 2016                 [Page 7]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
+   o  vp10: -end-usage=q -cq-level=x -lag-in-frames=0
+
+5.3.4.  Constrained Low Latency
 
    The encoder is given one parameter, which is absolute bitrate.  No
    frame delay, buffering, or lookahead is allowed.  The maximum
@@ -441,25 +426,30 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
    addition, these scripts can be run automatically utilizing
    distributed computer for fast results [AWCY].
 
-
-
-
-
-Daede                     Expires June 02, 2016                 [Page 8]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
-
 7.  Informative References
 
    [AWCY]     Xiph.Org, "Are We Compressed Yet?", 2015, <https://
               arewecompressedyet.com/>.
+
+   [CIEDE2000]
+              Yang, Y., Ming, J., and N. Yu, "Color Image Quality
+              Assessment Based on CIEDE2000", 2012,
+              <http://dx.doi.org/10.1155/2012/273723>.
 
    [COMPARECODECS]
               Alvestrand, H., "Compare Codecs", 2015,
               <http://compare-codecs.appspot.com/>.
 
    [DAALA-GIT]
+
+
+
+
+Daede                     Expires July 17, 2016                 [Page 8]
+
+Internet-Draft Video Codec Testing and Quality Measurement  January 2016
+
+
               Xiph.Org, "Daala Git Repository", 2015,
               <http://git.xiph.org/?p=daala.git;a=summary>.
 
@@ -493,18 +483,9 @@ Internet-Draft Video Codec Testing and Quality Measurement November 2015
               2015", June 2015,
               <http://store.steampowered.com/hwsurvey>.
 
-
-
-
-
-
-
-
-
-Daede                     Expires June 02, 2016                 [Page 9]
-
-Internet-Draft Video Codec Testing and Quality Measurement November 2015
-
+   [TESTSEQUENCES]
+              Daede, T., "Test Sets", n.d., <https://people.xiph.org/
+              ~tdaede/sets/>.
 
 Author's Address
 
@@ -520,41 +501,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Daede                     Expires June 02, 2016                [Page 10]
+Daede                     Expires July 17, 2016                 [Page 9]
