@@ -257,17 +257,17 @@ Sources are divided into several categories to test different scenarios the code
   - subset3 (1000 images)
   - subset4 (1000 images)
 
-- video-hd-3, a set that consists of the following 1920x1080 clips from {{DERFVIDEO}}, cropped to 50 frames (and converted to 4:2:0 if necessary)
+- video-hd-3, a set that consists of 1920x1080 clips from {{DERFVIDEO}} (1500 frames total)
 
-- vc-360p-1, a low quality video conferencing set
+- vc-360p-1, a low quality video conferencing set (2700 frames total)
 
-- vc-720p-1, a high quality video conferencing set
+- vc-720p-1, a high quality video conferencing set (2750 frames total)
 
-- netflix-4k-1, a cinematic 4K video test set
+- netflix-4k-1, a cinematic 4K video test set (2280 frames total)
 
-- netflix-2k-1, a 2K scaled version of netflix-4k-1
+- netflix-2k-1, a 2K scaled version of netflix-4k-1 (2280 frames total)
 
-- twitch-1, a game sequence set
+- twitch-1, a game sequence set (2280 frames total)
 
 ## Operating Points
 
