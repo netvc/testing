@@ -180,6 +180,8 @@ informative:
     target: "https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.500-13-201201-I!!PDF-E.pdf"
     title: Recommendation ITU-R BT.500-13
     date: 2012
+    author:
+      org: ITU-R
 
 --- abstract
 
