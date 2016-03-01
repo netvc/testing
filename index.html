@@ -431,14 +431,19 @@ ul.toc a:first-child {
 
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
-<link href="#rfc.section.2" rel="Chapter" title="2 Subjective Metrics"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Subjective quality tests"/>
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Still Image Pair Comparison"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Subjective viewing test"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Expert viewing"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Objective Metrics"/>
-<link href="#rfc.section.3.1" rel="Chapter" title="3.1 PSNR"/>
-<link href="#rfc.section.3.2" rel="Chapter" title="3.2 PSNR-HVS-M"/>
-<link href="#rfc.section.3.3" rel="Chapter" title="3.3 SSIM"/>
-<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Fast Multi-Scale SSIM"/>
-<link href="#rfc.section.3.5" rel="Chapter" title="3.5 CIEDE2000"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Overall PSNR"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Frame-averaged PSNR"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 PSNR-HVS-M"/>
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 SSIM"/>
+<link href="#rfc.section.3.5" rel="Chapter" title="3.5 Multi-Scale SSIM"/>
+<link href="#rfc.section.3.6" rel="Chapter" title="3.6 Fast Multi-Scale SSIM"/>
+<link href="#rfc.section.3.7" rel="Chapter" title="3.7 CIEDE2000"/>
+<link href="#rfc.section.3.8" rel="Chapter" title="3.8 VMAF"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Comparing and Interpreting Results"/>
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Graphing"/>
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Bjontegaard"/>
@@ -450,8 +455,10 @@ ul.toc a:first-child {
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Common settings"/>
 <link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 High Latency"/>
 <link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Unconstrained Low Latency"/>
-<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Constrained Low Latency"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Automation"/>
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Regression tests"/>
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Objective performance tests"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 Periodic tests"/>
 <link href="#rfc.references" rel="Chapter" title="7 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
@@ -459,11 +466,11 @@ ul.toc a:first-child {
   <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Daede, T." />
+  <meta name="dct.creator" content="Daede, T. and A. Norkin" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-netvc-testing-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-1-14" />
-  <meta name="dct.abstract" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
-  <meta name="description" content="This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-2-29" />
+  <meta name="dct.abstract" content="This document describes guidelines and procedures for evaluating a video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
+  <meta name="description" content="This document describes guidelines and procedures for evaluating a video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test." />
 
 </head>
 
@@ -482,11 +489,15 @@ ul.toc a:first-child {
 </tr>
 <tr>
   <td class="left">Intended status: Informational</td>
-  <td class="right">January 14, 2016</td>
+  <td class="right">A. Norkin</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 17, 2016</td>
-  <td class="right"></td>
+  <td class="left">Expires: September 01, 2016</td>
+  <td class="right">Netflix</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">February 29, 2016</td>
 </tr>
 
     	
@@ -499,14 +510,14 @@ ul.toc a:first-child {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.</p>
+<p>This document describes guidelines and procedures for evaluating a video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 17, 2016.</p>
+<p>This Internet-Draft will expire on September 01, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -519,14 +530,19 @@ ul.toc a:first-child {
   <ul class="toc">
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
-<li>2.   <a href="#rfc.section.2">Subjective Metrics</a></li>
+<li>2.   <a href="#rfc.section.2">Subjective quality tests</a></li>
 <li>2.1.   <a href="#rfc.section.2.1">Still Image Pair Comparison</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Subjective viewing test</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Expert viewing</a></li>
 <li>3.   <a href="#rfc.section.3">Objective Metrics</a></li>
-<li>3.1.   <a href="#rfc.section.3.1">PSNR</a></li>
-<li>3.2.   <a href="#rfc.section.3.2">PSNR-HVS-M</a></li>
-<li>3.3.   <a href="#rfc.section.3.3">SSIM</a></li>
-<li>3.4.   <a href="#rfc.section.3.4">Fast Multi-Scale SSIM</a></li>
-<li>3.5.   <a href="#rfc.section.3.5">CIEDE2000</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Overall PSNR</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Frame-averaged PSNR</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">PSNR-HVS-M</a></li>
+<li>3.4.   <a href="#rfc.section.3.4">SSIM</a></li>
+<li>3.5.   <a href="#rfc.section.3.5">Multi-Scale SSIM</a></li>
+<li>3.6.   <a href="#rfc.section.3.6">Fast Multi-Scale SSIM</a></li>
+<li>3.7.   <a href="#rfc.section.3.7">CIEDE2000</a></li>
+<li>3.8.   <a href="#rfc.section.3.8">VMAF</a></li>
 <li>4.   <a href="#rfc.section.4">Comparing and Interpreting Results</a></li>
 <li>4.1.   <a href="#rfc.section.4.1">Graphing</a></li>
 <li>4.2.   <a href="#rfc.section.4.2">Bjontegaard</a></li>
@@ -538,48 +554,60 @@ ul.toc a:first-child {
 <li>5.3.1.   <a href="#rfc.section.5.3.1">Common settings</a></li>
 <li>5.3.2.   <a href="#rfc.section.5.3.2">High Latency</a></li>
 <li>5.3.3.   <a href="#rfc.section.5.3.3">Unconstrained Low Latency</a></li>
-<li>5.3.4.   <a href="#rfc.section.5.3.4">Constrained Low Latency</a></li>
 <li>6.   <a href="#rfc.section.6">Automation</a></li>
+<li>6.1.   <a href="#rfc.section.6.1">Regression tests</a></li>
+<li>6.2.   <a href="#rfc.section.6.2">Objective performance tests</a></li>
+<li>6.3.   <a href="#rfc.section.6.3">Periodic tests</a></li>
 <li>7.   <a href="#rfc.references">Informative References</a></li>
-<li><a href="#rfc.authors">Author's Address</a></li>
+<li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
-<p id="rfc.section.1.p.1">When developing an internet video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.</p>
-<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#subjective-metrics" id="subjective-metrics">Subjective Metrics</a></h1>
+<p id="rfc.section.1.p.1">When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#subjective-quality-tests" id="subjective-quality-tests">Subjective quality tests</a></h1>
 <p id="rfc.section.2.p.1">Subjective testing is the preferable method of testing video codecs.</p>
 <p id="rfc.section.2.p.2">Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#still-image-pair-comparison" id="still-image-pair-comparison">Still Image Pair Comparison</a></h1>
 <p id="rfc.section.2.1.p.1">A simple way to determine superiority of one compressed image over another is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is mainly used for rapid comparisons during development. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.</p>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#subjective-viewing-test" id="subjective-viewing-test">Subjective viewing test</a></h1>
+<p id="rfc.section.2.2.p.1">A subjective viewing test is the preferred method of evaluating the quality. The subjective test should be performed as either consecutively showing the video sequences on one screen or on two screens located side-by-side. The testing procedure should normally follow rules described in <a href="#BT500">[BT500]</a> and be performed with non-expert test subjects. The result of the test could be (depending on the test procedure) mean opinion scores (MOS) or differential mean opinion scores (DMOS). Normally, confidence intervals are also calculated to judge whether the difference between two encodings is statistically significant.</p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#expert-viewing" id="expert-viewing">Expert viewing</a></h1>
+<p id="rfc.section.2.3.p.1">An expert viewing test can be performed in the case when an answer to a particular question should be found. An example of such test can be a test involving video coding experts on evaluation of a particular problem, for example such as comparing the results of two de-ringing filters. Depending on what information is sought, the appropriate test procedure can be chosen.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#objective-metrics" id="objective-metrics">Objective Metrics</a></h1>
 <p id="rfc.section.3.p.1">Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.</p>
 <p id="rfc.section.3.p.2">The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository <a href="#DAALA-GIT">[DAALA-GIT]</a>.</p>
 <p id="rfc.section.3.p.3">All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.</p>
 <p id="rfc.section.3.p.4">Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.</p>
-<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#psnr" id="psnr">PSNR</a></h1>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#overall-psnr" id="overall-psnr">Overall PSNR</a></h1>
 <p id="rfc.section.3.1.p.1">PSNR is a traditional signal quality metric, measured in decibels. It is directly drived from mean square error (MSE), or its square root (RMSE). The formula used is:</p>
 <p id="rfc.section.3.1.p.2">20 * log10 ( MAX / RMSE )</p>
 <p id="rfc.section.3.1.p.3">or, equivalently:</p>
 <p id="rfc.section.3.1.p.4">10 * log10 ( MAX^2 / MSE )</p>
-<p id="rfc.section.3.1.p.5">which is the method used in the dump_psnr.c reference implementation.</p>
-<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#psnr-hvs-m" id="psnr-hvs-m">PSNR-HVS-M</a></h1>
-<p id="rfc.section.3.2.p.1">The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. <a href="#PSNRHVS">[PSNRHVS]</a> The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.</p>
-<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#ssim" id="ssim">SSIM</a></h1>
-<p id="rfc.section.3.3.p.1">SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004 <a href="#SSIM">[SSIM]</a>. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.</p>
-<p id="rfc.section.3.3.p.2">For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:</p>
-<p id="rfc.section.3.3.p.3">-10 * log10 (1 - SSIM)</p>
-<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#fast-multi-scale-ssim" id="fast-multi-scale-ssim">Fast Multi-Scale SSIM</a></h1>
-<p id="rfc.section.3.4.p.1">Multi-Scale SSIM is SSIM extended to multiple window sizes <a href="#MSSSIM">[MSSSIM]</a>. This is implemented in the Fast implementation by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together <a href="#FASTSSIM">[FASTSSIM]</a>. The final score is converted to decibels in the same manner as SSIM.</p>
-<h1 id="rfc.section.3.5"><a href="#rfc.section.3.5">3.5.</a> <a href="#ciede2000" id="ciede2000">CIEDE2000</a></h1>
-<p id="rfc.section.3.5.p.1">CIEDE2000 is a metric based on CIEDE color distances <a href="#CIEDE2000">[CIEDE2000]</a>. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.</p>
+<p id="rfc.section.3.1.p.5">where the error is computed over all the pixels in the video, which is the method used in the dump_psnr.c reference implementation.</p>
+<p id="rfc.section.3.1.p.6">This metric may be applied to both the luma and chroma planes, with all planes reported separately.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#frame-averaged-psnr" id="frame-averaged-psnr">Frame-averaged PSNR</a></h1>
+<p id="rfc.section.3.2.p.1">PSNR can also be calculated per-frame, and then the values averaged together. This is reported in the same way as overall PSNR.</p>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#psnr-hvs-m" id="psnr-hvs-m">PSNR-HVS-M</a></h1>
+<p id="rfc.section.3.3.p.1">The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. <a href="#PSNRHVS">[PSNRHVS]</a> The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.</p>
+<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#ssim" id="ssim">SSIM</a></h1>
+<p id="rfc.section.3.4.p.1">SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004 <a href="#SSIM">[SSIM]</a>. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.</p>
+<p id="rfc.section.3.4.p.2">For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:</p>
+<p id="rfc.section.3.4.p.3">-10 * log10 (1 - SSIM)</p>
+<h1 id="rfc.section.3.5"><a href="#rfc.section.3.5">3.5.</a> <a href="#multi-scale-ssim" id="multi-scale-ssim">Multi-Scale SSIM</a></h1>
+<p id="rfc.section.3.5.p.1">Multi-Scale SSIM is SSIM extended to multiple window sizes <a href="#MSSSIM">[MSSSIM]</a>.</p>
+<h1 id="rfc.section.3.6"><a href="#rfc.section.3.6">3.6.</a> <a href="#fast-multi-scale-ssim" id="fast-multi-scale-ssim">Fast Multi-Scale SSIM</a></h1>
+<p id="rfc.section.3.6.p.1">Fast MS-SSIM is a modified implementation of MS-SSIM which operates on a limited number of scales and with modified weights <a href="#FASTSSIM">[FASTSSIM]</a>. The final score is converted to decibels in the same manner as SSIM.</p>
+<h1 id="rfc.section.3.7"><a href="#rfc.section.3.7">3.7.</a> <a href="#ciede2000" id="ciede2000">CIEDE2000</a></h1>
+<p id="rfc.section.3.7.p.1">CIEDE2000 is a metric based on CIEDE color distances <a href="#CIEDE2000">[CIEDE2000]</a>. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.</p>
+<h1 id="rfc.section.3.8"><a href="#rfc.section.3.8">3.8.</a> <a href="#vmaf" id="vmaf">VMAF</a></h1>
+<p id="rfc.section.3.8.p.1">Video Multi-method Assessment Fusion (VMAF) is a full-reference perceptual video quality metric that aims to approximate human perception of video quality <a href="#VMAF">[VMAF]</a>. This metric is focused on quality degradation due compression and rescaling. VMAF estimates the perceived quality score by computing scores from multiple quality assessment algorithms, and fusing them using a support vector machine (SVM). Currently, three image fidelity metrics and one temporal signal have been chosen as features to the SVM, namely Anti-noise SNR (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity (VIF), and the mean co-located pixel difference of a frame with respect to the previous frame.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#comparing-and-interpreting-results" id="comparing-and-interpreting-results">Comparing and Interpreting Results</a></h1>
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#graphing" id="graphing">Graphing</a></h1>
-<p id="rfc.section.4.1.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:</p>
-<p id="rfc.section.4.1.p.2">-1 * log10 ( 1 - SSIM )</p>
+<p id="rfc.section.4.1.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For publication, the X axis should be linear. The Y axis metric should be plotted in decibels. If the quality metric does not natively report quality in decibels, it should be converted as described in the previous section.</p>
 <h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#bjontegaard" id="bjontegaard">Bjontegaard</a></h1>
-<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a linear piecewise fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.</p>
+<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a cubic spline fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.</p>
 <h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#ranges" id="ranges">Ranges</a></h1>
 <p id="rfc.section.4.3.p.1">The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:</p>
 <p/>
@@ -594,9 +622,6 @@ ul.toc a:first-child {
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
 <p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.</p>
-<p id="rfc.section.5.1.p.2">The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with <a href="#L1100">[L1100]</a>. These clips are useful to verify older published results. They are not publicly available, so they are omitted from the test sets in this document.</p>
-<p id="rfc.section.5.1.p.3">Xiph publishes a variety of test clips collected from various sources.</p>
-<p id="rfc.section.5.1.p.4">The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.</p>
 <h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#test-sets" id="test-sets">Test Sets</a></h1>
 <p id="rfc.section.5.2.p.1">Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comparison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results. All current test sets are available for download <a href="#TESTSEQUENCES">[TESTSEQUENCES]</a>.</p>
 <p/>
@@ -617,9 +642,6 @@ ul.toc a:first-child {
 <p/>
 
 <ul>
-  <li>x264: &#8211;preset placebo</li>
-  <li>x265: &#8211;preset veryslow</li>
-  <li>daala: -z 10 &#8211;fpr</li>
   <li>vp10: &#8211;codec=vp10 &#8211;ivf &#8211;frame-parallel=0 &#8211;tile-columns=0 &#8211;cpu-used=0 &#8211;threads=1</li>
 </ul>
 <h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#high-latency" id="high-latency">High Latency</a></h1>
@@ -642,19 +664,14 @@ ul.toc a:first-child {
   <li>daala: -v=x</li>
   <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=0</li>
 </ul>
-<h1 id="rfc.section.5.3.4"><a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#constrained-low-latency" id="constrained-low-latency">Constrained Low Latency</a></h1>
-<p id="rfc.section.5.3.4.p.1">The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:</p>
-<p/>
-
-<ul>
-  <li>The buffer starts out empty.</li>
-  <li>After each frame is encoded, the buffer is filled by the number of bits spent for the frame.</li>
-  <li>The buffer is then emptied by (bitrate * frame duration) bits.</li>
-  <li>The buffer fill level is checked. If it is over the limit, the test is considered a failure.</li>
-</ul>
-<p id="rfc.section.5.3.4.p.3">The buffer size limit is defined by the bitrate target * 0.3 seconds.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
-<p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results <a href="#AWCY">[AWCY]</a>.</p>
+<p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computers for fast results, with the AreWeCompressedYet tool <a href="#AWCY">[AWCY]</a>. Because of computational constraints, several levels of testing are specified.</p>
+<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#regression-tests" id="regression-tests">Regression tests</a></h1>
+<p id="rfc.section.6.1.p.1">Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance.</p>
+<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#objective-performance-tests" id="objective-performance-tests">Objective performance tests</a></h1>
+<p id="rfc.section.6.2.p.1">Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated.</p>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#periodic-tests" id="periodic-tests">Periodic tests</a></h1>
+<p id="rfc.section.6.3.p.1">Periodic tests are run on a wide range of bitrates in order to gauge progress over time, as well as detect potential regressions missed by other tests.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
 <table>
   <tbody>
@@ -663,6 +680,12 @@ ul.toc a:first-child {
         <b id="AWCY">[AWCY]</b>
       </td>
       <td class="top"><a>Xiph.Org</a>, "<a href="https://arewecompressedyet.com/">Are We Compressed Yet?</a>", 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="BT500">[BT500]</b>
+      </td>
+      <td class="top"><a>ITU-R</a>, "<a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.500-13-201201-I!!PDF-E.pdf">Recommendation ITU-R BT.500-13</a>", 2012.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -730,10 +753,16 @@ ul.toc a:first-child {
       </td>
       <td class="top"><a>Daede, T.</a>, "<a href="https://people.xiph.org/~tdaede/sets/">Test Sets</a>", n.d..</td>
     </tr>
+    <tr>
+      <td class="reference">
+        <b id="VMAF">[VMAF]</b>
+      </td>
+      <td class="top"><a>Aaron, A.</a>, <a>Li, Z.</a>, <a>Manohara, M.</a>, <a>Lin, J.</a>, <a>Wu, E.</a> and <a>C. Kuo</a>, "<a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=7351097">Challenges in cloud based ingest and encoding for high quality streaming media</a>", 2015.</td>
+    </tr>
   </tbody>
 </table>
 <h1 id="rfc.authors">
-  <a href="#rfc.authors">Author's Address</a>
+  <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -754,6 +783,27 @@ ul.toc a:first-child {
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:tdaede@mozilla.com">tdaede@mozilla.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Andrey Norkin</span> 
+	  <span class="n hidden">
+		<span class="family-name">Norkin</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Netflix</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:anorkin@netflix.com">anorkin@netflix.com</a></span>
 
   </address>
 </div>
