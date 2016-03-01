@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-ietf-netvc-testing-latest
-date: 2016-01-07
+date: 2016-02-29
 category: info
 
 ipr: trust200902
@@ -17,6 +17,11 @@ author:
     name: Thomas Daede
     org: Mozilla
     email: tdaede@mozilla.com
+ -
+    ins: A. Norkin
+    name: Andrey Norkin
+    org: Netflix
+    email: anorkin@netflix.com
 
 normative:
 
@@ -148,18 +153,45 @@ informative:
         ins: N. Yu
         name: Nenghai Yu
     date: 2012
+  VMAF:
+    target: "http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=7351097"
+    title: Challenges in cloud based ingest and encoding for high quality streaming media
+    author:
+      -
+        ins: A. Aaron
+        name: Anne Aaron
+      -
+        ins: Z. Li
+        name: Zhi Li
+      -
+        ins: M. Manohara
+        name: Megha Manohara
+      -
+        ins: J. Y. Lin
+        name: Joe Yuchieh Lin
+      -
+        ins: E. C. Wu
+        name: Eddy Chi-Hao Wu
+      -
+        ins: C. J. Kuo
+        name: "C.-C Jay Kuo"
+    date: 2015
+  BT500:
+    target: "https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.500-13-201201-I!!PDF-E.pdf"
+    title: Recommendation ITU-R BT.500-13
+    date: 2012
 
 --- abstract
 
-This document describes guidelines and procedures for evaluating an internet video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.
+This document describes guidelines and procedures for evaluating a video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.
 
 --- middle
 
 # Introduction
 
-When developing an internet video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.
+When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.
 
-# Subjective Metrics
+# Subjective quality tests
 
 Subjective testing is the preferable method of testing video codecs.
 
@@ -168,6 +200,14 @@ Because the IETF does not have testing resources of its own, it has to rely on t
 ## Still Image Pair Comparison
 
 A simple way to determine superiority of one compressed image over another is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is mainly used for rapid comparisons during development. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.
+
+## Subjective viewing test
+
+A subjective viewing test is the preferred method of evaluating the quality. The subjective test should be performed as either consecutively showing the video sequences on one screen or on two screens located side-by-side. The testing procedure should normally follow rules described in {{BT500}} and be performed with non-expert test subjects. The result of the test could be (depending on the test procedure) mean opinion scores (MOS) or differential mean opinion scores (DMOS). Normally, confidence intervals are also calculated to judge whether the difference between two encodings is statistically significant.
+
+## Expert viewing
+
+An expert viewing test can be performed in the case when an answer to a particular question should be found. An example of such test can be a test involving video coding experts on evaluation of a particular problem, for example such as comparing the results of two de-ringing filters. Depending on what information is sought, the appropriate test procedure can be chosen.
 
 # Objective Metrics
 
@@ -179,7 +219,7 @@ All of the metrics described in this document are to be applied to the luma plan
 
 Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.
 
-## PSNR
+## Overall PSNR
 
 PSNR is a traditional signal quality metric, measured in decibels. It is directly drived from mean square error (MSE), or its square root (RMSE). The formula used is:
 
@@ -189,7 +229,13 @@ or, equivalently:
 
 10 * log10 ( MAX^2 / MSE )
 
-which is the method used in the dump_psnr.c reference implementation.
+where the error is computed over all the pixels in the video, which is the method used in the dump_psnr.c reference implementation.
+
+This metric may be applied to both the luma and chroma planes, with all planes reported separately.
+
+## Frame-averaged PSNR
+
+PSNR can also be calculated per-frame, and then the values averaged together. This is reported in the same way as overall PSNR.
 
 ## PSNR-HVS-M
 
@@ -203,21 +249,27 @@ For the metric to appear more linear on BD-rate curves, the score is converted i
 
 -10 * log10 (1 - SSIM)
 
+## Multi-Scale SSIM
+
+Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}.
+
 ## Fast Multi-Scale SSIM
 
-Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}. This is implemented in the Fast implementation by downscaling the image a number of times, and computing SSIM over the same number of pixels, then averaging the SSIM scores together {{FASTSSIM}}. The final score is converted to decibels in the same manner as SSIM.
+Fast MS-SSIM is a modified implementation of MS-SSIM which operates on a limited number of scales and with modified weights {{FASTSSIM}}. The final score is converted to decibels in the same manner as SSIM.
 
 ## CIEDE2000
 
 CIEDE2000 is a metric based on CIEDE color distances {{CIEDE2000}}. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.
 
+## VMAF
+
+Video Multi-method Assessment Fusion (VMAF) is a full-reference perceptual video quality metric that aims to approximate human perception of video quality {{VMAF}}. This metric is focused on quality degradation due compression and rescaling. VMAF estimates the perceived quality score by computing scores from multiple quality assessment algorithms, and fusing them using a support vector machine (SVM). Currently, three image fidelity metrics and one temporal signal have been chosen as features to the SVM, namely Anti-noise SNR (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity (VIF), and the mean co-located pixel difference of a frame with respect to the previous frame.
+
 # Comparing and Interpreting Results
 
 ## Graphing
 
-When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For clarity, the X axis bitrate is always graphed in the log domain. The Y axis metric should also be chosen so that the graph is approximately linear. For metrics such as PSNR and PSNR-HVS, the metric result is already in the log domain and is left as-is. SSIM and FASTSSIM, on the other hand, return a result between 0 and 1. To create more linear graphs, this result is converted to a value in decibels:
-
--1 * log10 ( 1 - SSIM )
+When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For publication, the X axis should be linear. The Y axis metric should be plotted in decibels. If the quality metric does not natively report quality in decibels, it should be converted as described in the previous section.
 
 ## Bjontegaard
 
@@ -240,12 +292,6 @@ bitrate = bpp * width * height * framerate
 ## Sources
 
 Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.
-
-The JCT-VC standards organization includes a set of standard test clips for video codec testing, and parameters to run the clips with {{L1100}}. These clips are useful to verify older published results. They are not publicly available, so they are omitted from the test sets in this document.
-
-Xiph publishes a variety of test clips collected from various sources.
-
-The Blender Open Movie projects provide a large test base of lossless cinematic test material. The lossless sources are available, hosted on Xiph.
 
 ## Test Sets
 
@@ -277,9 +323,6 @@ Two operating modes are defined. High latency is intended for on demand streamin
 
 Encoders should be configured to their best settings when being compared against each other:
 
-- x264: --preset placebo
-- x265: --preset veryslow
-- daala: -z 10 --fpr
 - vp10: --codec=vp10 --ivf --frame-parallel=0 --tile-columns=0 --cpu-used=0 --threads=1
 
 ### High Latency
@@ -300,17 +343,18 @@ The encoder should be run at the best quality mode available, using the mode tha
 - daala: -v=x
 - vp10: --end-usage=q --cq-level=x -lag-in-frames=0
 
-### Constrained Low Latency
-
-The encoder is given one parameter, which is absolute bitrate. No frame delay, buffering, or lookahead is allowed. The maximum achieved bitrate deviation from the supplied parameter is determined by a buffer model:
-
-- The buffer starts out empty.
-- After each frame is encoded, the buffer is filled by the number of bits spent for the frame.
-- The buffer is then emptied by (bitrate * frame duration) bits.
-- The buffer fill level is checked. If it is over the limit, the test is considered a failure.
-
-The buffer size limit is defined by the bitrate target * 0.3 seconds.
-
 # Automation
 
 Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs {{COMPARECODECS}}. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computer for fast results {{AWCY}}.
+
+## Regression tests
+
+Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance.
+
+## Objective performance tests
+
+Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated.
+
+## Periodic tests
+
+Periodic tests are run on a wide range of bitrates in order to gauge progress over time, as well as detect potential regressions missed by other tests.
