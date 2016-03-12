@@ -191,7 +191,7 @@ This document describes guidelines and procedures for evaluating a video codec s
 
 # Introduction
 
-When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.
+When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons when evaluating changes under consideration. Authors of features or changes should provide the results of the appropriate test when proposing codec modifications.
 
 # Subjective quality tests
 
@@ -217,7 +217,7 @@ Objective metrics are used in place of subjective metrics for easy and repeatabl
 
 The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository {{DAALA-GIT}}.
 
-All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.
+Unless otherwise specified, all of the metrics described below only apply to the luma plane, individually by frame. When applied to the video, the scores of each frame are averaged to create the final score.
 
 Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.
 
@@ -319,7 +319,7 @@ Sources are divided into several categories to test different scenarios the code
 
 ## Operating Points
 
-Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.
+Four operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access. Both of these modes come in CQP and unconstrained variants. When testing still image sets, such as subset1, high latency CQP mode should be used.
 
 ### Common settings
 
@@ -327,7 +327,21 @@ Encoders should be configured to their best settings when being compared against
 
 - vp10: --codec=vp10 --ivf --frame-parallel=0 --tile-columns=0 --cpu-used=0 --threads=1
 
-### High Latency
+### High Latency CQP
+
+High Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It allows codec features with intrinsic frame delay.
+
+- daala: -v=x -b 2
+- vp10: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+
+### Low Latency CQP
+
+Low Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It requires the codec to be set for zero intrinsic frame delay.
+
+- daala: -v=x
+- vp10: --end-usage=q --cq-level=x -lag-in-frames=0
+
+### Unconstrained High Latency
 
 The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:
 
@@ -351,11 +365,21 @@ Frequent objective comparisons are extremely beneficial while developing a new c
 
 ## Regression tests
 
-Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance.
+Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on the following sets, in both high and low latency CQP modes:
+
+- vc-720p-1
+- netflix-2k-1
 
 ## Objective performance tests
 
-Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated.
+Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated. Objective performance tests are run on the following sets, in both high and low latency CQP modes:
+
+- video-hd-3
+- netflix-2k-1
+- netflix-4k-1
+- vc-720p-1
+- vc-360p-1
+- twitch-1
 
 ## Periodic tests
 
