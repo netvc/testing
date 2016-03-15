@@ -61,36 +61,38 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Subjective quality tests  . . . . . . . . . . . . . . . . . .   2
+   2.  Subjective quality tests  . . . . . . . . . . . . . . . . . .   3
      2.1.  Still Image Pair Comparison . . . . . . . . . . . . . . .   3
      2.2.  Subjective viewing test . . . . . . . . . . . . . . . . .   3
      2.3.  Expert viewing  . . . . . . . . . . . . . . . . . . . . .   3
    3.  Objective Metrics . . . . . . . . . . . . . . . . . . . . . .   3
      3.1.  Overall PSNR  . . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Frame-averaged PSNR . . . . . . . . . . . . . . . . . . .   4
-     3.3.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   4
+     3.3.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   5
      3.4.  SSIM  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      3.5.  Multi-Scale SSIM  . . . . . . . . . . . . . . . . . . . .   5
      3.6.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   5
      3.7.  CIEDE2000 . . . . . . . . . . . . . . . . . . . . . . . .   5
      3.8.  VMAF  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   5
-     4.1.  Graphing  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   6
+     4.1.  Graphing  . . . . . . . . . . . . . . . . . . . . . . . .   6
      4.2.  Bjontegaard . . . . . . . . . . . . . . . . . . . . . . .   6
-     4.3.  Ranges  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     4.3.  Ranges  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+   5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   7
+     5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   7
      5.2.  Test Sets . . . . . . . . . . . . . . . . . . . . . . . .   7
-     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   7
-       5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   7
-       5.3.2.  High Latency  . . . . . . . . . . . . . . . . . . . .   8
-       5.3.3.  Unconstrained Low Latency . . . . . . . . . . . . . .   8
-   6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     6.1.  Regression tests  . . . . . . . . . . . . . . . . . . . .   9
-     6.2.  Objective performance tests . . . . . . . . . . . . . . .   9
-     6.3.  Periodic tests  . . . . . . . . . . . . . . . . . . . . .   9
-   7.  Informative References  . . . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   8
+       5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   8
+       5.3.2.  High Latency CQP  . . . . . . . . . . . . . . . . . .   8
+       5.3.3.  Low Latency CQP . . . . . . . . . . . . . . . . . . .   8
+       5.3.4.  Unconstrained High Latency  . . . . . . . . . . . . .   9
+       5.3.5.  Unconstrained Low Latency . . . . . . . . . . . . . .   9
+   6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Regression tests  . . . . . . . . . . . . . . . . . . . .  10
+     6.2.  Objective performance tests . . . . . . . . . . . . . . .  10
+     6.3.  Periodic tests  . . . . . . . . . . . . . . . . . . . . .  10
+   7.  Informative References  . . . . . . . . . . . . . . . . . . .  11
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
 
 1.  Introduction
 
@@ -98,14 +100,12 @@ Table of Contents
    need to be decided based on their performance tradeoffs.  In
    addition, measurements are needed to determine when the codec has met
    its performance goals.  This document specifies how the tests are to
-   be carried about to ensure valid comparisons and good decisions.
+   be carried about to ensure valid comparisons when evaluating changes
+   under consideration.  Authors of features or changes should provide
+   the results of the appropriate test when proposing codec
+   modifications.
 
-2.  Subjective quality tests
 
-   Subjective testing is the preferable method of testing video codecs.
-
-   Because the IETF does not have testing resources of its own, it has
-   to rely on the resources of its participants.  For this reason, even
 
 
 
@@ -114,6 +114,12 @@ Daede & Norkin         Expires September 01, 2016               [Page 2]
 Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
 
+2.  Subjective quality tests
+
+   Subjective testing is the preferable method of testing video codecs.
+
+   Because the IETF does not have testing resources of its own, it has
+   to rely on the resources of its participants.  For this reason, even
    if the group agrees that a particular test is important, if no one
    volunteers to do it, or if volunteers do not complete it in a timely
    fashion, then that test should be discarded.  This ensures that only
@@ -154,6 +160,16 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
 3.  Objective Metrics
 
+
+
+
+
+
+Daede & Norkin         Expires September 01, 2016               [Page 3]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
    Objective metrics are used in place of subjective metrics for easy
    and repeatable experiments.  Most objective metrics have been
    designed to correlate with subjective scores.
@@ -163,17 +179,10 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    the exact implementation is specified in C in the Daala tools
    repository [DAALA-GIT].
 
-
-
-Daede & Norkin         Expires September 01, 2016               [Page 3]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
-
-
-   All of the metrics described in this document are to be applied to
-   the luma plane only.  In addition, they are single frame metrics.
-   When applied to the video, the scores of each frame are averaged to
-   create the final score.
+   Unless otherwise specified, all of the metrics described below only
+   apply to the luma plane, individually by frame.  When applied to the
+   video, the scores of each frame are averaged to create the final
+   score.
 
    Codecs are allowed to internally use downsampling, but must include a
    normative upsampler, so that the metrics run at the same resolution
@@ -204,15 +213,6 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    PSNR can also be calculated per-frame, and then the values averaged
    together.  This is reported in the same way as overall PSNR.
 
-3.3.  PSNR-HVS-M
-
-   The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the
-   image, weights the coefficients, and then calculates the PSNR of
-   those coefficients.  Several different sets of weights have been
-   considered.  [PSNRHVS] The weights used by the dump_pnsrhvs.c tool in
-   the Daala repository have been found to be the best match to real MOS
-   scores.
-
 
 
 
@@ -225,6 +225,15 @@ Daede & Norkin         Expires September 01, 2016               [Page 4]
 
 Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
+
+3.3.  PSNR-HVS-M
+
+   The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the
+   image, weights the coefficients, and then calculates the PSNR of
+   those coefficients.  Several different sets of weights have been
+   considered.  [PSNRHVS] The weights used by the dump_pnsrhvs.c tool in
+   the Daala repository have been found to be the best match to real MOS
+   scores.
 
 3.4.  SSIM
 
@@ -265,6 +274,14 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    the perceived quality score by computing scores from multiple quality
    assessment algorithms, and fusing them using a support vector machine
    (SVM).  Currently, three image fidelity metrics and one temporal
+
+
+
+Daede & Norkin         Expires September 01, 2016               [Page 5]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
    signal have been chosen as features to the SVM, namely Anti-noise SNR
    (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity
    (VIF), and the mean co-located pixel difference of a frame with
@@ -273,14 +290,6 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 4.  Comparing and Interpreting Results
 
 4.1.  Graphing
-
-
-
-
-Daede & Norkin         Expires September 01, 2016               [Page 5]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
-
 
    When displayed on a graph, bitrate is shown on the X axis, and the
    quality metric is on the Y axis.  For publication, the X axis should
@@ -291,29 +300,52 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 4.2.  Bjontegaard
 
    The Bjontegaard rate difference, also known as BD-rate, allows the
-   comparison of two different codecs based on a metric.  This is
-   commonly done by fitting a curve to each set of data points on the
-   plot of bitrate versus metric score, and then computing the
-   difference in area between each of the curves.  A cubic polynomial
-   fit is common, but will be overconstrained with more than four
-   samples.  For higher accuracy, at least 10 samples and a cubic spline
-   fit should be used.  In addition, if using a truncated BD-rate curve,
-   there should be at least 4 samples within the point of interest.
+   measurement of the bitrate reduction offered by a codec or codec
+   feature, while maintaining the same quality as measured by an
+   objective metric.  This rate difference is calculated over a range of
+   quality levels.  In this document, the BD-rate between a reference
+   and test codec is computed as follows:
+
+   o  Rate/distortion points are calculated for the reference and test
+      codec.  There need to be enough points so that at least four
+      points lie within the quality levels.
+
+   o  The rates are converted into log-rates.
+
+   o  A piecewise cubic hermite interpolating polynomial is fit to the
+      points for each codec to produce functions of distortion in terms
+      of log-rate.
+
+   o  Metric score ranges are computed.
+
+      *  If using a bitrate range, metric score ranges are computed by
+         converting the rate bounds into log-rate and then looking up
+         scores of the reference codec using the interpolating
+         polynomial.
+
+      *  If using a quantizer range, a third anchor codec is used to
+         generate metric scores for the quantizer bounds.  The anchor
+         codec makes the range immune to quantizer changes.
+
+   o  The log-rate is numerically integrated over the metric range for
+      each curve.
+
+
+
+
+Daede & Norkin         Expires September 01, 2016               [Page 6]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
+   o  The resulting integrated log-rates are converted back into linear
+      rate, and then the percent difference is calculated from the
+      reference to the test codec.
 
 4.3.  Ranges
 
-   The curve is split into three regions, for low, medium, and high
-   bitrate.  The ranges are defined as follows:
-
-   o  Low bitrate: 0.005 - 0.02 bpp
-
-   o  Medium bitrate: 0.02 - 0.06 bpp
-
-   o  High bitrate: 0.06 - 0.2 bpp
-
-   Bitrate can be calculated from bits per pixel (bpp) as follows:
-
-   bitrate = bpp * width * height * framerate
+   The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and
+   High Latency CQP settings.
 
 5.  Test Sequences
 
@@ -328,15 +360,6 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    to support operation at high bit depth.  If one or more codecs in a
    comparison do not support high bit depth, sources need to be
    converted once before entering the encoder.
-
-
-
-
-
-Daede & Norkin         Expires September 01, 2016               [Page 6]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
-
 
 5.2.  Test Sets
 
@@ -364,6 +387,13 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    o  video-hd-3, a set that consists of 1920x1080 clips from
       [DERFVIDEO] (1500 frames total)
 
+
+
+Daede & Norkin         Expires September 01, 2016               [Page 7]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
    o  vc-360p-1, a low quality video conferencing set (2700 frames
       total)
 
@@ -379,20 +409,14 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
 5.3.  Operating Points
 
-   Two operating modes are defined.  High latency is intended for on
+   Four operating modes are defined.  High latency is intended for on
    demand streaming, one-to-many live streaming, and stored video.  Low
-   latency is intended for videoconferencing and remote access.
+   latency is intended for videoconferencing and remote access.  Both of
+   these modes come in CQP and unconstrained variants.  When testing
+   still image sets, such as subset1, high latency CQP mode should be
+   used.
 
 5.3.1.  Common settings
-
-
-
-
-
-Daede & Norkin         Expires September 01, 2016               [Page 7]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
-
 
    Encoders should be configured to their best settings when being
    compared against each other:
@@ -400,7 +424,37 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    o  vp10: -codec=vp10 -ivf -frame-parallel=0 -tile-columns=0 -cpu-
       used=0 -threads=1
 
-5.3.2.  High Latency
+5.3.2.  High Latency CQP
+
+   High Latency CQP is used for evaluating incremental changes to a
+   codec.  It should not be used to compare unrelated codecs to each
+   other.  It allows codec features with intrinsic frame delay.
+
+   o  daala: -v=x -b 2
+
+   o  vp9: -end-usage=q -cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+
+   o  vp10: -end-usage=q -cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+
+5.3.3.  Low Latency CQP
+
+   Low Latency CQP is used for evaluating incremental changes to a
+   codec.  It should not be used to compare unrelated codecs to each
+   other.  It requires the codec to be set for zero intrinsic frame
+   delay.
+
+
+
+Daede & Norkin         Expires September 01, 2016               [Page 8]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
+   o  daala: -v=x
+
+   o  vp10: -end-usage=q -cq-level=x -lag-in-frames=0
+
+5.3.4.  Unconstrained High Latency
 
    The encoder should be run at the best quality mode available, using
    the mode that will provide the best quality per bitrate (VBR or
@@ -416,7 +470,7 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
    o  vp10: -end-usage=q -cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
-5.3.3.  Unconstrained Low Latency
+5.3.5.  Unconstrained Low Latency
 
    The encoder should be run at the best quality mode available, using
    the mode that will provide the best quality per bitrate (VBR or
@@ -442,23 +496,29 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    scripts that can be used to automate the various metrics used.  In
    addition, these scripts can be run automatically utilizing
    distributed computers for fast results, with the AreWeCompressedYet
+   tool [AWCY].  Because of computational constraints, several levels of
+   testing are specified.
 
 
 
-Daede & Norkin         Expires September 01, 2016               [Page 8]
+Daede & Norkin         Expires September 01, 2016               [Page 9]
 
 Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
-
-   tool [AWCY].  Because of computational constraints, several levels of
-   testing are specified.
 
 6.1.  Regression tests
 
    Regression tests run on a small number of short sequences.  The
    regression tests should include a number of various test conditions.
    The purpose of regression tests is to ensure bug fixes (and similar
-   patches) do not negatively affect the performance.
+   patches) do not negatively affect the performance.  The anchor in
+   regression tests is the previous revision of the codec in source
+   control.  Regression tests are run on the following sets, in both
+   high and low latency CQP modes:
+
+   o  vc-720p-1
+
+   o  netflix-2k-1
 
 6.2.  Objective performance tests
 
@@ -467,13 +527,40 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
    tests should be run on a wider number of sequences.  If the option
    for the objective performance test is chosen, wide range and full
    length simulations are run on the site and the results (including all
-   the objective metrics) are generated.
+   the objective metrics) are generated.  Objective performance tests
+   are run on the following sets, in both high and low latency CQP
+   modes:
+
+   o  video-hd-3
+
+   o  netflix-2k-1
+
+   o  netflix-4k-1
+
+   o  vc-720p-1
+
+   o  vc-360p-1
+
+   o  twitch-1
 
 6.3.  Periodic tests
 
    Periodic tests are run on a wide range of bitrates in order to gauge
    progress over time, as well as detect potential regressions missed by
    other tests.
+
+
+
+
+
+
+
+
+
+Daede & Norkin         Expires September 01, 2016              [Page 10]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
 
 7.  Informative References
 
@@ -498,14 +585,6 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
               <http://git.xiph.org/?p=daala.git;a=summary>.
 
    [DERFVIDEO]
-
-
-
-Daede & Norkin         Expires September 01, 2016               [Page 9]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
-
-
               Terriberry, T., "Xiph.org Video Test Media", n.d., <https:
               //media.xiph.org/video/derf/>.
 
@@ -531,6 +610,14 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
               Similarity", 2004,
               <http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf>.
 
+
+
+
+Daede & Norkin         Expires September 01, 2016              [Page 11]
+
+Internet-Draft Video Codec Testing and Quality Measurement February 2016
+
+
    [STEAM]    Valve Corporation, "Steam Hardware & Software Survey: June
               2015", June 2015,
               <http://store.steampowered.com/hwsurvey>.
@@ -550,16 +637,6 @@ Authors' Addresses
    Mozilla
 
    Email: tdaede@mozilla.com
-
-
-
-
-
-
-
-Daede & Norkin         Expires September 01, 2016              [Page 10]
-
-Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
 
    Andrey Norkin
@@ -592,25 +669,4 @@ Internet-Draft Video Codec Testing and Quality Measurement February 2016
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Daede & Norkin         Expires September 01, 2016              [Page 11]
+Daede & Norkin         Expires September 01, 2016              [Page 12]

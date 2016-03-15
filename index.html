@@ -453,8 +453,10 @@ ul.toc a:first-child {
 <link href="#rfc.section.5.2" rel="Chapter" title="5.2 Test Sets"/>
 <link href="#rfc.section.5.3" rel="Chapter" title="5.3 Operating Points"/>
 <link href="#rfc.section.5.3.1" rel="Chapter" title="5.3.1 Common settings"/>
-<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 High Latency"/>
-<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Unconstrained Low Latency"/>
+<link href="#rfc.section.5.3.2" rel="Chapter" title="5.3.2 High Latency CQP"/>
+<link href="#rfc.section.5.3.3" rel="Chapter" title="5.3.3 Low Latency CQP"/>
+<link href="#rfc.section.5.3.4" rel="Chapter" title="5.3.4 Unconstrained High Latency"/>
+<link href="#rfc.section.5.3.5" rel="Chapter" title="5.3.5 Unconstrained Low Latency"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Automation"/>
 <link href="#rfc.section.6.1" rel="Chapter" title="6.1 Regression tests"/>
 <link href="#rfc.section.6.2" rel="Chapter" title="6.2 Objective performance tests"/>
@@ -552,8 +554,10 @@ ul.toc a:first-child {
 <li>5.2.   <a href="#rfc.section.5.2">Test Sets</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">Operating Points</a></li>
 <li>5.3.1.   <a href="#rfc.section.5.3.1">Common settings</a></li>
-<li>5.3.2.   <a href="#rfc.section.5.3.2">High Latency</a></li>
-<li>5.3.3.   <a href="#rfc.section.5.3.3">Unconstrained Low Latency</a></li>
+<li>5.3.2.   <a href="#rfc.section.5.3.2">High Latency CQP</a></li>
+<li>5.3.3.   <a href="#rfc.section.5.3.3">Low Latency CQP</a></li>
+<li>5.3.4.   <a href="#rfc.section.5.3.4">Unconstrained High Latency</a></li>
+<li>5.3.5.   <a href="#rfc.section.5.3.5">Unconstrained Low Latency</a></li>
 <li>6.   <a href="#rfc.section.6">Automation</a></li>
 <li>6.1.   <a href="#rfc.section.6.1">Regression tests</a></li>
 <li>6.2.   <a href="#rfc.section.6.2">Objective performance tests</a></li>
@@ -565,7 +569,7 @@ ul.toc a:first-child {
   </ul>
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
-<p id="rfc.section.1.p.1">When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons and good decisions.</p>
+<p id="rfc.section.1.p.1">When developing a video codec, changes and additions to the codec need to be decided based on their performance tradeoffs. In addition, measurements are needed to determine when the codec has met its performance goals. This document specifies how the tests are to be carried about to ensure valid comparisons when evaluating changes under consideration. Authors of features or changes should provide the results of the appropriate test when proposing codec modifications.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#subjective-quality-tests" id="subjective-quality-tests">Subjective quality tests</a></h1>
 <p id="rfc.section.2.p.1">Subjective testing is the preferable method of testing video codecs.</p>
 <p id="rfc.section.2.p.2">Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.</p>
@@ -578,7 +582,7 @@ ul.toc a:first-child {
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#objective-metrics" id="objective-metrics">Objective Metrics</a></h1>
 <p id="rfc.section.3.p.1">Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.</p>
 <p id="rfc.section.3.p.2">The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository <a href="#DAALA-GIT">[DAALA-GIT]</a>.</p>
-<p id="rfc.section.3.p.3">All of the metrics described in this document are to be applied to the luma plane only. In addition, they are single frame metrics. When applied to the video, the scores of each frame are averaged to create the final score.</p>
+<p id="rfc.section.3.p.3">Unless otherwise specified, all of the metrics described below only apply to the luma plane, individually by frame. When applied to the video, the scores of each frame are averaged to create the final score.</p>
 <p id="rfc.section.3.p.4">Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#overall-psnr" id="overall-psnr">Overall PSNR</a></h1>
 <p id="rfc.section.3.1.p.1">PSNR is a traditional signal quality metric, measured in decibels. It is directly drived from mean square error (MSE), or its square root (RMSE). The formula used is:</p>
@@ -607,18 +611,19 @@ ul.toc a:first-child {
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#graphing" id="graphing">Graphing</a></h1>
 <p id="rfc.section.4.1.p.1">When displayed on a graph, bitrate is shown on the X axis, and the quality metric is on the Y axis. For publication, the X axis should be linear. The Y axis metric should be plotted in decibels. If the quality metric does not natively report quality in decibels, it should be converted as described in the previous section.</p>
 <h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#bjontegaard" id="bjontegaard">Bjontegaard</a></h1>
-<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a cubic spline fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.</p>
-<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#ranges" id="ranges">Ranges</a></h1>
-<p id="rfc.section.4.3.p.1">The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:</p>
+<p id="rfc.section.4.2.p.1">The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by an objective metric. This rate difference is calculated over a range of quality levels. In this document, the BD-rate between a reference and test codec is computed as follows:</p>
 <p/>
 
 <ul>
-  <li>Low bitrate: 0.005 - 0.02 bpp</li>
-  <li>Medium bitrate: 0.02 - 0.06 bpp</li>
-  <li>High bitrate: 0.06 - 0.2 bpp</li>
+  <li>Rate/distortion points are calculated for the reference and test codec. There need to be enough points so that at least four points lie within the quality levels.</li>
+  <li>The rates are converted into log-rates.</li>
+  <li>A piecewise cubic hermite interpolating polynomial is fit to the points for each codec to produce functions of distortion in terms of log-rate.</li>
+  <li>Metric score ranges are computed.  <ul><li>If using a bitrate range, metric score ranges are computed by converting the rate bounds into log-rate and then looking up scores of the reference codec using the interpolating polynomial.</li><li>If using a quantizer range, a third anchor codec is used to generate metric scores for the quantizer bounds. The anchor codec makes the range immune to quantizer changes.</li></ul></li>
+  <li>The log-rate is numerically integrated over the metric range for each curve.</li>
+  <li>The resulting integrated log-rates are converted back into linear rate, and then the percent difference is calculated from the reference to the test codec.</li>
 </ul>
-<p id="rfc.section.4.3.p.3">Bitrate can be calculated from bits per pixel (bpp) as follows:</p>
-<p id="rfc.section.4.3.p.4">bitrate = bpp * width * height * framerate</p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#ranges" id="ranges">Ranges</a></h1>
+<p id="rfc.section.4.3.p.1">The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#test-sequences" id="test-sequences">Test Sequences</a></h1>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#sources" id="sources">Sources</a></h1>
 <p id="rfc.section.5.1.p.1">Lossless test clips are preferred for most tests, because the structure of compression artifacts in already-compressed clips may introduce extra noise in the test results. However, a large amount of content on the internet needs to be recompressed at least once, so some sources of this nature are useful. The encoder should run at the same bit depth as the original source. In addition, metrics need to support operation at high bit depth. If one or more codecs in a comparison do not support high bit depth, sources need to be converted once before entering the encoder.</p>
@@ -636,7 +641,7 @@ ul.toc a:first-child {
   <li>twitch-1, a game sequence set (2280 frames total)</li>
 </ul>
 <h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#operating-points" id="operating-points">Operating Points</a></h1>
-<p id="rfc.section.5.3.p.1">Two operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access.</p>
+<p id="rfc.section.5.3.p.1">Four operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access. Both of these modes come in CQP and unconstrained variants. When testing still image sets, such as subset1, high latency CQP mode should be used.</p>
 <h1 id="rfc.section.5.3.1"><a href="#rfc.section.5.3.1">5.3.1.</a> <a href="#common-settings" id="common-settings">Common settings</a></h1>
 <p id="rfc.section.5.3.1.p.1">Encoders should be configured to their best settings when being compared against each other:</p>
 <p/>
@@ -644,8 +649,25 @@ ul.toc a:first-child {
 <ul>
   <li>vp10: &#8211;codec=vp10 &#8211;ivf &#8211;frame-parallel=0 &#8211;tile-columns=0 &#8211;cpu-used=0 &#8211;threads=1</li>
 </ul>
-<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#high-latency" id="high-latency">High Latency</a></h1>
-<p id="rfc.section.5.3.2.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:</p>
+<h1 id="rfc.section.5.3.2"><a href="#rfc.section.5.3.2">5.3.2.</a> <a href="#high-latency-cqp" id="high-latency-cqp">High Latency CQP</a></h1>
+<p id="rfc.section.5.3.2.p.1">High Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It allows codec features with intrinsic frame delay.</p>
+<p/>
+
+<ul>
+  <li>daala: -v=x -b 2</li>
+  <li>vp9: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=2</li>
+  <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=2</li>
+</ul>
+<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#low-latency-cqp" id="low-latency-cqp">Low Latency CQP</a></h1>
+<p id="rfc.section.5.3.3.p.1">Low Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It requires the codec to be set for zero intrinsic frame delay.</p>
+<p/>
+
+<ul>
+  <li>daala: -v=x</li>
+  <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=0</li>
+</ul>
+<h1 id="rfc.section.5.3.4"><a href="#rfc.section.5.3.4">5.3.4.</a> <a href="#unconstrained-high-latency" id="unconstrained-high-latency">Unconstrained High Latency</a></h1>
+<p id="rfc.section.5.3.4.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode). Lookahead and/or two-pass are allowed, if supported. One parameter is provided to adjust bitrate, but the units are arbitrary.  Example configurations follow:</p>
 <p/>
 
 <ul>
@@ -654,8 +676,8 @@ ul.toc a:first-child {
   <li>daala: -v=x -b 2</li>
   <li>vp10: &#8211;end-usage=q &#8211;cq-level=x -lag-in-frames=25 -auto-alt-ref=2</li>
 </ul>
-<h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#unconstrained-low-latency" id="unconstrained-low-latency">Unconstrained Low Latency</a></h1>
-<p id="rfc.section.5.3.3.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:</p>
+<h1 id="rfc.section.5.3.5"><a href="#rfc.section.5.3.5">5.3.5.</a> <a href="#unconstrained-low-latency" id="unconstrained-low-latency">Unconstrained Low Latency</a></h1>
+<p id="rfc.section.5.3.5.p.1">The encoder should be run at the best quality mode available, using the mode that will provide the best quality per bitrate (VBR or constant quality mode), but no frame delay, buffering, or lookahead is allowed. One parameter is provided to adjust bitrate, but the units are arbitrary. Example configurations follow:</p>
 <p/>
 
 <ul>
@@ -667,9 +689,25 @@ ul.toc a:first-child {
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#automation" id="automation">Automation</a></h1>
 <p id="rfc.section.6.p.1">Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs <a href="#COMPARECODECS">[COMPARECODECS]</a>. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computers for fast results, with the AreWeCompressedYet tool <a href="#AWCY">[AWCY]</a>. Because of computational constraints, several levels of testing are specified.</p>
 <h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#regression-tests" id="regression-tests">Regression tests</a></h1>
-<p id="rfc.section.6.1.p.1">Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance.</p>
+<p id="rfc.section.6.1.p.1">Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on the following sets, in both high and low latency CQP modes:</p>
+<p/>
+
+<ul>
+  <li>vc-720p-1</li>
+  <li>netflix-2k-1</li>
+</ul>
 <h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#objective-performance-tests" id="objective-performance-tests">Objective performance tests</a></h1>
-<p id="rfc.section.6.2.p.1">Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated.</p>
+<p id="rfc.section.6.2.p.1">Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated. Objective performance tests are run on the following sets, in both high and low latency CQP modes:</p>
+<p/>
+
+<ul>
+  <li>video-hd-3</li>
+  <li>netflix-2k-1</li>
+  <li>netflix-4k-1</li>
+  <li>vc-720p-1</li>
+  <li>vc-360p-1</li>
+  <li>twitch-1</li>
+</ul>
 <h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#periodic-tests" id="periodic-tests">Periodic tests</a></h1>
 <p id="rfc.section.6.3.p.1">Periodic tests are run on a wide range of bitrates in order to gauge progress over time, as well as detect potential regressions missed by other tests.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> Informative References</h1>
