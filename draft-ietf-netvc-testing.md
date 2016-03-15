@@ -275,19 +275,20 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 
 ## Bjontegaard
 
-The Bjontegaard rate difference, also known as BD-rate, allows the comparison of two different codecs based on a metric. This is commonly done by fitting a curve to each set of data points on the plot of bitrate versus metric score, and then computing the difference in area between each of the curves. A cubic polynomial fit is common, but will be overconstrained with more than four samples. For higher accuracy, at least 10 samples and a cubic spline fit should be used. In addition, if using a truncated BD-rate curve, there should be at least 4 samples within the point of interest.
+The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by an objective metric. This rate difference is calculated over a range of quality levels. In this document, the BD-rate between a reference and test codec is computed as follows:
+
+- Rate/distortion points are calculated for the reference and test codec. There need to be enough points so that at least four points lie within the quality levels.
+- The rates are converted into log-rates.
+- A piecewise cubic hermite interpolating polynomial is fit to the points for each codec to produce functions of distortion in terms of log-rate.
+- Metric score ranges are computed.
+  - If using a bitrate range, metric score ranges are computed by converting the rate bounds into log-rate and then looking up scores of the reference codec using the interpolating polynomial.
+  - If using a quantizer range, a third anchor codec is used to generate metric scores for the quantizer bounds. The anchor codec makes the range immune to quantizer changes.
+- The log-rate is numerically integrated over the metric range for each curve.
+- The resulting integrated log-rates are converted back into linear rate, and then the percent difference is calculated from the reference to the test codec.
 
 ## Ranges
 
-The curve is split into three regions, for low, medium, and high bitrate. The ranges are defined as follows:
-
-- Low bitrate: 0.005 - 0.02 bpp
-- Medium bitrate: 0.02 - 0.06 bpp
-- High bitrate: 0.06 - 0.2 bpp
-
-Bitrate can be calculated from bits per pixel (bpp) as follows:
-
-bitrate = bpp * width * height * framerate
+The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings.
 
 # Test Sequences
 
@@ -332,6 +333,7 @@ Encoders should be configured to their best settings when being compared against
 High Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It allows codec features with intrinsic frame delay.
 
 - daala: -v=x -b 2
+- vp9: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 - vp10: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
 ### Low Latency CQP
