@@ -288,7 +288,7 @@ The Bjontegaard rate difference, also known as BD-rate, allows the measurement o
 
 ## Ranges
 
-For all tests described in this document, quantizers of an anchor codec are used to determine the quality ranges. The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quantizers used are 20 and 60.
+For all tests described in this document, quantizers of an anchor codec are used to determine the quality ranges. The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 60.
 
 # Test Sequences
 
