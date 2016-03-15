@@ -275,7 +275,7 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 
 ## Bjontegaard
 
-The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by an objective metric. This rate difference is calculated over a range of quality levels. In this document, the BD-rate between a reference and test codec is computed as follows:
+The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by objective metrics. The rate change is computed as the average percent difference in rate over a range of qualities. Metric score ranges are not static - they are calculated either from a range of bitrates of the reference codec, or from quantizers of a third, reference codec. Given a reference codec, test codec, and ranges, BD-rate values are calculated as follows:
 
 - Rate/distortion points are calculated for the reference and test codec. There need to be enough points so that at least four points lie within the quality levels.
 - The rates are converted into log-rates.
