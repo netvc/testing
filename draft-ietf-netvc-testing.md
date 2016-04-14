@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-ietf-netvc-testing-latest
-date: 2016-03-15
+date: 2016-04-16
 category: info
 
 ipr: trust200902
@@ -22,6 +22,11 @@ author:
     name: Andrey Norkin
     org: Netflix
     email: anorkin@netflix.com
+ -
+    ins: I. Brailovskiy
+    name: Ilya Brailovskiy
+    org: Amazon Lab126
+    email: brailovs@lab126.com
 
 normative:
 
@@ -100,7 +105,13 @@ informative:
     author:
       org: Xiph.Org
     title: Are We Compressed Yet?
-    date: 2015
+    date: 2016
+  RD_TOOL:
+    target: https://github.com/tdaede/rd_tool
+    author:
+      org: Xiph.Org
+    title: rd_tool
+    date: 2016
   STEAM:
     target: http://store.steampowered.com/hwsurvey
     author:
@@ -185,7 +196,7 @@ informative:
 
 --- abstract
 
-This document describes guidelines and procedures for evaluating a video codec specified at the IETF. This covers subjective and objective tests, test conditions, and materials used for the test.
+This document describes guidelines and procedures for evaluating a video codec. This covers subjective and objective tests, test conditions, and materials used for the test.
 
 --- middle
 
@@ -197,29 +208,33 @@ When developing a video codec, changes and additions to the codec need to be dec
 
 Subjective testing is the preferable method of testing video codecs.
 
-Because the IETF does not have testing resources of its own, it has to rely on the resources of its participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.
+Subjective testing results take priority over objective testing results, when available. Subjective testing is recommended especially when taking advantage of psychovisual effects that may not be well represented by objective metrics, or when different objective metrics disagree.
+
+Selection of a testing methodology depends on the feature being tested and the resources available. Test methodologies are presented in order of increasing accuracy and cost.
+
+Testing relies on the resources of participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.
 
 ## Still Image Pair Comparison
 
-A simple way to determine superiority of one compressed image over another is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is mainly used for rapid comparisons during development. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.
+A simple way to determine superiority of one compressed image is to visually compare two compressed images, and have the viewer judge which one has a higher quality. This is used for rapid comparisons during development - the viewer may be a developer or user, for example. Because testing is done on still images (keyframes), this is only suitable for changes with similar or no effect on other frames. For example, this test may be suitable for an intra de-ringing filter, but not for a new inter prediction mode. For this test, the two compressed images should have similar compressed file sizes, with one image being no more than 5% larger than the other. In addition, at least 5 different images should be compared.
+
+## Video Pair Comparison
+
+Video comparisons are necessary when making changes with temporal effects, such as changes to inter-frame prediction. Video pair comparisons follow the same procedure as still images.
 
 ## Subjective viewing test
 
 A subjective viewing test is the preferred method of evaluating the quality. The subjective test should be performed as either consecutively showing the video sequences on one screen or on two screens located side-by-side. The testing procedure should normally follow rules described in {{BT500}} and be performed with non-expert test subjects. The result of the test could be (depending on the test procedure) mean opinion scores (MOS) or differential mean opinion scores (DMOS). Normally, confidence intervals are also calculated to judge whether the difference between two encodings is statistically significant.
 
-## Expert viewing
-
-An expert viewing test can be performed in the case when an answer to a particular question should be found. An example of such test can be a test involving video coding experts on evaluation of a particular problem, for example such as comparing the results of two de-ringing filters. Depending on what information is sought, the appropriate test procedure can be chosen.
-
 # Objective Metrics
 
 Objective metrics are used in place of subjective metrics for easy and repeatable experiments. Most objective metrics have been designed to correlate with subjective scores.
 
-The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository {{DAALA-GIT}}.
+The following descriptions give an overview of the operation of each of the metrics. Because implementation details can sometimes vary, the exact implementation is specified in C in the Daala tools repository {{DAALA-GIT}}. Implementations of metrics must directly support the input's resolution, bit depth, and sampling format.
 
 Unless otherwise specified, all of the metrics described below only apply to the luma plane, individually by frame. When applied to the video, the scores of each frame are averaged to create the final score.
 
-Codecs are allowed to internally use downsampling, but must include a normative upsampler, so that the metrics run at the same resolution as the source video. In addition, some metrics, such as PSNR and FASTSSIM, have poor behavior on downsampled images, so it must be noted in test results if downsampling is in effect.
+Codecs must output the same resolution, bit depth, and sampling format as the input.
 
 ## Overall PSNR
 
@@ -326,7 +341,7 @@ Four operating modes are defined. High latency is intended for on demand streami
 
 Encoders should be configured to their best settings when being compared against each other:
 
-- vp10: --codec=vp10 --ivf --frame-parallel=0 --tile-columns=0 --cpu-used=0 --threads=1
+- av1: --codec=av1 --ivf --frame-parallel=0 --tile-columns=0 --cpu-used=0 --threads=1
 
 ### High Latency CQP
 
@@ -334,14 +349,14 @@ High Latency CQP is used for evaluating incremental changes to a codec. It shoul
 
 - daala: -v=x -b 2
 - vp9: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
-- vp10: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+- av1: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
 ### Low Latency CQP
 
 Low Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It requires the codec to be set for zero intrinsic frame delay.
 
 - daala: -v=x
-- vp10: --end-usage=q --cq-level=x -lag-in-frames=0
+- av1: --end-usage=q --cq-level=x -lag-in-frames=0
 
 ### Unconstrained High Latency
 
@@ -350,7 +365,7 @@ The encoder should be run at the best quality mode available, using the mode tha
 - x264: --crf=x
 - x265: --crf=x
 - daala: -v=x -b 2
-- vp10: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+- av1: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
 ### Unconstrained Low Latency
 
@@ -359,11 +374,13 @@ The encoder should be run at the best quality mode available, using the mode tha
 - x264: --crf-x --tune zerolatency
 - x265: --crf=x --tune zerolatency
 - daala: -v=x
-- vp10: --end-usage=q --cq-level=x -lag-in-frames=0
+- av1: --end-usage=q --cq-level=x -lag-in-frames=0
 
 # Automation
 
-Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs {{COMPARECODECS}}. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computers for fast results, with the AreWeCompressedYet tool {{AWCY}}. Because of computational constraints, several levels of testing are specified.
+Frequent objective comparisons are extremely beneficial while developing a new codec. Several tools exist in order to automate the process of objective comparisons. The Compare-Codecs tool allows BD-rate curves to be generated for a wide variety of codecs {{COMPARECODECS}}. The Daala source repository contains a set of scripts that can be used to automate the various metrics used. In addition, these scripts can be run automatically utilizing distributed computers for fast results, with rd_tool {{RD_TOOL}}. This tool can be run via a web interface called AreWeCompressedYet {{AWCY}}, or locally.
+
+Because of computational constraints, several levels of testing are specified.
 
 ## Regression tests
 
