@@ -5,10 +5,10 @@
 Network Working Group                                           T. Daede
 Internet-Draft                                                   Mozilla
 Intended status: Informational                                 A. Norkin
-Expires: October 16, 2016                                        Netflix
+Expires: October 17, 2016                                        Netflix
                                                           I. Brailovskiy
                                                            Amazon Lab126
-                                                          April 14, 2016
+                                                          April 15, 2016
 
 
               Video Codec Testing and Quality Measurement
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 16, 2016.
+   This Internet-Draft will expire on October 17, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Daede, et al.           Expires October 16, 2016                [Page 1]
+Daede, et al.           Expires October 17, 2016                [Page 1]
 
 Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
@@ -81,7 +81,7 @@ Table of Contents
      3.3.  PSNR-HVS-M  . . . . . . . . . . . . . . . . . . . . . . .   5
      3.4.  SSIM  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
      3.5.  Multi-Scale SSIM  . . . . . . . . . . . . . . . . . . . .   5
-     3.6.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   5
+     3.6.  Fast Multi-Scale SSIM . . . . . . . . . . . . . . . . . .   6
      3.7.  CIEDE2000 . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.8.  VMAF  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
    4.  Comparing and Interpreting Results  . . . . . . . . . . . . .   6
@@ -90,26 +90,26 @@ Table of Contents
      4.3.  Ranges  . . . . . . . . . . . . . . . . . . . . . . . . .   7
    5.  Test Sequences  . . . . . . . . . . . . . . . . . . . . . . .   7
      5.1.  Sources . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     5.2.  Test Sets . . . . . . . . . . . . . . . . . . . . . . . .   7
-     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   8
-       5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   8
+     5.2.  Test Sets . . . . . . . . . . . . . . . . . . . . . . . .   8
+     5.3.  Operating Points  . . . . . . . . . . . . . . . . . . . .   9
+       5.3.1.  Common settings . . . . . . . . . . . . . . . . . . .   9
        5.3.2.  High Latency CQP  . . . . . . . . . . . . . . . . . .   9
        5.3.3.  Low Latency CQP . . . . . . . . . . . . . . . . . . .   9
        5.3.4.  Unconstrained High Latency  . . . . . . . . . . . . .   9
-       5.3.5.  Unconstrained Low Latency . . . . . . . . . . . . . .   9
+       5.3.5.  Unconstrained Low Latency . . . . . . . . . . . . . .  10
    6.  Automation  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      6.1.  Regression tests  . . . . . . . . . . . . . . . . . . . .  10
-     6.2.  Objective performance tests . . . . . . . . . . . . . . .  10
+     6.2.  Objective performance tests . . . . . . . . . . . . . . .  11
      6.3.  Periodic tests  . . . . . . . . . . . . . . . . . . . . .  11
    7.  Informative References  . . . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
 
 
 
-Daede, et al.           Expires October 16, 2016                [Page 2]
+Daede, et al.           Expires October 17, 2016                [Page 2]
 
 Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
@@ -165,7 +165,7 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
 
 
-Daede, et al.           Expires October 16, 2016                [Page 3]
+Daede, et al.           Expires October 17, 2016                [Page 3]
 
 Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
@@ -185,7 +185,12 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    test procedure) mean opinion scores (MOS) or differential mean
    opinion scores (DMOS).  Normally, confidence intervals are also
    calculated to judge whether the difference between two encodings is
-   statistically significant.
+   statistically significant.  In certain cases, a viewing test with
+   expert test subjects can be performed, for example if a test should
+   evaluate technologies with similar performance with respect to a
+   particular artifact (e.g. loop filters or motion prediction).
+   Depending on the setup of the test, the output could be a MOS, DMOS
+   or a percentage of experts, who preferred one or another technology.
 
 3.  Objective Metrics
 
@@ -213,18 +218,19 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    It is directly drived from mean square error (MSE), or its square
    root (RMSE).  The formula used is:
 
+
+
+
+Daede, et al.           Expires October 17, 2016                [Page 4]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    20 * log10 ( MAX / RMSE )
 
    or, equivalently:
 
    10 * log10 ( MAX^2 / MSE )
-
-
-
-Daede, et al.           Expires October 16, 2016                [Page 4]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
 
    where the error is computed over all the pixels in the video, which
    is the method used in the dump_psnr.c reference implementation.
@@ -263,24 +269,24 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
    Multi-Scale SSIM is SSIM extended to multiple window sizes [MSSSIM].
 
+
+
+
+
+
+
+
+
+Daede, et al.           Expires October 17, 2016                [Page 5]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
 3.6.  Fast Multi-Scale SSIM
 
    Fast MS-SSIM is a modified implementation of MS-SSIM which operates
    on a limited number of scales and with modified weights [FASTSSIM].
    The final score is converted to decibels in the same manner as SSIM.
-
-
-
-
-
-
-
-
-
-Daede, et al.           Expires October 16, 2016                [Page 5]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
 
 3.7.  CIEDE2000
 
@@ -325,18 +331,18 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    codec.  Given a reference codec, test codec, and ranges, BD-rate
    values are calculated as follows:
 
+
+
+Daede, et al.           Expires October 17, 2016                [Page 6]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    o  Rate/distortion points are calculated for the reference and test
       codec.  There need to be enough points so that at least four
       points lie within the quality levels.
 
    o  The rates are converted into log-rates.
-
-
-
-Daede, et al.           Expires October 16, 2016                [Page 6]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
 
    o  A piecewise cubic hermite interpolating polynomial is fit to the
       points for each codec to produce functions of distortion in terms
@@ -372,6 +378,22 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
 5.1.  Sources
 
+
+
+
+
+
+
+
+
+
+
+
+Daede, et al.           Expires October 17, 2016                [Page 7]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    Lossless test clips are preferred for most tests, because the
    structure of compression artifacts in already-compressed clips may
    introduce extra noise in the test results.  However, a large amount
@@ -386,14 +408,6 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
    Sources are divided into several categories to test different
    scenarios the codec will be required to operate in.  For easier
-
-
-
-Daede, et al.           Expires October 16, 2016                [Page 7]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
-
    comparison, all videos in each set should have the same color
    subsampling, same resolution, and same number of frames.  In
    addition, all test videos must be publicly available for testing use,
@@ -429,6 +443,13 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
    o  twitch-1, a game sequence set (2280 frames total)
 
+
+
+Daede, et al.           Expires October 17, 2016                [Page 8]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
 5.3.  Operating Points
 
    Four operating modes are defined.  High latency is intended for on
@@ -443,21 +464,14 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    Encoders should be configured to their best settings when being
    compared against each other:
 
-
-
-Daede, et al.           Expires October 16, 2016                [Page 8]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
-
    o  av1: -codec=av1 -ivf -frame-parallel=0 -tile-columns=0 -cpu-used=0
       -threads=1
 
 5.3.2.  High Latency CQP
 
    High Latency CQP is used for evaluating incremental changes to a
-   codec.  It should not be used to compare unrelated codecs to each
-   other.  It allows codec features with intrinsic frame delay.
+   codec.  This method is well suited to compare codecs with similar
+   coding tools.  It allows codec features with intrinsic frame delay.
 
    o  daala: -v=x -b 2
 
@@ -468,9 +482,9 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 5.3.3.  Low Latency CQP
 
    Low Latency CQP is used for evaluating incremental changes to a
-   codec.  It should not be used to compare unrelated codecs to each
-   other.  It requires the codec to be set for zero intrinsic frame
-   delay.
+   codec.  This method is well suited to compare codecs with similar
+   coding tools.  It requires the codec to be set for zero intrinsic
+   frame delay.
 
    o  daala: -v=x
 
@@ -484,6 +498,14 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    supported.  One parameter is provided to adjust bitrate, but the
    units are arbitrary.  Example configurations follow:
 
+
+
+
+Daede, et al.           Expires October 17, 2016                [Page 9]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    o  x264: -crf=x
 
    o  x265: -crf=x
@@ -493,18 +515,6 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    o  av1: -end-usage=q -cq-level=x -lag-in-frames=25 -auto-alt-ref=2
 
 5.3.5.  Unconstrained Low Latency
-
-
-
-
-
-
-
-
-Daede, et al.           Expires October 16, 2016                [Page 9]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
 
    The encoder should be run at the best quality mode available, using
    the mode that will provide the best quality per bitrate (VBR or
@@ -538,6 +548,20 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
 6.1.  Regression tests
 
+
+
+
+
+
+
+
+
+
+Daede, et al.           Expires October 17, 2016               [Page 10]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    Regression tests run on a small number of short sequences.  The
    regression tests should include a number of various test conditions.
    The purpose of regression tests is to ensure bug fixes (and similar
@@ -554,14 +578,6 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
    Changes that are expected to affect the quality of encode or
    bitstream should run an objective performance test.  The performance
-
-
-
-Daede, et al.           Expires October 16, 2016               [Page 10]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
-
    tests should be run on a wider number of sequences.  If the option
    for the objective performance test is chosen, wide range and full
    length simulations are run on the site and the results (including all
@@ -592,6 +608,16 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
    [AWCY]     Xiph.Org, "Are We Compressed Yet?", 2016, <https://
               arewecompressedyet.com/>.
 
+
+
+
+
+
+Daede, et al.           Expires October 17, 2016               [Page 11]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    [BT500]    ITU-R, "Recommendation ITU-R BT.500-13", 2012, <https://
               www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-
               BT.500-13-201201-I!!PDF-E.pdf>.
@@ -610,14 +636,6 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
               <http://git.xiph.org/?p=daala.git;a=summary>.
 
    [DERFVIDEO]
-
-
-
-Daede, et al.           Expires October 16, 2016               [Page 11]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
-
-
               Terriberry, T., "Xiph.org Video Test Media", n.d., <https:
               //media.xiph.org/video/derf/>.
 
@@ -646,6 +664,16 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
               Similarity", 2004,
               <http://www.cns.nyu.edu/pub/eero/wang03-reprint.pdf>.
 
+
+
+
+
+
+Daede, et al.           Expires October 17, 2016               [Page 12]
+
+Internet-Draft Video Codec Testing and Quality Measurement    April 2016
+
+
    [STEAM]    Valve Corporation, "Steam Hardware & Software Survey: June
               2015", June 2015,
               <http://store.steampowered.com/hwsurvey>.
@@ -665,13 +693,6 @@ Authors' Addresses
    Mozilla
 
    Email: tdaede@mozilla.com
-
-
-
-
-Daede, et al.           Expires October 16, 2016               [Page 12]
-
-Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
 
    Andrey Norkin
@@ -704,25 +725,4 @@ Internet-Draft Video Codec Testing and Quality Measurement    April 2016
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Daede, et al.           Expires October 16, 2016               [Page 13]
+Daede, et al.           Expires October 17, 2016               [Page 13]
