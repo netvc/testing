@@ -224,7 +224,7 @@ Video comparisons are necessary when making changes with temporal effects, such 
 
 ## Subjective viewing test
 
-A subjective viewing test is the preferred method of evaluating the quality. The subjective test should be performed as either consecutively showing the video sequences on one screen or on two screens located side-by-side. The testing procedure should normally follow rules described in {{BT500}} and be performed with non-expert test subjects. The result of the test could be (depending on the test procedure) mean opinion scores (MOS) or differential mean opinion scores (DMOS). Normally, confidence intervals are also calculated to judge whether the difference between two encodings is statistically significant.
+A subjective viewing test is the preferred method of evaluating the quality. The subjective test should be performed as either consecutively showing the video sequences on one screen or on two screens located side-by-side. The testing procedure should normally follow rules described in {{BT500}} and be performed with non-expert test subjects. The result of the test could be (depending on the test procedure) mean opinion scores (MOS) or differential mean opinion scores (DMOS). Normally, confidence intervals are also calculated to judge whether the difference between two encodings is statistically significant. In certain cases, a viewing test with expert test subjects can be performed, for example if a test should evaluate technologies with similar performance with respect to a particular artifact (e.g. loop filters or motion prediction). Depending on the setup of the test, the output could be a MOS, DMOS or a percentage of experts, who preferred one or another technology.
 
 # Objective Metrics
 
@@ -345,7 +345,7 @@ Encoders should be configured to their best settings when being compared against
 
 ### High Latency CQP
 
-High Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It allows codec features with intrinsic frame delay.
+High Latency CQP is used for evaluating incremental changes to a codec. This method is well suited to compare codecs with similar coding tools. It allows codec features with intrinsic frame delay.
 
 - daala: -v=x -b 2
 - vp9: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
@@ -353,7 +353,7 @@ High Latency CQP is used for evaluating incremental changes to a codec. It shoul
 
 ### Low Latency CQP
 
-Low Latency CQP is used for evaluating incremental changes to a codec. It should not be used to compare unrelated codecs to each other. It requires the codec to be set for zero intrinsic frame delay.
+Low Latency CQP is used for evaluating incremental changes to a codec. This method is well suited to compare codecs with similar coding tools. It requires the codec to be set for zero intrinsic frame delay.
 
 - daala: -v=x
 - av1: --end-usage=q --cq-level=x -lag-in-frames=0
