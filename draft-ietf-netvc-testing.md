@@ -348,8 +348,8 @@ Encoders should be configured to their best settings when being compared against
 High Latency CQP is used for evaluating incremental changes to a codec. This method is well suited to compare codecs with similar coding tools. It allows codec features with intrinsic frame delay.
 
 - daala: -v=x -b 2
-- vp9: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
-- av1: --end-usage=q --cq-level=x -lag-in-frames=25 -auto-alt-ref=2
+- vp9: --end-usage=q --cq-level=x --lag-in-frames=25 --auto-alt-ref=2
+- av1: --end-usage=q --cq-level=x --lag-in-frames=25 --auto-alt-ref=2
 
 ### Low Latency CQP
 
