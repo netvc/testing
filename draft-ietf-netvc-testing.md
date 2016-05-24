@@ -315,23 +315,140 @@ Lossless test clips are preferred for most tests, because the structure of compr
 
 Sources are divided into several categories to test different scenarios the codec will be required to operate in. For easier comparison, all videos in each set should have the same color subsampling, same resolution, and same number of frames. In addition, all test videos must be publicly available for testing use, to allow for reproducibility of results. All current test sets are available for download {{TESTSEQUENCES}}.
 
-- Still images are useful when comparing intra coding performance. Xiph.org has four sets of lossless, one megapixel images that have been converted into YUV 4:2:0 format. There are four sets that can be used:
-  - subset1 (50 images)
-  - subset2 (50 images)
-  - subset3 (1000 images)
-  - subset4 (1000 images)
+Test sequences should be downloaded in whole. They should not be recreated from the original sources.
 
-- video-hd-3, a set that consists of 1920x1080 clips from {{DERFVIDEO}} (1500 frames total)
+### regression-1
 
-- vc-360p-1, a low quality video conferencing set (2700 frames total)
+This test set is used for basic regression testing. It contains a very small number of clips.
 
-- vc-720p-1, a high quality video conferencing set (2750 frames total)
+- kirlandvga_300f.y4m (360p, 8bit, 4:2:0)
+- FourPeople_1280x720_60_250f.y4m (720p, 8bit, 4:2:0)
+- Narrarator_4096x2160_60fps_10bit_420_0_15f.y4m (4k, 10bit, 4:2:0)
+- CSGO_10_120f.y4m (1080p, 8bit, 4:4:4)
 
-- netflix-4k-1, a cinematic 4K video test set (2280 frames total)
+### objective-1
 
-- netflix-2k-1, a 2K scaled version of netflix-4k-1 (2280 frames total)
+This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. Other deviations are noted in parenthesis.
 
-- twitch-1, a game sequence set (2280 frames total)
+4096x2160, 10bit, 4:2:0, 60 frames:
+
+- Aerial (start frame 600)
+- BarScene (start frame 120)
+- Boat (start frame 0)
+- BoxingPractice (start frame 0)
+- Crosswalk (start frame 0)
+- Dancers (start frame 120)
+- FoodMarket
+- Narrator
+- PierSeaside
+- RitualDance
+- SquareAndTimelapse
+- ToddlerFountain (start frame 120)
+- TunnelFlag
+- WindAndNature (start frame 120)
+
+1920x1080, 8bit, 4:4:4, 60 frames:
+
+- CSGO
+- DOTA2
+- EuroTruckSimulator2
+- Hearthstone
+- MINECRAFT
+- STARCRAFT
+
+1920x1080, 8bit, 4:2:0, 60 frames:
+
+- ducks_take_off
+- life
+- aspen
+- crowd_run
+- old_town_cross
+- park_joy
+- pedestrian_area
+- rush_field_cuts
+- rush_hour
+- station2
+- touchdown_pass
+
+1280x720, 8bit, 4:2:0, 60 frames:
+
+- Netflix_FoodMarket2
+- Netflix_Tango
+- DrivingPOV (start frame 120)
+- DinnerScene (start frame 120)
+- RollerCoaster (start frame 600)
+- FourPeople
+- Johnny
+- KristenAndSara
+- vidyo1
+- vidyo3
+- vidyo4
+- dark720p
+- gipsrecmotion720p
+- gipsrestat720p
+
+640x360, 8bit, 4:2:0, 60 frames:
+
+- red_kayak
+- blue_sky
+- riverbed
+- thaloundeskmtgvga
+- kirlandvga
+- tacomanarrowsvga
+- tacomascmvvga
+- desktop2360p
+- mmmovingvga
+- mmstationaryvga
+- niklasvga
+
+### objective-1-fast
+
+This test set is based on objective-1, but requires much less computation and is suitable for smaller tests. It is intended to be a predictor for the results from objective-1.
+
+2048x1080, 8bit, 4:2:0, 60 frames:
+
+- Aerial (start frame 600)
+- Boat (start frame 0)
+- Crosswalk (start frame 0)
+- FoodMarket
+- PierSeaside
+- SquareAndTimelapse
+- TunnelFlag
+
+1920x1080, 8bit, 4:2:0, 60 frames:
+
+- CSGO
+- EuroTruckSimulator2
+- MINECRAFT
+
+1920x1080, 8bit, 4:2:0, 60 frames:
+
+- ducks_take_off
+- aspen
+- old_town_cross
+- pedestrian_area
+- rush_hour
+- touchdown_pass
+
+1280x720, 8bit, 4:2:0, 60 frames:
+
+- Netflix_FoodMarket2
+- DrivingPOV (start frame 120)
+- RollerCoaster (start frame 600)
+- Johnny
+- vidyo1
+- vidyo4
+- gipsrecmotion720p
+
+640x360, 8bit, 4:2:0, 60 frames:
+
+- red_kayak
+- riverbed
+- kirlandvga
+- tacomascmvvga
+- mmmovingvga
+- niklasvga
+
 
 ## Operating Points
 
@@ -384,21 +501,20 @@ Because of computational constraints, several levels of testing are specified.
 
 ## Regression tests
 
-Regression tests run on a small number of short sequences. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on the following sets, in both high and low latency CQP modes:
-
-- vc-720p-1
-- netflix-2k-1
+Regression tests run on a small number of short sequences - regression-test-1. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on the following sets, in both high and low latency CQP modes:
 
 ## Objective performance tests
 
-Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. If the option for the objective performance test is chosen, wide range and full length simulations are run on the site and the results (including all the objective metrics) are generated. Objective performance tests are run on the following sets, in both high and low latency CQP modes:
+Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. The following data should be reported:
+- Identifying information for the encoder used, such as the git commit hash.
+- Command line options to the encoder, configure script, and anything else necessary to replicate the experiment.
+- The name of the test set run (objective-1)
+- For both high and low latency CQP modes, and for each objective metric:
+  - The BD-Rate score, in percent, for each clip.
+  - The average of all BD-Rate scores, equally weighted, for each resolution category in the test set.
+  - The average of all BD-Rate scores for all videos in all categories.
 
-- video-hd-3
-- netflix-2k-1
-- netflix-4k-1
-- vc-720p-1
-- vc-360p-1
-- twitch-1
+For smaller changes that don't introduce new tools, the objective-1-fast test may be substituted. In this case only high latency CQP needs to be run.
 
 ## Periodic tests
 
