@@ -293,7 +293,7 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by objective metrics. The rate change is computed as the average percent difference in rate over a range of qualities. Metric score ranges are not static - they are calculated either from a range of bitrates of the reference codec, or from quantizers of a third, anchor codec. Given a reference codec and test codec, BD-rate values are calculated as follows:
 
 - Rate/distortion points are calculated for the reference and test codec.
-  - There need to be enough points so that at least four points lie within the quality levels, and one point must lie outside of the quality range on each side.
+  - There need to be enough points so that at least four points lie within the quality range, and one point must lie outside of the quality range on each side.
   - Additional points outside of the range should be discarded.
 - The rates are converted into log-rates.
 - A piecewise cubic hermite interpolating polynomial is fit to the points for each codec to produce functions of log-rate in terms of distortion.
@@ -305,7 +305,7 @@ The Bjontegaard rate difference, also known as BD-rate, allows the measurement o
 
 ## Ranges
 
-For all tests described in this document, quantizers of an anchor codec are used to determine the quality ranges. The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 55. The resulting quality ranges are available for download FIXME.
+For all tests described in this document, quantizers of an anchor codec are used to determine the quality ranges. The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 55.
 
 # Test Sequences
 
@@ -323,10 +323,10 @@ Test sequences should be downloaded in whole. They should not be recreated from 
 
 This test set is used for basic regression testing. It contains a very small number of clips.
 
-- kirlandvga_300f.y4m (360p, 8bit, 4:2:0)
-- FourPeople_1280x720_60_250f.y4m (720p, 8bit, 4:2:0)
-- Narrarator_4096x2160_60fps_10bit_420_0_15f.y4m (4k, 10bit, 4:2:0)
-- CSGO_10_120f.y4m (1080p, 8bit, 4:4:4)
+- kirlandvga (640x360, 8bit, 4:2:0, 300 frames)
+- FourPeople (1280x720, 8bit, 4:2:0, 60 frames)
+- Narrarator (4096x2160, 10bit, 4:2:0, 15 frames)
+- CSGO (1920x1080, 8bit, 4:4:4 60 frames)
 
 ### objective-1
 
@@ -405,7 +405,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 
 ### objective-1-fast
 
-This test set is based on objective-1, but requires much less computation and is suitable for smaller tests. It is intended to be a predictor for the results from objective-1.
+This test set is based on objective-1, but requires much less computation. It is intended to be a predictor for the results from objective-1.
 
 2048x1080, 8bit, 4:2:0, 60 frames:
 
@@ -503,11 +503,12 @@ Because of computational constraints, several levels of testing are specified.
 
 ## Regression tests
 
-Regression tests run on a small number of short sequences - regression-test-1. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on the following sets, in both high and low latency CQP modes:
+Regression tests run on a small number of short sequences - regression-test-1. The regression tests should include a number of various test conditions. The purpose of regression tests is to ensure bug fixes (and similar patches) do not negatively affect the performance. The anchor in regression tests is the previous revision of the codec in source control. Regression tests are run on both high and low latency CQP modes
 
 ## Objective performance tests
 
 Changes that are expected to affect the quality of encode or bitstream should run an objective performance test. The performance tests should be run on a wider number of sequences. The following data should be reported:
+
 - Identifying information for the encoder used, such as the git commit hash.
 - Command line options to the encoder, configure script, and anything else necessary to replicate the experiment.
 - The name of the test set run (objective-1)
@@ -516,7 +517,7 @@ Changes that are expected to affect the quality of encode or bitstream should ru
   - The average of all BD-Rate scores, equally weighted, for each resolution category in the test set.
   - The average of all BD-Rate scores for all videos in all categories.
 
-For smaller changes that don't introduce new tools, the objective-1-fast test may be substituted. In this case only high latency CQP needs to be run.
+For non-tool contributions, the test set objective-1-fast can be substituted.
 
 ## Periodic tests
 
