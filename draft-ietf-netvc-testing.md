@@ -293,19 +293,19 @@ When displayed on a graph, bitrate is shown on the X axis, and the quality metri
 The Bjontegaard rate difference, also known as BD-rate, allows the measurement of the bitrate reduction offered by a codec or codec feature, while maintaining the same quality as measured by objective metrics. The rate change is computed as the average percent difference in rate over a range of qualities. Metric score ranges are not static - they are calculated either from a range of bitrates of the reference codec, or from quantizers of a third, anchor codec. Given a reference codec and test codec, BD-rate values are calculated as follows:
 
 - Rate/distortion points are calculated for the reference and test codec.
-  - There need to be enough points so that at least four points lie within the quality range, and one point must lie outside of the quality range on each side.
+  - At least four points must be computed. These points should be the same quantizers when comparing two versions of the same codec.
   - Additional points outside of the range should be discarded.
 - The rates are converted into log-rates.
 - A piecewise cubic hermite interpolating polynomial is fit to the points for each codec to produce functions of log-rate in terms of distortion.
 - Metric score ranges are computed:
-  - If using a bitrate range, metric score ranges are computed by converting the rate bounds into log-rate and then looking up scores of the reference codec using the interpolating polynomial.
-  - If using a quantizer range, a third anchor codec's metric scores at fixed quantizers are used directly as the bounds.
+  - If comparing two versions of the same codec, the overlap is the intersection of the two curves, bound by the chosen quantizer points.
+  - If comparing dissimilar codecs, a third anchor codec's metric scores at fixed quantizers are used directly as the bounds.
 - The log-rate is numerically integrated over the metric range for each curve, using at least 1000 samples and trapezoidal integration.
 - The resulting integrated log-rates are converted back into linear rate, and then the percent difference is calculated from the reference to the test codec.
 
 ## Ranges
 
-For all tests described in this document, quantizers of an anchor codec are used to determine the quality ranges. The anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 55.
+For all tests described in this document, the anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 55. For testing changes to libvpx or libaom, the anchor does not need to be used.
 
 # Test Sequences
 
