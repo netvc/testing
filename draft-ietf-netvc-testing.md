@@ -165,8 +165,8 @@ informative:
         name: Nenghai Yu
     date: 2012
   VMAF:
-    target: "http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=7351097"
-    title: Challenges in cloud based ingest and encoding for high quality streaming media
+    target: "https://github.com/Netflix/vmaf"
+    title: VMAF - Video Multi-Method Assessment Fusion
     author:
       -
         ins: A. Aaron
