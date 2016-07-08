@@ -390,6 +390,11 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - dark720p
 - gipsrecmotion720p
 - gipsrestat720p
+- controlled_burn
+- stockholm
+- speed_bag
+- snow_mnt
+- shields
 
 640x360, 8bit, 4:2:0, 60 frames:
 
@@ -444,6 +449,8 @@ This test set is based on objective-1, but requires much less computation. It is
 - vidyo1
 - vidyo4
 - gipsrecmotion720p
+- speed_bag
+- shields
 
 640x360, 8bit, 4:2:0, 60 frames:
 
