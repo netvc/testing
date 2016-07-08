@@ -357,6 +357,8 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - Hearthstone
 - MINECRAFT
 - STARCRAFT
+- wikipedia
+- pvq_slideshow
 
 1920x1080, 8bit, 4:2:0, 60 frames:
 
@@ -422,6 +424,7 @@ This test set is based on objective-1, but requires much less computation. It is
 - CSGO
 - EuroTruckSimulator2
 - MINECRAFT
+- wikipedia
 
 1920x1080, 8bit, 4:2:0, 60 frames:
 
