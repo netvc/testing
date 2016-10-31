@@ -271,10 +271,6 @@ For the metric to appear more linear on BD-rate curves, the score is converted i
 
 Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}.
 
-## Fast Multi-Scale SSIM
-
-Fast MS-SSIM is a modified implementation of MS-SSIM which operates on a limited number of scales and with modified weights {{FASTSSIM}}. The final score is converted to decibels in the same manner as SSIM.
-
 ## CIEDE2000
 
 CIEDE2000 is a metric based on CIEDE color distances {{CIEDE2000}}. It generates a single score taking into account all three chroma planes. It does not take into consideration any structural similarity or other psychovisual effects.
