@@ -31,6 +31,7 @@ author:
 normative:
 
 informative:
+  I-D.ietf-netvc-requirements:
   PSNRHVS:
     title: A New Full-Reference Quality Metrics Based on HVS
     author:
@@ -305,7 +306,9 @@ The Bjontegaard rate difference, also known as BD-rate, allows the measurement o
 
 ## Ranges
 
-For all tests described in this document, the anchor codec used for ranges is libvpx 1.5.0 run with VP9 and High Latency CQP settings. The quality range used is that achieved between cq-level 20 and 55. For testing changes to libvpx or libaom, the anchor does not need to be used.
+For individual feature changes in libaom or libvpx, the overlap BD-Rate method with quantizers 20, 32, 43, and 55 must be used.
+
+For the final evaluation described in {{I-D.ietf-netvc-requirements}}, the quantizers used are 20, 24, 28, 32, 36, 39, 43, 47, 51, and 55.
 
 # Test Sequences
 
