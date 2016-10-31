@@ -263,13 +263,13 @@ The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights
 
 SSIM (Structural Similarity Image Metric) is a still image quality metric introduced in 2004 {{SSIM}}. It computes a score for each individual pixel, using a window of neighboring pixels. These scores can then be averaged to produce a global score for the entire image. The original paper produces scores ranging between 0 and 1.
 
-For the metric to appear more linear on BD-rate curves, the score is converted into a nonlinear decibel scale:
+To linearize the metric for BD-Rate computation, the score is converted into a nonlinear decibel scale:
 
 -10 * log10 (1 - SSIM)
 
 ## Multi-Scale SSIM
 
-Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}.
+Multi-Scale SSIM is SSIM extended to multiple window sizes {{MSSSIM}}. The metric score is converted to decibels in the same way as SSIM.
 
 ## CIEDE2000
 
@@ -278,6 +278,8 @@ CIEDE2000 is a metric based on CIEDE color distances {{CIEDE2000}}. It generates
 ## VMAF
 
 Video Multi-method Assessment Fusion (VMAF) is a full-reference perceptual video quality metric that aims to approximate human perception of video quality {{VMAF}}. This metric is focused on quality degradation due compression and rescaling. VMAF estimates the perceived quality score by computing scores from multiple quality assessment algorithms, and fusing them using a support vector machine (SVM). Currently, three image fidelity metrics and one temporal signal have been chosen as features to the SVM, namely Anti-noise SNR (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity (VIF), and the mean co-located pixel difference of a frame with respect to the previous frame.
+
+The quality score from VMAF is used directly to calculate BD-Rate, without any conversions.
 
 # Comparing and Interpreting Results
 
