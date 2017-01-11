@@ -334,6 +334,7 @@ This test set is used for basic regression testing. It contains a very small num
 This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. This test set requires compiling with high bit depth support.
 
 4096x2160, 4:2:0, 60 frames:
+
 - Netflix_BarScene_4096x2160_60fps_10bit_420_60f
 - Netflix_BoxingPractice_4096x2160_60fps_10bit_420_60f
 - Netflix_Dancers_4096x2160_60fps_10bit_420_60f
@@ -344,6 +345,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - street_hdr_amazon_2160p
 
 1920x1080, 4:2:0, 60 frames:
+
 - aspen_1080p_60f
 - crowd_run_1080p50_60f
 - ducks_take_off_1080p50_60f
@@ -367,6 +369,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - touchdown_pass_1080p_60f
 
 1280x720, 4:2:0, 120 frames:
+
 - boat_hdr_amazon_720p
 - dark720p_120f
 - FourPeople_1280x720_60_120f
@@ -384,6 +387,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - vidyo4_720p_60fps_120f
 
 640x360, 4:2:0, 120 frames:
+
 - blue_sky_360p_120f
 - controlled_burn_640x360_120f
 - desktop2360p_120f
@@ -402,6 +406,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - water_hdr_amazon_360p
 
 426x240, 4:2:0, 120 frames:
+
 - bqfree_240p_120f
 - bqhighway_240p_120f
 - bqzoom_240p_120f
@@ -410,6 +415,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 - mozzoom_240p_120f
 
 1920x1080, 4:4:4 or 4:2:0, 60 frames:
+
 - CSGO_60f.y4m
 - DOTA2_60f_420.y4m
 - MINECRAFT_60f_420.y4m
@@ -424,6 +430,7 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 This test set is a strict subset of objective-2-slow. It is designed for faster runtime. This test set requires compiling with high bit depth support.
 
 1920x1080, 4:2:0, 60 frames:
+
 - aspen_1080p_60f
 - ducks_take_off_1080p50_60f
 - life_1080p30_60f
@@ -438,6 +445,7 @@ This test set is a strict subset of objective-2-slow. It is designed for faster 
 - touchdown_pass_1080p_60f
 
 1280x720, 4:2:0, 120 frames:
+
 - boat_hdr_amazon_720p
 - dark720p_120f
 - gipsrestat720p_120f
@@ -448,6 +456,7 @@ This test set is a strict subset of objective-2-slow. It is designed for faster 
 - vidyo4_720p_60fps_120f
 
 640x360, 4:2:0, 120 frames:
+
 - blue_sky_360p_120f
 - controlled_burn_640x360_120f
 - kirland360p_120f
@@ -460,11 +469,13 @@ This test set is a strict subset of objective-2-slow. It is designed for faster 
 - thaloundeskmtg360p_120f
 
 426x240, 4:2:0, 120 frames:
+
 - bqfree_240p_120f
 - bqzoom_240p_120f
 - dirtbike_240p_120f
 
 1290x1080, 4:2:0, 60 frames:
+
 - DOTA2_60f_420.y4m
 - MINECRAFT_60f_420.y4m
 - STARCRAFT_60f_420.y4m
@@ -554,7 +565,7 @@ This test set is an old version of objective-2-slow.
 
 ### objective-1-fast
 
-This is an old versin of objective-2-fast.
+This is an old version of objective-2-fast.
 
 1920x1080, 8bit, 4:2:0, 60 frames:
 
