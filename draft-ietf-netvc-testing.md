@@ -329,9 +329,150 @@ This test set is used for basic regression testing. It contains a very small num
 - Narrarator (4096x2160, 10bit, 4:2:0, 15 frames)
 - CSGO (1920x1080, 8bit, 4:4:4 60 frames)
 
-### objective-1
+### objective-2-slow
 
-This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. Other deviations are noted in parenthesis.
+This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. This test set requires compiling with high bit depth support.
+
+4096x2160, 4:2:0, 60 frames:
+- Netflix_BarScene_4096x2160_60fps_10bit_420_60f
+- Netflix_BoxingPractice_4096x2160_60fps_10bit_420_60f
+- Netflix_Dancers_4096x2160_60fps_10bit_420_60f
+- Netflix_Narrator_4096x2160_60fps_10bit_420_60f
+- Netflix_RitualDance_4096x2160_60fps_10bit_420_60f
+- Netflix_ToddlerFountain_4096x2160_60fps_10bit_420_60f
+- Netflix_WindAndNature_4096x2160_60fps_10bit_420_60f
+- street_hdr_amazon_2160p
+
+1920x1080, 4:2:0, 60 frames:
+- aspen_1080p_60f
+- crowd_run_1080p50_60f
+- ducks_take_off_1080p50_60f
+- guitar_hdr_amazon_1080p
+- life_1080p30_60f
+- Netflix_Aerial_1920x1080_60fps_8bit_420_60f
+- Netflix_Boat_1920x1080_60fps_8bit_420_60f
+- Netflix_Crosswalk_1920x1080_60fps_8bit_420_60f
+- Netflix_FoodMarket_1920x1080_60fps_8bit_420_60f
+- Netflix_PierSeaside_1920x1080_60fps_8bit_420_60f
+- Netflix_SquareAndTimelapse_1920x1080_60fps_8bit_420_60f
+- Netflix_TunnelFlag_1920x1080_60fps_8bit_420_60f
+- old_town_cross_1080p50_60f
+- pan_hdr_amazon_1080p
+- park_joy_1080p50_60f
+- pedestrian_area_1080p25_60f
+- rush_field_cuts_1080p_60f
+- rush_hour_1080p25_60f
+- seaplane_hdr_amazon_1080p
+- station2_1080p25_60f
+- touchdown_pass_1080p_60f
+
+1280x720, 4:2:0, 120 frames:
+- boat_hdr_amazon_720p
+- dark720p_120f
+- FourPeople_1280x720_60_120f
+- gipsrestat720p_120f
+- Johnny_1280x720_60_120f
+- KristenAndSara_1280x720_60_120f
+- Netflix_DinnerScene_1280x720_60fps_8bit_420_120f
+- Netflix_DrivingPOV_1280x720_60fps_8bit_420_120f
+- Netflix_FoodMarket2_1280x720_60fps_8bit_420_120f
+- Netflix_RollerCoaster_1280x720_60fps_8bit_420_120f
+- Netflix_Tango_1280x720_60fps_8bit_420_120f
+- rain_hdr_amazon_720p
+- vidyo1_720p_60fps_120f
+- vidyo3_720p_60fps_120f
+- vidyo4_720p_60fps_120f
+
+640x360, 4:2:0, 120 frames:
+- blue_sky_360p_120f
+- controlled_burn_640x360_120f
+- desktop2360p_120f
+- kirland360p_120f
+- mmstationary360p_120f
+- niklas360p_120f
+- rain2_hdr_amazon_360p
+- red_kayak_360p_120f
+- riverbed_360p25_120f
+- shields2_640x360_120f
+- snow_mnt_640x360_120f
+- speed_bag_640x360_120f
+- stockholm_640x360_120f
+- tacomanarrows360p_120f
+- thaloundeskmtg360p_120f
+- water_hdr_amazon_360p
+
+426x240, 4:2:0, 120 frames:
+- bqfree_240p_120f
+- bqhighway_240p_120f
+- bqzoom_240p_120f
+- chairlift_240p_120f
+- dirtbike_240p_120f
+- mozzoom_240p_120f
+
+1920x1080, 4:4:4 or 4:2:0, 60 frames:
+- CSGO_60f.y4m
+- DOTA2_60f_420.y4m
+- MINECRAFT_60f_420.y4m
+- STARCRAFT_60f_420.y4m
+- EuroTruckSimulator2_60f.y4m
+- Hearthstone_60f.y4m
+- wikipedia_420.y4m
+- pvq_slideshow.y4m
+
+### objective-2-fast
+
+This test set is a strict subset of objective-2-slow. It is designed for faster runtime. This test set requires compiling with high bit depth support.
+
+1920x1080, 4:2:0, 60 frames:
+- aspen_1080p_60f
+- ducks_take_off_1080p50_60f
+- life_1080p30_60f
+- Netflix_Aerial_1920x1080_60fps_8bit_420_60f
+- Netflix_Boat_1920x1080_60fps_8bit_420_60f
+- Netflix_FoodMarket_1920x1080_60fps_8bit_420_60f
+- Netflix_PierSeaside_1920x1080_60fps_8bit_420_60f
+- Netflix_SquareAndTimelapse_1920x1080_60fps_8bit_420_60f
+- Netflix_TunnelFlag_1920x1080_60fps_8bit_420_60f
+- rush_hour_1080p25_60f
+- seaplane_hdr_amazon_1080p
+- touchdown_pass_1080p_60f
+
+1280x720, 4:2:0, 120 frames:
+- boat_hdr_amazon_720p
+- dark720p_120f
+- gipsrestat720p_120f
+- KristenAndSara_1280x720_60_120f
+- Netflix_DrivingPOV_1280x720_60fps_8bit_420_60f
+- Netflix_RollerCoaster_1280x720_60fps_8bit_420_60f
+- vidyo1_720p_60fps_120f
+- vidyo4_720p_60fps_120f
+
+640x360, 4:2:0, 120 frames:
+- blue_sky_360p_120f
+- controlled_burn_640x360_120f
+- kirland360p_120f
+- niklas360p_120f
+- rain2_hdr_amazon_360p
+- red_kayak_360p_120f
+- riverbed_360p25_120f
+- shields2_640x360_120f
+- speed_bag_640x360_120f
+- thaloundeskmtg360p_120f
+
+426x240, 4:2:0, 120 frames:
+- bqfree_240p_120f
+- bqzoom_240p_120f
+- dirtbike_240p_120f
+
+1290x1080, 4:2:0, 60 frames:
+- DOTA2_60f_420.y4m
+- MINECRAFT_60f_420.y4m
+- STARCRAFT_60f_420.y4m
+- wikipedia_420.y4m
+
+### objective-1.1
+
+This test set is an old version of objective-2-slow.
 
 4096x2160, 10bit, 4:2:0, 60 frames:
 
@@ -413,9 +554,9 @@ This test set is a comprehensive test set, grouped by resolution. These test cli
 
 ### objective-1-fast
 
-This test set is based on objective-1, but requires much less computation. It is intended to be a predictor for the results from objective-1.
+This is an old versin of objective-2-fast.
 
-2048x1080, 8bit, 4:2:0, 60 frames:
+1920x1080, 8bit, 4:2:0, 60 frames:
 
 - Aerial (start frame 600)
 - Boat (start frame 0)
