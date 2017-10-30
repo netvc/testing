@@ -631,7 +631,7 @@ High Latency CQP is used for evaluating incremental changes to a codec. This met
 
 - daala: -v=x -b 2
 - vp9: --end-usage=q --cq-level=x --lag-in-frames=25 --auto-alt-ref=2
-- av1: --end-usage=q --cq-level=x --lag-in-frames=25 --auto-alt-ref=2
+- av1: --end-usage=q --cq-level=x --auto-alt-ref=2
 
 ### Low Latency CQP
 
@@ -674,13 +674,13 @@ Changes that are expected to affect the quality of encode or bitstream should ru
 
 - Identifying information for the encoder used, such as the git commit hash.
 - Command line options to the encoder, configure script, and anything else necessary to replicate the experiment.
-- The name of the test set run (objective-1)
+- The name of the test set run (objective-1-fast)
 - For both high and low latency CQP modes, and for each objective metric:
   - The BD-Rate score, in percent, for each clip.
   - The average of all BD-Rate scores, equally weighted, for each resolution category in the test set.
   - The average of all BD-Rate scores for all videos in all categories.
 
-For non-tool contributions, the test set objective-1-fast can be substituted.
+Normally, the encoder should always be run at the slowest, highest quality speed setting (cpu-used=0 in the case of AV1 and VP9). However, in the case of computation time, both the reference and changed encoder can be built with some options disabled. For AV1, --disable-ext_partition and --disable-ext_partition_types can be passed to the configure script to substantially speed up encoding, but the usage of these options must be reported in the test results.
 
 ## Periodic tests
 
