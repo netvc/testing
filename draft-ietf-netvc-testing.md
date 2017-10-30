@@ -54,17 +54,6 @@ informative:
         ins: M. Carli
         name: Marco Carli
     date: 2002
-  FASTSSIM:
-    target: http://live.ece.utexas.edu/publications/2011/chen_rtip_2011.pdf
-    title: Fast structural similarity index algorithm
-    author:
-      -
-        ins: M. Chen
-        name: Ming-Jun Chen
-      -
-        ins: A. C. Bovik
-        name: Alan Conrad Bovik
-    date: 2010
   MSSSIM:
     target: http://www.cns.nyu.edu/~zwang/files/papers/msssim.pdf
     title: Multi-Scale Structural Similarity for Image Quality Assessment
