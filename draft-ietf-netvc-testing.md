@@ -1,7 +1,7 @@
 ---
 title: Video Codec Testing and Quality Measurement
 docname: draft-ietf-netvc-testing-latest
-date: 2018-07-02
+date: 2019-01-25
 category: info
 
 ipr: trust200902
@@ -102,22 +102,6 @@ informative:
       org: Xiph.Org
     title: rd_tool
     date: 2016
-  STEAM:
-    target: http://store.steampowered.com/hwsurvey
-    author:
-      org: Valve Corporation
-    title: "Steam Hardware & Software Survey: June 2015"
-    date: June 2015
-  L1100:
-    target: http://phenix.int-evry.fr/jct/
-    title: Common test conditions and software reference configurations
-    author:
-      -
-        ins: F. Bossen
-        name: Frank Bossen
-    date: 2013
-    seriesinfo:
-      JCTVC: L1100
   COMPARECODECS:
     target: http://compare-codecs.appspot.com/
     title: Compare Codecs
@@ -126,13 +110,6 @@ informative:
         ins: H. Alvestrand
         name: Harald Alvestrand
     date: 2015
-  DERFVIDEO:
-    target: https://media.xiph.org/video/derf/
-    title: Xiph.org Video Test Media
-    author:
-      -
-        ins: T. Terriberry
-        name: Timothy Terriberry
   TESTSEQUENCES:
     target: https://people.xiph.org/~tdaede/sets/
     title: Test Sets
@@ -202,7 +179,7 @@ Subjective testing results take priority over objective testing results, when av
 
 Selection of a testing methodology depends on the feature being tested and the resources available. Test methodologies are presented in order of increasing accuracy and cost.
 
-Testing relies on the resources of participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done in particular, the tests that are important to participants.
+Testing relies on the resources of participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done; in particular, the tests that are important to participants.
 
 Subjective tests should use the same operating points as the objective tests.
 
@@ -262,7 +239,7 @@ PSNR can also be calculated per-frame, and then the values averaged together. Th
 
 ## PSNR-HVS-M
 
-The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. {{PSNRHVS}} The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.
+The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered {{PSNRHVS}}. The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.
 
 ## SSIM
 
