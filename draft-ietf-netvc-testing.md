@@ -669,3 +669,11 @@ Normally, the encoder should always be run at the slowest, highest quality speed
 ## Periodic tests
 
 Periodic tests are run on a wide range of bitrates in order to gauge progress over time, as well as detect potential regressions missed by other tests.
+
+# IANA Considerations
+
+This document does not require any IANA actions.
+
+# Security Considerations
+
+This document describes the methodologies an procedures for qualitative testing, therefore does not iteself have implications for network of decoder security.
