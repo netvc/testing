@@ -173,13 +173,13 @@ When developing a video codec, changes and additions to the codec need to be dec
 
 # Subjective quality tests
 
-Subjective testing is the preferable method of testing video codecs.
+Subjective testing uses human viewers to rate and compare the quality of videos. It is the preferable method of testing video codecs.
 
 Subjective testing results take priority over objective testing results, when available. Subjective testing is recommended especially when taking advantage of psychovisual effects that may not be well represented by objective metrics, or when different objective metrics disagree.
 
 Selection of a testing methodology depends on the feature being tested and the resources available. Test methodologies are presented in order of increasing accuracy and cost.
 
-Testing relies on the resources of participants. For this reason, even if the group agrees that a particular test is important, if no one volunteers to do it, or if volunteers do not complete it in a timely fashion, then that test should be discarded.  This ensures that only important tests be done; in particular, the tests that are important to participants.
+Testing relies on the resources of participants. If a participant requires a subjective test for a particular feature or improvement, they are responsible for ensuring that resources are available.  This ensures that only important tests be done; in particular, the tests that are important to participants.
 
 Subjective tests should use the same operating points as the objective tests.
 
@@ -190,13 +190,13 @@ A simple way to determine superiority of one compressed image is to visually com
 Once testing is complete, a p-value can be computed using the binomial test. A significant result should have a resulting p-value less than or equal to 0.5. For example:
 
     p_value = binom_test(a,a+b)
-    
-where a is the number of votes for one video, b is the number of votes for the second video, and binom_test(x,y) returns the binomial PMF with x observed tests, y total tests, and expected probability 0.5.
+
+where a is the number of votes for one video, b is the number of votes for the second video, and binom_test(x,y) returns the binomial PMF (probability mass function) with x observed tests, y total tests, and expected probability 0.5.
 
 If ties are allowed to be reported, then the equation is modified:
 
     p_value = binom_test(a+floor(t/2),a+b+t)
-    
+
 where t is the number of tie votes.
 
 Still image pair comparison is used for rapid comparisons during development - the viewer may be either a developer or user, for example. As the results are only relative, it is effective even with an inconsistent viewing environment. Because this test only uses still images (keyframes), this is only suitable for changes with similar or no effect on inter frames.
@@ -239,7 +239,7 @@ PSNR can also be calculated per-frame, and then the values averaged together. Th
 
 ## PSNR-HVS-M
 
-The PSNR-HVS metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered {{PSNRHVS}}. The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.
+The PSNR-HVS {{PSNRHVS}} metric performs a DCT transform of 8x8 blocks of the image, weights the coefficients, and then calculates the PSNR of those coefficients. Several different sets of weights have been considered. The weights used by the dump_pnsrhvs.c tool in the Daala repository have been found to be the best match to real MOS scores.
 
 ## SSIM
 
@@ -259,7 +259,7 @@ CIEDE2000 is a metric based on CIEDE color distances {{CIEDE2000}}. It generates
 
 ## VMAF
 
-Video Multi-method Assessment Fusion (VMAF) is a full-reference perceptual video quality metric that aims to approximate human perception of video quality {{VMAF}}. This metric is focused on quality degradation due compression and rescaling. VMAF estimates the perceived quality score by computing scores from multiple quality assessment algorithms, and fusing them using a support vector machine (SVM). Currently, three image fidelity metrics and one temporal signal have been chosen as features to the SVM, namely Anti-noise SNR (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity (VIF), and the mean co-located pixel difference of a frame with respect to the previous frame.
+Video Multi-method Assessment Fusion (VMAF) is a full-reference perceptual video quality metric that aims to approximate human perception of video quality {{VMAF}}. This metric is focused on quality degradation due to compression and rescaling. VMAF estimates the perceived quality score by computing scores from multiple quality assessment algorithms, and fusing them using a support vector machine (SVM). Currently, three image fidelity metrics and one temporal signal have been chosen as features to the SVM, namely Anti-noise SNR (ANSNR), Detail Loss Measure (DLM), Visual Information Fidelity (VIF), and the mean co-located pixel difference of a frame with respect to the previous frame.
 
 The quality score from VMAF is used directly to calculate BD-Rate, without any conversions.
 
@@ -302,6 +302,8 @@ Sources are divided into several categories to test different scenarios the code
 
 Test sequences should be downloaded in whole. They should not be recreated from the original sources.
 
+Each clip is labeled with its resolution, bit depth, color subsampling, and length.
+
 ### regression-1
 
 This test set is used for basic regression testing. It contains a very small number of clips.
@@ -313,7 +315,7 @@ This test set is used for basic regression testing. It contains a very small num
 
 ### objective-2-slow
 
-This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. This test set requires compiling with high bit depth support.
+This test set is a comprehensive test set, grouped by resolution. These test clips were created from originals at {{TESTSEQUENCES}}. They have been scaled and cropped to match the resolution of their category. This test set requires a codec that supports both 8 and 10 bit video.
 
 4096x2160, 4:2:0, 60 frames:
 
@@ -599,7 +601,7 @@ This is an old version of objective-2-fast.
 
 ## Operating Points
 
-Four operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access. Both of these modes come in CQP and unconstrained variants. When testing still image sets, such as subset1, high latency CQP mode should be used.
+Four operating modes are defined. High latency is intended for on demand streaming, one-to-many live streaming, and stored video. Low latency is intended for videoconferencing and remote access. Both of these modes come in CQP (constant quantizer parameter) and unconstrained variants. When testing still image sets, such as subset1, high latency CQP mode should be used.
 
 ### Common settings
 
